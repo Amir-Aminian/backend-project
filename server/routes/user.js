@@ -1,7 +1,7 @@
 const express = require("express");
-const router = express.router();
+const router = express.Router();
 const {body, validationResult} = require("express-validator");
-let users = require("./users");
+let users = require("../users");
 
 router.get("/", (req, res) => {
   res.status(200).json(users);
@@ -58,7 +58,6 @@ router.delete("/:id", (req, res) => {
       return(user);
     };
   });
-  console.log(users);
   res.status(200).json(`Successfully deleted user id: ${req.params.id}`);
 });
 
