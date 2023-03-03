@@ -4,7 +4,7 @@ const path = require("path");
 global.config = require("./config");
 
 const app = express();
-const static__dir = path.resolve(path.join(__dirname, "../client/public"));
+const static__dir = path.resolve(path.join(__dirname, "../client/build"));
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
