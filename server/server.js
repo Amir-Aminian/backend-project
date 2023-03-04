@@ -13,5 +13,4 @@ app.use("/user", require("./routes/user"));
 
 app.listen(config.port, () => {
   console.log(`server is runing on port: ${config.port}`);
-  console.log(static__dir);
 });
