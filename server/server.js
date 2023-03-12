@@ -9,6 +9,9 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(express.static(static__dir));
 app.use("/user", require("./routes/user"));
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(static__dir, 'index.html'));
+});
 
 app.listen(config.port, () => {
   console.log(`server is runing on port: ${config.port}`);
