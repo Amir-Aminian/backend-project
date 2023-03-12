@@ -1,4 +1,4 @@
-import Routing from "./containers/Routing";
+import Routing from "./routing/Routing";
 import { UserProvider } from "./contexts/UserContext";
 
 function App() {

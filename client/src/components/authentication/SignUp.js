@@ -3,8 +3,8 @@ import DropDownForm from "../../forms/DropDownForm";
 import { Link, useNavigate } from "react-router-dom";
 import { Container, Button, Grid } from "@mui/material";
 import NavigationBar from "./NavigationBar";
-import Register from "../../utilities/Register";
 import { useForm } from "react-hook-form";
+import AddUser from "../../requests/addUser";
 
 const SignUp = () => {
     const securityQuestions = ["In what city were you born?", "What is the name of your favorite pet?", "What is your mother's maiden name?", "What high school did you attend?", "What was the name of your elementary school?", "What was the make of your first car?", "What was your favorite food as a child?", "Where did you meet your spouse?", "What year was your father (or mother) born?"];
@@ -15,7 +15,7 @@ const SignUp = () => {
 
 
     const submit = (data) => {
-        Register(data);
+        AddUser(data);
         navigate("/");
     };
 

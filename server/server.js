@@ -8,7 +8,7 @@ const static__dir = path.resolve(path.join(__dirname, "../client/build"));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(express.static(static__dir));
-app.use("/user", require("./routes/user"));
+app.use("/api", require("./routes/user"));
 app.get("/*", (req, res) => {
   res.sendFile(path.join(static__dir, 'index.html'));
 });

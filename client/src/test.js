@@ -1,5 +1,4 @@
-import React, { useState } from "react"
-import ShowUsers from "./components/showUsers";
+import React, { useState } from "react";
 
 function App() {
   const [users, setUsers] = useState(null);
