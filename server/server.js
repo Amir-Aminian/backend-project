@@ -1,5 +1,4 @@
 const express = require("express");
-const { stat } = require("fs");
 const path = require("path");
 global.config = require("./config");
 
