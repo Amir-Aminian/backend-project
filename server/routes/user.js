@@ -6,9 +6,9 @@ const uuid = require("uuid");
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-router.get("/", (req, res) => {
-  res.status(200).json(users);
-});
+// router.get("/", (req, res) => {
+//   res.status(200).json(users);
+// });
 
 router.get("/:id", (req, res) => {
   let user = users.find((user) => {
@@ -24,7 +24,7 @@ router.post(
   body(["username", "email", "password", "confirmPassword", "SQ1", "SA1", "SQ2", "SA2", "SQ3", "SA3"],"This field is required.").exists({checkFalsy: true}),
   body("email", "Please use a correct email format!").isEmail(), 
   body("password", "Password should be at least 8 characters long!").isLength({min: 8}), 
-  (req, res) => {
+  async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return(res.status(400).json({errors: errors.array()}));
@@ -38,7 +38,7 @@ router.post(
         return(res.status(400).json({error: "Password does not match."}));
       } else {
         req.body.id = uuid.v4();
-        bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
+        await bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
           req.body.password = hash;
           req.body.confirmPassword = hash;
         });
@@ -51,7 +51,7 @@ router.post(
 );
 
 router.put(
-  "/:id",
+  "/update/:id",
   body("email", "Please use a correct email format!").isEmail(),
   body("password", "Password should be at least 8 characters long!").isLength({min: 8}),
   (req, res) => {
@@ -71,13 +71,13 @@ router.put(
   }
 );
 
-router.delete("/:id", (req, res) => {
-  users = users.filter((user) => {
-    if (user.id != req.params.id) {
-      return(user);
-    };
-  });
-  res.status(200).json(`Successfully deleted user id: ${req.params.id}`);
-});
+// router.delete("/:id", (req, res) => {
+//   users = users.filter((user) => {
+//     if (user.id != req.params.id) {
+//       return(user);
+//     };
+//   });
+//   res.status(200).json(`Successfully deleted user id: ${req.params.id}`);
+// });
 
 module.exports = router;
