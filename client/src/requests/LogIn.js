@@ -1,7 +1,7 @@
-const AddUser = async (data) => {
+const LogIn = async (data) => {
   const response = await fetch(
     new Request(
-      "http://localhost:8080/api/signUp", 
+      "http://localhost:8080/api/signIn", 
       {
         method: "POST",
         headers: {'Content-Type':'application/json'},
@@ -13,4 +13,4 @@ const AddUser = async (data) => {
   console.log(res);
 };
 
-export default AddUser;
+export default LogIn;

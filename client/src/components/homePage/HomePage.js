@@ -42,7 +42,7 @@ const HomePage = () => {
             <Container maxWidth="lg" sx={{mt: 5 , mb: 5, backgroundColor: "white", borderRadius: "0.5%"}}>
                 <Grid container direction="column" alignItems="center" justifyContent="center" spacing={1}>
                     <Grid container item justifyContent="right">
-                        <IconButton onClick={() => {localStorage.removeItem("userEmail"); localStorage.removeItem("userName"); navigate("/schedule-assistant")}}>
+                        <IconButton onClick={() => {localStorage.removeItem("userEmail"); localStorage.removeItem("userName"); navigate("/")}}>
                             <LogoutOutlined />
                         </IconButton> 
                     </Grid>               

@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button, Grid, Container } from "@mui/material";
 import NavigationBar from "./NavigationBar";
 import { useForm } from "react-hook-form";
-import Validate from "../../utilities/Validate.js";
+import LogIn from "../../requests/LogIn";
 
 const SignIn = () => {
     const { control, handleSubmit } = useForm();
@@ -12,7 +12,8 @@ const SignIn = () => {
     const navigate = useNavigate();
     
     const submit = (data) => {
-        Validate(data)!=-1 ? navigate("homePage") : alert("Invalid Email Address or Password");
+        LogIn(data);
+        // !=-1 ? navigate("homePage") : alert("Invalid Email Address or Password");
     };
     
     useEffect(() => {
@@ -33,7 +34,7 @@ const SignIn = () => {
                         <form onSubmit={handleSubmit(submit)}>
                             <Grid container item direction="column" alignItems="center" justifyContent="center" spacing={2} width={250}>
                                 <InputForm type="email" id="email" label="Email Address" control={control} rules={{required: "This field is required"}} defaultValue={""} />
-                                <InputForm type="password" id="password" label="Password" control={control} rules={{required: "This field is required"}} defaultValue={""} />
+                                <InputForm type="password" id="password" label="Password" control={control} rules={{required: "This field is required", minLength: {value: 8, message: "Password must have at least 8 characters"}}} defaultValue={""} />
                                 <Grid container item justifyContent="flex-end">
                                     <Link to={"/forgotPassword"}>Forgot Your Password?</Link>
                                 </Grid>
