@@ -10,6 +10,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.static(static__dir));
 app.use("/api/signUp", require("./routes/signUp"));
 app.use("/api/signIn", require("./routes/signIn"));
+app.use("/api/users", require("./routes/test"));
 app.get("/*", (req, res) => {
   res.sendFile(path.join(static__dir, 'index.html'));
 });

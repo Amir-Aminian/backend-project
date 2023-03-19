@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 const {body, validationResult} = require("express-validator");
 let users = require("../users");
-let config = require("../config");
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
+const { secretKey } = require("../config");
 
 router.post(
   "/", 
@@ -23,7 +23,7 @@ router.post(
         return(res.status(400).json({error: "Invalid Email Address or Password."}));
       } else if (await bcrypt.compare(req.body.password, user.password)) {
         user = {email: user.email}
-        const accessToken = jwt.sign(user, config.secretKey);
+        const accessToken = jwt.sign(user, secretKey);
         res.status(200).json(accessToken);
       } else {
         return(res.status(400).json({error: "Invalid Email Address or Password."}));
