@@ -1,7 +1,7 @@
 const express = require("express");
+const database = require("../database");
 const router = express.Router();
 const {body, validationResult} = require("express-validator");
-let users = require("../users");
 const uuid = require("uuid");
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
@@ -17,25 +17,25 @@ router.post(
       if (!errors.isEmpty()) {
         return(res.status(400).json({errors: errors.array()}));
       };
-      let userDataBase = users || [];
-      let userIndex = userDataBase.findIndex((user) => user.email===req.body.email);
+      let usersEmails = await database(`SELECT email FROM db_users`) || [];
+      let userIndex = usersEmails.findIndex((user) => user.email===req.body.email);
       if (userIndex!=-1) {
         return(res.status(400).json({error: "This Email Address has already been used befor.\nPlease sign in or try to sign up agian with a new Email Address."}));
       } else {
         if (req.body.password != req.body.confirmPassword) {
           return(res.status(400).json({error: "Password does not match."}));
         } else {
-          req.body.id = uuid.v4();
-          await bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
+          const user = {id: uuid.v4(), ...req.body};
+          await bcrypt.hash(user.password, saltRounds, function(err, hash) {
             if (err) {
               return(res.status(400).json({error: "Could not hash the password."}));
             }
-            req.body.password = hash;
-            req.body.confirmPassword = hash;
+            user.password = hash;
+            delete user.confirmPassword;
           });
-          req.body.validated = false;
-          userDataBase.push(req.body);
-          res.status(200).json("Successfully added new user!");
+          const query = `INSERT INTO db_users VALUES ("${user.id}", "${user.username}", "${user.email}", "${user.password}", "${user.SQ1}", "${user.SA1}", "${user.SQ2}", "${user.SA2}", "${user.SQ3}", "${user.SA3}");`;
+          await database(query);
+          res.status(200).json("Successfully added new user.");
         };
       };
     } catch (error) {
