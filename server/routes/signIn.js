@@ -1,7 +1,7 @@
 const express = require("express");
+const database = require("../database");
 const router = express.Router();
 const {body, validationResult} = require("express-validator");
-let users = require("../users");
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 const { secretKey } = require("../config");
@@ -17,14 +17,12 @@ router.post(
       if (!errors.isEmpty()) {
         return(res.status(400).json({errors: errors.array()}));
       };
-      let userDataBase = users || [];
-      let user = userDataBase.find((user) => user.email === req.body.email);
+      let users = await database(`SELECT email, password FROM db_users`) || [];
+      let user = users.find((user) => user.email === req.body.email);
       if (user == null) {
         return(res.status(400).json({error: "Invalid Email Address or Password."}));
       } else if (await bcrypt.compare(req.body.password, user.password)) {
-        user = {email: user.email}
-        const accessToken = jwt.sign(user, secretKey);
-        res.status(200).json(accessToken);
+        const accessToken = jwt.sign({email: user.email}, secretKey);
       } else {
         return(res.status(400).json({error: "Invalid Email Address or Password."}));
       };
