@@ -4,7 +4,6 @@ const router = express.Router();
 const {body, validationResult} = require("express-validator");
 const uuid = require("uuid");
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
 
 router.post(
   "/", 
@@ -17,8 +16,8 @@ router.post(
       if (!errors.isEmpty()) {
         return(res.status(400).json({errors: errors.array()}));
       };
-      let usersEmails = await database(`SELECT email FROM db_users`) || [];
-      let userIndex = usersEmails.findIndex((user) => user.email===req.body.email);
+      let users = await database(`SELECT email FROM db_users`) || [];
+      let userIndex = users.findIndex((user) => user.email===req.body.email);
       if (userIndex!=-1) {
         return(res.status(400).json({error: "This Email Address has already been used befor.\nPlease sign in or try to sign up agian with a new Email Address."}));
       } else {
@@ -26,13 +25,9 @@ router.post(
           return(res.status(400).json({error: "Password does not match."}));
         } else {
           const user = {id: uuid.v4(), ...req.body};
-          await bcrypt.hash(user.password, saltRounds, function(err, hash) {
-            if (err) {
-              return(res.status(400).json({error: "Could not hash the password."}));
-            }
-            user.password = hash;
-            delete user.confirmPassword;
-          });
+          delete user.confirmPassword;
+          const saltRounds = await bcrypt.genSalt();
+          user.password = await bcrypt.hash(user.password, saltRounds);
           const query = `INSERT INTO db_users VALUES ("${user.id}", "${user.username}", "${user.email}", "${user.password}", "${user.SQ1}", "${user.SA1}", "${user.SQ2}", "${user.SA2}", "${user.SQ3}", "${user.SA3}");`;
           await database(query);
           res.status(200).json("Successfully added new user.");
