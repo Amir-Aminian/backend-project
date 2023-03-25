@@ -23,6 +23,8 @@ router.post(
         return(res.status(400).json({error: "Invalid Email Address or Password."}));
       } else if (await bcrypt.compare(req.body.password, user.password)) {
         const accessToken = jwt.sign({email: user.email}, secretKey);
+        res.status(200).cookie("access_token", "Bearer " + accessToken,{httpOnly: true, secure: false, sameSite: "lax"});
+        res.status(200).json("Successfully created jwt TOKEN.");
       } else {
         return(res.status(400).json({error: "Invalid Email Address or Password."}));
       };

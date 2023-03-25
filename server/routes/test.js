@@ -1,15 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const {body, validationResult} = require("express-validator");
-let users = require("../users");
 const uuid = require("uuid");
 const bcrypt = require('bcrypt');
 const authenticateToken = require("../middlewares/authenticateToken");
 const saltRounds = 10;
 
-router.get("/", authenticateToken,(req, res) => {
-  res.status(200).json(users.filter(user => user.email === req.user.email));
-});
+// router.get("/", authenticateToken,(req, res) => {
+//   res.status(200).json(users.filter(user => user.email === req.user.email));
+// });
 
 // router.get("/:id", (req, res) => {
 //   let user = users.find((user) => {
