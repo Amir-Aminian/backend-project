@@ -9,8 +9,8 @@ const LogIn = async (data) => {
       }
     )
   );
-  const res = await response.json();
-  console.log(res);
+  const result = await response.json();
+  console.log(result);
 };
 
 export default LogIn;

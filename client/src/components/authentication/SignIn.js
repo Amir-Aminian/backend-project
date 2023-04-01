@@ -13,7 +13,7 @@ const SignIn = () => {
     
     const submit = (data) => {
         LogIn(data);
-        // !=-1 ? navigate("homePage") : alert("Invalid Email Address or Password");
+        navigate("/homePage");
     };
     
     useEffect(() => {

@@ -16,7 +16,7 @@ router.post(
       if (!errors.isEmpty()) {
         return(res.status(400).json({errors: errors.array()}));
       };
-      let users = await database(`SELECT email FROM db_users`) || [];
+      let users = await database('SELECT `email` FROM `db_users`') || [];
       let userIndex = users.findIndex((user) => user.email===req.body.email);
       if (userIndex!=-1) {
         return(res.status(400).json({error: "This Email Address has already been used befor.\nPlease sign in or try to sign up agian with a new Email Address."}));

@@ -17,7 +17,7 @@ router.post(
       if (!errors.isEmpty()) {
         return(res.status(400).json({errors: errors.array()}));
       };
-      let users = await database(`SELECT email, password FROM db_users`) || [];
+      let users = await database('SELECT `email`, `password` FROM `db_users`') || [];
       let user = users.find((user) => user.email === req.body.email);
       if (user == null) {
         return(res.status(400).json({error: "Invalid Email Address or Password."}));

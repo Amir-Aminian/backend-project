@@ -2,24 +2,32 @@ import { Box, Button, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import InputForm from "../../../forms/InputForm";
 import { useForm } from "react-hook-form";
-import FindSQ from "../../../utilities/FindSQ";
 import FindSA from "../../../utilities/FindSA";
 import { useContext } from "react";
 import UserContext from "../../../contexts/UserContext";
+import forgotPass from "../../../requests/forgotPass";
 
 const UserEmail = () => {
     const {setUserEmail, setSQ, setSA} = useContext(UserContext);
     
     const { control, handleSubmit } = useForm();
     
-    const submit = (data) => {
-        if (FindSQ(data.email)!=undefined) {
-            setUserEmail(data.email);
-            setSQ(FindSQ(data.email));
-            setSA(FindSA(data.email));
+    const submit = async (data) => {
+        const userData =  await forgotPass(data);
+        if (userData != undefined) {
+            setSQ([userData.SQ1, userData.SQ2, userData.SQ3]);
+            setSA([userData.SA1, userData.SA2, userData.SA3]);
         } else {
-            alert("Invalid Email Address");
+            alert("Invalid Email Address.");
         };
+
+        // if (FindSQ(data.email)!=undefined) {
+        //     setUserEmail(data.email);
+        //     setSQ(FindSQ(data.email));
+        //     setSA(FindSA(data.email));
+        // } else {
+        //     alert("Invalid Email Address");
+        // };
     };
 
     return (
