@@ -1,7 +1,7 @@
-const LogIn = async (data) => {
+const forgotPassSA = async (data) => {
   const response = await fetch(
     new Request(
-      "http://localhost:8080/api/signIn", 
+      "http://localhost:8080/api/forgotPasswordSA", 
       {
         method: "POST",
         headers: {'Content-Type':'application/json'},
@@ -13,4 +13,4 @@ const LogIn = async (data) => {
   return(result);
 };
 
-export default LogIn;
+export default forgotPassSA;

@@ -11,9 +11,13 @@ const SignIn = () => {
 
     const navigate = useNavigate();
     
-    const submit = (data) => {
-        LogIn(data);
-        navigate("/homePage");
+    const submit = async (data) => {
+        const result = await LogIn(data);
+        if (result.error != undefined ) {
+            alert(result.error);
+        } else {
+            navigate("/homePage");
+        };
     };
     
     useEffect(() => {

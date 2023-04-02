@@ -14,9 +14,14 @@ const SignUp = () => {
     const navigate = useNavigate();
 
 
-    const submit = (data) => {
-        AddUser(data);
-        navigate("/");
+    const submit = async (data) => {
+        const result = await AddUser(data);
+        if (result.error != undefined ) {
+            alert(result.error);
+        } else {
+            alert(result);
+            navigate("/");
+        };
     };
 
     const handleOptions = (value1, value2) => {

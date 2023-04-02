@@ -1,7 +1,7 @@
-const forgotPass = async (data) => {
+const forgotPassReset = async (data) => {
   const response = await fetch(
     new Request(
-      "http://localhost:8080/api/forgotPassword", 
+      "http://localhost:8080/api/forgotPasswordReset", 
       {
         method: "POST",
         headers: {'Content-Type':'application/json'},
@@ -10,7 +10,7 @@ const forgotPass = async (data) => {
     )
   );
   const result = await response.json();
-  return(result[0]);
+  return(result);
 };
 
-export default forgotPass;
+export default forgotPassReset;

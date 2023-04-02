@@ -12,7 +12,9 @@ app.use(express.static(static__dir));
 app.use(cookieParser());
 app.use("/api/signUp", require("./routes/signUp"));
 app.use("/api/signIn", require("./routes/signIn"));
-app.use("/api/forgotPassword", require("./routes/forgotPassword"));
+app.use("/api/forgotPasswordSQ", require("./routes/forgotPasswordSQ"));
+app.use("/api/forgotPasswordSA", require("./routes/forgotPasswordSA"));
+app.use("/api/forgotPasswordReset", require("./routes/forgotPasswordReset"));
 app.use("/api/homePage", require("./routes/homePage"));
 app.get("/*", (req, res) => {
   res.sendFile(path.join(static__dir, 'index.html'));

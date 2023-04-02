@@ -2,9 +2,9 @@ import { Box, Button, Grid } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import InputForm from "../../../forms/InputForm";
 import { useForm } from "react-hook-form";
-import ResetUserPassword from "../../../utilities/ResetUserPassword";
 import { useContext } from "react";
 import UserContext from "../../../contexts/UserContext";
+import forgotPassReset from "../../../requests/forgotPassReset";
 
 const ResetPassword = () => {
     const { control, handleSubmit, watch } = useForm();
@@ -13,8 +13,9 @@ const ResetPassword = () => {
 
     const navigate = useNavigate();
     
-    const submit = (data) => {
-        ResetUserPassword(userEmail, data.newPassword);
+    const submit = async (data) => {
+        const result = await forgotPassReset({email: userEmail, ...data});
+        alert(result);
         navigate("/");
         setSA(false);
     };

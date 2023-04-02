@@ -4,14 +4,16 @@ import InputForm from "../../../forms/InputForm";
 import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import UserContext from "../../../contexts/UserContext";
+import forgotPassSA from "../../../requests/forgotPassSA";
 
 const UserSQ = ({SQ1, SQ2, SQ3}) => {
-    const {setSQ, SA, setSA} = useContext(UserContext);
+    const {setSQ, setSA, userEmail} = useContext(UserContext);
 
     const { control, handleSubmit } = useForm();
     
-    const submit = (data) => {
-        if (data.SA1===SA[0] && data.SA2===SA[1] && data.SA3===SA[2]) {
+    const submit = async (data) => {
+        const userData =  await forgotPassSA({email: userEmail, ...data}); 
+        if (userData === true) {
             setSA(true);
             setSQ(undefined);
         } else {

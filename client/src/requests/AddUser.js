@@ -10,7 +10,7 @@ const AddUser = async (data) => {
     )
   );
   const result = await response.json();
-  console.log(result);
+  return(result);
 };
 
 export default AddUser;
