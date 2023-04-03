@@ -1,7 +1,7 @@
 const forgotPassReset = async (data) => {
   const response = await fetch(
     new Request(
-      "http://localhost:8080/api/forgotPasswordReset", 
+      "http://localhost:8080/api/forgotPassword/reset", 
       {
         method: "POST",
         headers: {'Content-Type':'application/json'},
