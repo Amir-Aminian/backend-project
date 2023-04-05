@@ -7,7 +7,7 @@ import UserContext from "../../../contexts/UserContext";
 import forgotPassSQ from "../../../requests/forgotPassSQ";
 
 const UserEmail = () => {
-    const {setUserEmail, setSQ} = useContext(UserContext);
+    const {setSQ} = useContext(UserContext);
     
     const { control, handleSubmit } = useForm();
     
@@ -15,7 +15,6 @@ const UserEmail = () => {
         const userData =  await forgotPassSQ(data);
         if (userData != undefined) {
             setSQ([userData.SQ1, userData.SQ2, userData.SQ3]);
-            setUserEmail(data.email);
         } else {
             alert("Invalid Email Address.");
         };

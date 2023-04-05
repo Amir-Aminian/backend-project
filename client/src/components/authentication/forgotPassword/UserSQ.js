@@ -7,14 +7,14 @@ import UserContext from "../../../contexts/UserContext";
 import forgotPassSA from "../../../requests/forgotPassSA";
 
 const UserSQ = ({SQ1, SQ2, SQ3}) => {
-    const {setSQ, setSA, userEmail} = useContext(UserContext);
+    const {setSQ, setSA} = useContext(UserContext);
 
     const { control, handleSubmit } = useForm();
     
     const submit = async (data) => {
-        const userData =  await forgotPassSA({email: userEmail, ...data}); 
+        const userData =  await forgotPassSA(data); 
         if (userData === true) {
-            setSA(true);
+            setSA(userData);
             setSQ(undefined);
         } else {
             alert("You have entered wrong security question's answer")

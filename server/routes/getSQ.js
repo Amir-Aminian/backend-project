@@ -2,7 +2,8 @@ const express = require("express");
 const database = require("../database");
 const router = express.Router();
 const {body, validationResult} = require("express-validator");
-const bcrypt = require('bcrypt');
+const jwt = require("jsonwebtoken");
+const { secretKey } = require("../config");
 
 router.post(
   "/", 
@@ -20,8 +21,10 @@ router.post(
         return(res.status(400).json({error: "Invalid Email Address."}));
       } else {
         const query = 'SELECT `SQ1`, `SQ2`, `SQ3` FROM `db_users` WHERE `email` = ?';
-        const value = [req.body.email];
+        const value = [user.email];
         const userData = await database(query, value);
+        const accessToken = jwt.sign({email: user.email}, secretKey);
+        res.status(200).cookie("access_token", "Bearer " + accessToken,{httpOnly: true, secure: false, sameSite: "lax"});
         return(res.status(200).json(userData));
       };
     } catch (error) {

@@ -7,10 +7,11 @@ const authenticateToken = (req, res, next) => {
   if (token == null) {
     return(res.status(400).json({error: "No TOKEN is available."}));
   } else {
-    jwt.verify(token, secretKey, (err) => {
+    jwt.verify(token, secretKey, (err, data) => {
       if (err) {
         return(res.status(400).json({error: "The TOKEN is no longer valid."}));
-      } else {
+      } else {    
+        req.body.userData = data;
         next();
       };
     })

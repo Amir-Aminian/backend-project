@@ -9,15 +9,15 @@ import forgotPassReset from "../../../requests/forgotPassReset";
 const ResetPassword = () => {
     const { control, handleSubmit, watch } = useForm();
 
-    const {userEmail, setSA} = useContext(UserContext);
+    const {setSA} = useContext(UserContext);
 
     const navigate = useNavigate();
     
     const submit = async (data) => {
-        const result = await forgotPassReset({email: userEmail, ...data});
+        const result = await forgotPassReset(data);
+        setSA(false);
         alert(result);
         navigate("/");
-        setSA(false);
     };
 
     return (

@@ -9,7 +9,7 @@ router.post(
   "/", 
   body(["username", "email", "password", "confirmPassword", "SQ1", "SA1", "SQ2", "SA2", "SQ3", "SA3"],"This field is required.").exists({checkFalsy: true}),
   body("email", "Please use a correct email format!").isEmail(), 
-  body("password", "Password should be at least 8 characters long!").isLength({min: 8}), 
+  body(["password", "confirmPassword"], "Password should be at least 8 characters long!").isLength({min: 8}), 
   async (req, res) => {
     try {
       const errors = validationResult(req);
