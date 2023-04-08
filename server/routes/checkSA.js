@@ -24,8 +24,7 @@ router.post(
         res.status(200).cookie("access_token", "Bearer " + accessToken,{httpOnly: true, secure: false, sameSite: "lax"});
         return(res.status(200).json(true));
       } else {
-        res.status(400).json("You have entered wrong security question's answer.");
-        return(res.status(200).json(false));
+        return(res.status(400).json("You have entered wrong security question's answer."));
       };
     } catch (error) {
       res.status(400).json(error);
