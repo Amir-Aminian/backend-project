@@ -4,7 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button, Grid, Container } from "@mui/material";
 import NavigationBar from "./NavigationBar";
 import { useForm } from "react-hook-form";
-import LogIn from "../../requests/LogIn";
+import logIn from "../../requests/logIn";
+import mainPage from '../../requests/mainPage';
 
 const SignIn = () => {
     const { control, handleSubmit } = useForm();
@@ -12,21 +13,27 @@ const SignIn = () => {
     const navigate = useNavigate();
     
     const submit = async (data) => {
-        const result = await LogIn(data);
-        if (result.error != undefined ) {
-            alert(result.error);
-        } else {
+        const result = await logIn(data);
+        if (result.error == undefined ) {
             navigate("/homePage");
+        } else {
+            alert(result.error);
         };
     };
     
     useEffect(() => {
-        if (localStorage.getItem("userEmail")!=undefined) {
-            navigate("/homePage");
-        }
+        const getResult = async () => {
+            const result = await mainPage();
+            if (result.error != undefined) {
+                alert("You are not signed in");
+            } else if (result.signedIn === true) {
+                navigate("/homePage");
+            };
+        };
+        getResult();
     }, []);
 
-    if (localStorage.getItem("userEmail")==undefined) {    
+     
         return (
             <Container maxWidth="xs" sx={{mt: 5 , mb: 5, backgroundColor: "white", borderRadius: "2%"}}>
                 <NavigationBar tabIndex={0} />
@@ -51,7 +58,7 @@ const SignIn = () => {
                 </Grid>
             </Container>
         );
-    }
+    
 }
 
 export default SignIn;

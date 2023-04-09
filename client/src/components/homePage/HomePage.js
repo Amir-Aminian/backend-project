@@ -4,8 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SetWeek from "../../utilities/SetWeek";
 import WeekTable from "./WeekTable";
+import mainPage from "../../requests/mainPage";
 
 const HomePage = () => {
+    const [signedIn, setSignedIn] = useState();
+
     const scrollToDate = useRef();
 
     const navigate = useNavigate();
@@ -25,19 +28,25 @@ const HomePage = () => {
     };
 
     useEffect(() => {
-        if (localStorage.getItem("userEmail")==undefined) {
-            alert("You are not signed in");
-            navigate("/");
-        }
+        const getResult = async () => {
+            const result = await mainPage();
+            if (result.error != undefined) {
+                alert("You are not signed in");
+                navigate("/");
+            } else if (result.signedIn === true) {
+                setSignedIn(true);
+            };
+        };
+        getResult();
     }, []);
 
     useEffect(() => {
         if (scrollToDate.current!=undefined) {
             scrollToDate.current.scrollIntoView({block:"center", behavior:"smooth"});
         }
-    }, [date]);  
+    });  
 
-    if (localStorage.getItem("userEmail")!=undefined) {
+    if (signedIn === true) {
         return (
             <Container maxWidth="lg" sx={{mt: 5 , mb: 5, backgroundColor: "white", borderRadius: "0.5%"}}>
                 <Grid container direction="column" alignItems="center" justifyContent="center" spacing={1}>

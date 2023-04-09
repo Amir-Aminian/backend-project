@@ -4,8 +4,18 @@ const router = express.Router();
 const authenticateToken = require("../middlewares/authenticateToken");
 
 router.get("/", authenticateToken, async (req, res) => {
-  let users = await database(`SELECT * FROM db_users`) || [];
-  res.status(200).json(users.filter(user => user.email === req.body.email));
+  try {
+    if (req.body.userData.signedIn === true) {
+      const query = 'SELECT `username`, `task_date`, `task_color`, `task_color_name`, `task_title`, `task_start_time`, `task_end_time`, `task_description` FROM `db_tasks` WHERE `email` = ?';
+      const value = [req.body.userData.email];
+      let tasks = await database(query, value);
+      return(res.status(200).json({tasks: tasks, signedIn: true}));
+    } else {
+      return(res.status(400).json({error: "Please sign in."}));
+    };
+  } catch (error) {
+    return(res.status(400).json(error));
+  };
 });
 
 module.exports = router;

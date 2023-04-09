@@ -1,4 +1,4 @@
-const LogIn = async (data) => {
+const logIn = async (data) => {
   const response = await fetch(
     new Request(
       "http://localhost:8080/api/signIn", 
@@ -13,4 +13,4 @@ const LogIn = async (data) => {
   return(result);
 };
 
-export default LogIn;
+export default logIn;
