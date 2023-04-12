@@ -5,7 +5,7 @@ const {body, validationResult} = require("express-validator");
 const bcrypt = require('bcrypt');
 const authenticateToken = require("../middlewares/authenticateToken");
 
-router.post(
+router.put(
   "/",
   body(["newPassword", "confirmNewPassword"],"This field is required.").exists({checkFalsy: true}),
   body(["newPassword", "confirmNewPassword"], "Password should be at least 8 characters long!").isLength({min: 8}),  

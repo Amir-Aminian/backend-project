@@ -3,7 +3,7 @@ const forgotPassReset = async (data) => {
     new Request(
       "http://localhost:8080/api/forgotPassword/reset", 
       {
-        method: "POST",
+        method: "PUT",
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify(data)
       }
