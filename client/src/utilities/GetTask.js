@@ -1,13 +1,12 @@
-const GetTask = (date) => {
-  let usersTasks=JSON.parse(localStorage.getItem("usersTasks")) || [];
+const GetTask = (date, tasks) => {
+  let usersTasks= tasks || [];
   let dayTasks= [];
 
   usersTasks.forEach((data) => {
-      if (data.date===new Date(date).getTime()) {
+      if (data.task_date===new Date(date).getTime()) {
           dayTasks.push(data);
-      }
+      };
   });
-
   return (dayTasks);
 }
 

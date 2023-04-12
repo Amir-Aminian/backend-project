@@ -1,11 +1,9 @@
-import { useEffect } from 'react'
 import InputForm from "../../forms/InputForm";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Grid, Container } from "@mui/material";
 import NavigationBar from "./NavigationBar";
 import { useForm } from "react-hook-form";
 import logIn from "../../requests/logIn";
-import mainPage from '../../requests/mainPage';
 
 const SignIn = () => {
     const { control, handleSubmit } = useForm();
@@ -20,19 +18,6 @@ const SignIn = () => {
             alert(result.error);
         };
     };
-    
-    useEffect(() => {
-        const getResult = async () => {
-            const result = await mainPage();
-            if (result.error != undefined) {
-                alert("You are not signed in");
-            } else if (result.signedIn === true) {
-                navigate("/homePage");
-            };
-        };
-        getResult();
-    }, []);
-
      
         return (
             <Container maxWidth="xs" sx={{mt: 5 , mb: 5, backgroundColor: "white", borderRadius: "2%"}}>
