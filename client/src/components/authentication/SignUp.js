@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Container, Button, Grid } from "@mui/material";
 import NavigationBar from "./NavigationBar";
 import { useForm } from "react-hook-form";
-import AddUser from "../../requests/addUser";
+import addUser from "../../requests/addUser";
 
 const SignUp = () => {
     const securityQuestions = ["In what city were you born?", "What is the name of your favorite pet?", "What is your mother's maiden name?", "What high school did you attend?", "What was the name of your elementary school?", "What was the make of your first car?", "What was your favorite food as a child?", "Where did you meet your spouse?", "What year was your father (or mother) born?"];
@@ -15,7 +15,7 @@ const SignUp = () => {
 
 
     const submit = async (data) => {
-        const result = await AddUser(data);
+        const result = await addUser(data);
         if (result.error != undefined ) {
             alert(result.error);
         } else {

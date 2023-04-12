@@ -1,4 +1,4 @@
-const AddUser = async (data) => {
+const addUser = async (data) => {
   const response = await fetch(
     new Request(
       "http://localhost:8080/api/signUp", 
@@ -13,4 +13,4 @@ const AddUser = async (data) => {
   return(result);
 };
 
-export default AddUser;
+export default addUser;
