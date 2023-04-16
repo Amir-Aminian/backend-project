@@ -7,7 +7,7 @@ import { Stack } from "@mui/system";
 import { useState } from "react";
 import addNewTask from "../../requests/addNewTask";
 
-const AddTask = ({open, setOpen, date, user}) => {
+const AddTask = ({open, setOpen, date, user, setNewTask}) => {
     const {control, reset, handleSubmit} = useForm();
 
     const[color, setColor] = useState("rgb(66, 133, 244)");
@@ -17,8 +17,13 @@ const AddTask = ({open, setOpen, date, user}) => {
     const submit = async (data) => {
         if (SetTask(data.startTime, data.endTime) != false) {
             const result = await addNewTask({date: new Date(date).getTime() ,...data , color:color, colorLabel:colorLabel});
-            reset();
-            setOpen(false);
+            if (result.error) {
+                alert(result.error);
+            } else {
+                reset();
+                setOpen(false);
+                setNewTask("added");
+            };
         };
     };     
       

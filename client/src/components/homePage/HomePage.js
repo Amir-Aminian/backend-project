@@ -7,6 +7,8 @@ import WeekTable from "./WeekTable";
 import mainPage from "../../requests/mainPage";
 
 const HomePage = () => {
+    const [newTask, setNewTask] = useState();
+
     const [signedIn, setSignedIn] = useState();
 
     const [tasks, setTasks] = useState([])
@@ -41,10 +43,11 @@ const HomePage = () => {
                 setSignedIn(true);
                 setTasks(result.tasks);
                 setUser(result.user);
+                setNewTask(null);
             };
         };
         getResult();
-    }, []);
+    }, [newTask]);
 
     useEffect(() => {
         if (scrollToDate.current!=undefined) {
@@ -72,7 +75,7 @@ const HomePage = () => {
                             <Button onClick={nextWeek} variant="contained" size="small">Next Week</Button>
                         </Grid>
                     </Grid>
-                    <WeekTable year={SetWeek(date).year} month={SetWeek(date).month} weekDays={SetWeek(date).weekDays} scrollToDate={scrollToDate} tasks={tasks} user={user} />
+                    <WeekTable year={SetWeek(date).year} month={SetWeek(date).month} weekDays={SetWeek(date).weekDays} scrollToDate={scrollToDate} tasks={tasks} user={user} setNewTask={setNewTask} />
                 </Grid>
             </Container>
         );
