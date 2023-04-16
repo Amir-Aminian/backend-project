@@ -1,4 +1,4 @@
-const addTask = async (data) => {
+const addNewTask = async (data) => {
   const response = await fetch(
     new Request(
       "http://localhost:8080/api/addTask", 
@@ -13,4 +13,4 @@ const addTask = async (data) => {
   return(result);
 };
 
-export default addTask;
+export default addNewTask;

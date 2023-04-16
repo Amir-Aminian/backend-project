@@ -11,6 +11,8 @@ const HomePage = () => {
 
     const [tasks, setTasks] = useState([])
 
+    const [user, setUser] = useState();
+
     const scrollToDate = useRef();
 
     const navigate = useNavigate();
@@ -38,6 +40,7 @@ const HomePage = () => {
             } else if (result.signedIn === true) {
                 setSignedIn(true);
                 setTasks(result.tasks);
+                setUser(result.user);
             };
         };
         getResult();
@@ -69,7 +72,7 @@ const HomePage = () => {
                             <Button onClick={nextWeek} variant="contained" size="small">Next Week</Button>
                         </Grid>
                     </Grid>
-                    <WeekTable year={SetWeek(date).year} month={SetWeek(date).month} weekDays={SetWeek(date).weekDays} scrollToDate={scrollToDate} tasks={tasks} />
+                    <WeekTable year={SetWeek(date).year} month={SetWeek(date).month} weekDays={SetWeek(date).weekDays} scrollToDate={scrollToDate} tasks={tasks} user={user} />
                 </Grid>
             </Container>
         );

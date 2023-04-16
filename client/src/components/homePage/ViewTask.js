@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import DeleteTask from "../../utilities/DeleteTask";
 import UpdateTask from "../../utilities/UpdateTask";
 
-const ViewTask = ({open, setOpen, date, task}) => {    
+const ViewTask = ({open, setOpen, date, task, user}) => {    
     const {control, reset, handleSubmit} = useForm();
 
     const[newColor, setNewColor] = useState(task.task_color);
@@ -20,7 +20,7 @@ const ViewTask = ({open, setOpen, date, task}) => {
     }, [task.task_color, task.task_color_label]);
 
     const submit = (data) => {
-        if (UpdateTask(task.task_id, {user: task.username, date: new Date(date).getTime(), task: data, color:newColor, colorLabel:newColorLabel, id:task.task_id})) {
+        if (UpdateTask(task.task_id, {user: user, date: new Date(date).getTime(), task: data, color:newColor, colorLabel:newColorLabel, id:task.task_id})) {
             reset();
             setOpen(false)
         };
@@ -32,7 +32,7 @@ const ViewTask = ({open, setOpen, date, task}) => {
                 <form onSubmit={handleSubmit(submit)}>
                     <Stack direction="column" spacing={2}>
                         <Avatar sx={{backgroundColor:"rgb(0, 114, 181)", mt: 2}}></Avatar>
-                        <Chip label={task.username} variant="outlined" sx={{width:"30%"}} />
+                        <Chip label={user} variant="outlined" sx={{width:"30%"}} />
                         <Stack direction="row" spacing={1}>
                             <DateRange />
                             <Typography>{date[0]}, {date[1]} {date[2]} {date[3]}</Typography>

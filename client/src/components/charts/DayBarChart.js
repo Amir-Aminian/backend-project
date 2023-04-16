@@ -7,7 +7,7 @@ import ViewTask from "../homePage/ViewTask";
 import { useState } from "react";
 import GetTask from "../../utilities/GetTask";
 
-const DayBarChart = ({date, tasks}) => {
+const DayBarChart = ({date, tasks, user}) => {
     const [open, setOpen] = useState(false);
 
     const [task, setTask] = useState({});
@@ -28,7 +28,7 @@ const DayBarChart = ({date, tasks}) => {
                     data={{
                         datasets:
                             dayTasks.map((data) =>( 
-                                {data:[{x:[data.task_start_time, data.task_end_time],y:data.username}], backgroundColor:data.task_color}
+                                {data:[{x:[data.task_start_time, data.task_end_time],y:user}], backgroundColor:data.task_color}
                             ))
                     }} 
                     options={{
@@ -63,7 +63,7 @@ const DayBarChart = ({date, tasks}) => {
                     }}
                 />
             </Box>
-            <ViewTask open={open} setOpen={setOpen} date={date} task={task} />
+            <ViewTask open={open} setOpen={setOpen} date={date} task={task} user={user} />
         </Box>
     );
 }

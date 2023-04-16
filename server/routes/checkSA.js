@@ -27,7 +27,7 @@ router.post(
         return(res.status(400).json("You have entered wrong security question's answer."));
       };
     } catch (error) {
-      res.status(400).json(error);
+      return(res.status(400).json(error));
     };
   }
 );

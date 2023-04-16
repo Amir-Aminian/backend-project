@@ -31,7 +31,7 @@ router.post(
           const query = 'INSERT INTO `db_users` VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
           const values = [user.id, user.username, user.email, user.password, user.SQ1, user.SA1, user.SQ2, user.SA2, user.SQ3, user.SA3];
           await database(query, values);
-          res.status(200).json("Successfully added new user.");
+          return(res.status(200).json("Successfully added new user."));
         };
       };
     } catch (error) {

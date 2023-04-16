@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import DayBarChart from "../charts/DayBarChart";
 import AddTask from "./AddTask";
 
-const WeekTable = ({year, month, weekDays, scrollToDate, tasks}) => {
+const WeekTable = ({year, month, weekDays, scrollToDate, tasks, user}) => {
     const [open, setOpen] = useState(false);
 
     const [date, setDate] = useState([]);
@@ -54,12 +54,12 @@ const WeekTable = ({year, month, weekDays, scrollToDate, tasks}) => {
                             </IconButton>
                         </Grid>  
                         <Grid item xs={12} sm={12} md={10} lg={10}>
-                            <DayBarChart date={[weekDay.weekDay, weekDay.weekDate, weekDay.weekMonth, year]} tasks={tasks} />
+                            <DayBarChart date={[weekDay.weekDay, weekDay.weekDate, weekDay.weekMonth, year]} tasks={tasks} user={user} />
                         </Grid>                      
                     </Grid>
                 ))}
             </Grid> 
-            <AddTask open={open} setOpen={setOpen} date={date} />
+            <AddTask open={open} setOpen={setOpen} date={date} user={user} />
         </Grid>
     );
 }

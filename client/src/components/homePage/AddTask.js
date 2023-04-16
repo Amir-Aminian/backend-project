@@ -5,23 +5,21 @@ import InputForm from "../../forms/InputForm";
 import { DateRange } from "@mui/icons-material";
 import { Stack } from "@mui/system";
 import { useState } from "react";
-import { v4 as uuidv4 } from 'uuid';
+import addNewTask from "../../requests/addNewTask";
 
-const AddTask = ({open, setOpen, date}) => {
-    const user = localStorage.getItem("userName");
-    
+const AddTask = ({open, setOpen, date, user}) => {
     const {control, reset, handleSubmit} = useForm();
 
     const[color, setColor] = useState("rgb(66, 133, 244)");
 
     const[colorLabel, setColorLabel] = useState("Blue");
 
-    let taskuuid = uuidv4();
-
-    const submit = (data) => {
-        if (SetTask({user: user, date: new Date(date).getTime(), task: data, color:color, colorLabel:colorLabel, id:taskuuid})) {
+    const submit = async (data) => {
+        if (SetTask(data.startTime, data.endTime) != false) {
+            const result = await addNewTask({date: new Date(date).getTime() ,...data , color:color, colorLabel:colorLabel});
+            console.log(result);
             reset();
-            setOpen(false)
+            setOpen(false);
         };
     };     
       
