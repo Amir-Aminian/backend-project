@@ -17,7 +17,6 @@ const AddTask = ({open, setOpen, date, user}) => {
     const submit = async (data) => {
         if (SetTask(data.startTime, data.endTime) != false) {
             const result = await addNewTask({date: new Date(date).getTime() ,...data , color:color, colorLabel:colorLabel});
-            console.log(result);
             reset();
             setOpen(false);
         };
