@@ -18,6 +18,7 @@ app.use("/api/forgotPassword/reset", require("./routes/resetPassword"));
 app.use("/api/homePage", require("./routes/homePage"));
 app.use("/api/addTask", require("./routes/addTask"));
 app.use("/api/deleteTask", require("./routes/deleteTask"));
+app.use("/api/updateTask", require("./routes/updateTask"));
 app.get("/*", (req, res) => {
   res.sendFile(path.join(static__dir, 'index.html'));
 });

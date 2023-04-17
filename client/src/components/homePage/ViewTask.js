@@ -4,8 +4,9 @@ import InputForm from "../../forms/InputForm";
 import { DateRange } from "@mui/icons-material";
 import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
-import UpdateTask from "../../utilities/UpdateTask";
+import SetTask from "../../utilities/SetTask";
 import removeTask from "../../requests/removeTask";
+import taskUpdate from "../../requests/taskUpdate";
 
 const ViewTask = ({open, setOpen, date, task, user, setNewTask}) => {   
     const {control, reset, handleSubmit} = useForm();
@@ -19,12 +20,19 @@ const ViewTask = ({open, setOpen, date, task, user, setNewTask}) => {
         setNewColorLabel(task.task_color_label);
     }, [task.task_color, task.task_color_label]);
 
-    const submit = (data) => {
-        if (UpdateTask(task.task_id, {user: user, date: new Date(date).getTime(), task: data, color:newColor, colorLabel:newColorLabel, id:task.task_id})) {
-            reset();
-            setOpen(false)
+    const submit = async (data) => {
+        if (SetTask(data.startTime, data.endTime) != false) {
+            const result = await taskUpdate({date: new Date(date).getTime(), taskId: task.task_id ,...data , color:newColor, colorLabel:newColorLabel});
+            if (result.error) {
+                alert(result.error);
+            } else {
+                reset();
+                setOpen(false);
+                setNewTask("added");
+                alert(result);
+            };
         };
-    };     
+    };
 
     const deleteTask = async () => {
         const result = await removeTask({taskId: task.task_id});
