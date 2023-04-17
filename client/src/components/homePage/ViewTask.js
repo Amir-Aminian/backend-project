@@ -6,8 +6,9 @@ import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
 import DeleteTask from "../../utilities/DeleteTask";
 import UpdateTask from "../../utilities/UpdateTask";
+import removeTask from "../../requests/removeTask";
 
-const ViewTask = ({open, setOpen, date, task, user}) => {    
+const ViewTask = ({open, setOpen, date, task, user, setNewTask}) => {   
     const {control, reset, handleSubmit} = useForm();
 
     const[newColor, setNewColor] = useState(task.task_color);
@@ -25,6 +26,13 @@ const ViewTask = ({open, setOpen, date, task, user}) => {
             setOpen(false)
         };
     };     
+
+    const taskDelete = async () => {
+        const result = await removeTask({taskId: task.task_id});
+        setOpen(false);
+        setNewTask("deleted");
+        alert(result);
+    };
     
     return (
         <Modal open={open} onClose={() => {setOpen(false); reset(); setNewColor(task.task_color); setNewColorLabel(task.task_color_label);}} sx={{overflow:"scroll"}}>            
@@ -58,7 +66,7 @@ const ViewTask = ({open, setOpen, date, task, user}) => {
                                 <Button type="button" onClick={() => {setOpen(false); reset(); setNewColor(task.task_color); setNewColorLabel(task.task_color_label);}} variant="contained" size="large" sx={{mb:2, mr:2}}>Close</Button>
                             </Grid>
                             <Grid item>
-                                <Button type="button" onClick={() => {DeleteTask(task.task_id); setOpen(false)}} variant="contained" size="large" sx={{mb:2}}>Delete</Button>
+                                <Button type="button" onClick={() => taskDelete()} variant="contained" size="large" sx={{mb:2}}>Delete</Button>
                             </Grid>
                             <Grid item>
                                 <Button type="submit" variant="contained" size="large" sx={{mb:2, ml:2}}>Update</Button>

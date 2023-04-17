@@ -54,7 +54,7 @@ const WeekTable = ({year, month, weekDays, scrollToDate, tasks, user, setNewTask
                             </IconButton>
                         </Grid>  
                         <Grid item xs={12} sm={12} md={10} lg={10}>
-                            <DayBarChart date={[weekDay.weekDay, weekDay.weekDate, weekDay.weekMonth, year]} tasks={tasks} user={user} />
+                            <DayBarChart date={[weekDay.weekDay, weekDay.weekDate, weekDay.weekMonth, year]} tasks={tasks} user={user} setNewTask={setNewTask} />
                         </Grid>                      
                     </Grid>
                 ))}
