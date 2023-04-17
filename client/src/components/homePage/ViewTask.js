@@ -4,7 +4,6 @@ import InputForm from "../../forms/InputForm";
 import { DateRange } from "@mui/icons-material";
 import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
-import DeleteTask from "../../utilities/DeleteTask";
 import UpdateTask from "../../utilities/UpdateTask";
 import removeTask from "../../requests/removeTask";
 
@@ -27,7 +26,7 @@ const ViewTask = ({open, setOpen, date, task, user, setNewTask}) => {
         };
     };     
 
-    const taskDelete = async () => {
+    const deleteTask = async () => {
         const result = await removeTask({taskId: task.task_id});
         setOpen(false);
         setNewTask("deleted");
@@ -66,7 +65,7 @@ const ViewTask = ({open, setOpen, date, task, user, setNewTask}) => {
                                 <Button type="button" onClick={() => {setOpen(false); reset(); setNewColor(task.task_color); setNewColorLabel(task.task_color_label);}} variant="contained" size="large" sx={{mb:2, mr:2}}>Close</Button>
                             </Grid>
                             <Grid item>
-                                <Button type="button" onClick={() => taskDelete()} variant="contained" size="large" sx={{mb:2}}>Delete</Button>
+                                <Button type="button" onClick={() => deleteTask()} variant="contained" size="large" sx={{mb:2}}>Delete</Button>
                             </Grid>
                             <Grid item>
                                 <Button type="submit" variant="contained" size="large" sx={{mb:2, ml:2}}>Update</Button>
