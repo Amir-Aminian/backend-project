@@ -1,4 +1,4 @@
-const taskUpdate = async (data) => {
+const updateTask = async (data) => {
   const response = await fetch(
     new Request(
       "http://localhost:8080/api/updateTask", 
@@ -13,4 +13,4 @@ const taskUpdate = async (data) => {
   return(result);
 };
 
-export default taskUpdate;
+export default updateTask;

@@ -6,7 +6,7 @@ import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
 import SetTask from "../../utilities/SetTask";
 import removeTask from "../../requests/removeTask";
-import taskUpdate from "../../requests/taskUpdate";
+import updateTask from "../../requests/updateTask";
 
 const ViewTask = ({open, setOpen, date, task, user, setNewTask}) => {   
     const {control, reset, handleSubmit} = useForm();
@@ -22,7 +22,7 @@ const ViewTask = ({open, setOpen, date, task, user, setNewTask}) => {
 
     const submit = async (data) => {
         if (SetTask(data.startTime, data.endTime) != false) {
-            const result = await taskUpdate({date: new Date(date).getTime(), taskId: task.task_id ,...data , color:newColor, colorLabel:newColorLabel});
+            const result = await updateTask({date: new Date(date).getTime(), taskId: task.task_id ,...data , color:newColor, colorLabel:newColorLabel});
             if (result.error) {
                 alert(result.error);
             } else {
