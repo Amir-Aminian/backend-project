@@ -1,10 +1,11 @@
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
-global.config = require("./config");
+require('dotenv').config();
 
 const app = express();
 const static__dir = path.resolve(path.join(__dirname, "../client/build"));
+const port = process.env.PORT;
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
@@ -23,6 +24,6 @@ app.get("/*", (req, res) => {
   res.sendFile(path.join(static__dir, 'index.html'));
 });
 
-app.listen(config.port, () => {
-  console.log(`server is runing on port: ${config.port}`);
+app.listen(port, () => {
+  console.log(`server is runing on port: ${port}`);
 });

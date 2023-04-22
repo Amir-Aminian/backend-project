@@ -3,7 +3,7 @@ const database = require("../database");
 const router = express.Router();
 const {body, validationResult} = require("express-validator");
 const jwt = require("jsonwebtoken");
-const { secretKey } = require("../config");
+const secretKey = process.env.SECRETKEYE;
 
 router.post(
   "/", 

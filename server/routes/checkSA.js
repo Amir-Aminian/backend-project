@@ -4,7 +4,7 @@ const router = express.Router();
 const {body, validationResult} = require("express-validator");
 const authenticateToken = require("../middlewares/authenticateToken");
 const jwt = require("jsonwebtoken");
-const { secretKey } = require("../config");
+const secretKey = process.env.SECRETKEYE;
 
 router.post(
   "/", 
