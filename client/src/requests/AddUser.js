@@ -1,7 +1,7 @@
 const addUser = async (data) => {
   const response = await fetch(
     new Request(
-      "http://localhost:8080/api/addUser", 
+      "http://localhost:8080/api/signUp", 
       {
         method: "POST",
         headers: {'Content-Type':'application/json'},
