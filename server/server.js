@@ -21,6 +21,7 @@ app.use("/api/addTask", require("./routes/addTask"));
 app.use("/api/deleteTask", require("./routes/deleteTask"));
 app.use("/api/updateTask", require("./routes/updateTask"));
 app.use("/api/clearCookies", require("./routes/clearCookies"));
+app.use("/api/shareUser", require("./routes/shareUser"));
 app.get("/*", (req, res) => {
   res.sendFile(path.join(static__dir, 'index.html'));
 });

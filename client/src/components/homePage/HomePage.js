@@ -7,15 +7,20 @@ import WeekTable from "./WeekTable";
 import mainPage from "../../requests/mainPage";
 import clearCookies from "../../requests/clearCookies";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import AddSharedUser from "./AddSharedUser";
 
 const HomePage = () => {
-    const [newTask, setNewTask] = useState();
+    const [newTask, setNewTask] = useState(null);
 
     const [signedIn, setSignedIn] = useState();
 
     const [tasks, setTasks] = useState([])
 
     const [user, setUser] = useState();
+
+    const [open, setOpen] = useState(false)
+
+    const [sharedUser, setSharedUser] = useState(null);
 
     const scrollToDate = useRef();
 
@@ -46,10 +51,11 @@ const HomePage = () => {
                 setTasks(result.tasks);
                 setUser(result.user);
                 setNewTask(null);
+                setSharedUser(null);
             };
         };
         getResult();
-    }, [newTask]);
+    }, [newTask, sharedUser]);
 
     useEffect(() => {
         if (scrollToDate.current!=undefined) {
@@ -68,7 +74,7 @@ const HomePage = () => {
             <Container maxWidth="lg" sx={{mt: 5 , mb: 5, backgroundColor: "white", borderRadius: "0.5%"}}>
                 <Grid container direction="column" alignItems="center" justifyContent="center" spacing={1}>
                     <Grid container item direction="row" justifyContent="right" spacing={0.34}>
-                        <IconButton onClick={() => {localStorage.removeItem("userEmail"); localStorage.removeItem("userName"); navigate("/")}}>
+                        <IconButton onClick={() => setOpen(true)}>
                             <PersonAddIcon />
                         </IconButton> 
                         <IconButton onClick={() => logOut()}>
@@ -88,6 +94,7 @@ const HomePage = () => {
                     </Grid>
                     <WeekTable year={SetWeek(date).year} month={SetWeek(date).month} weekDays={SetWeek(date).weekDays} scrollToDate={scrollToDate} tasks={tasks} user={user} setNewTask={setNewTask} />
                 </Grid>
+                <AddSharedUser open={open} setOpen={setOpen} user={user} setSharedUser={setSharedUser} />
             </Container>
         );
     };   
