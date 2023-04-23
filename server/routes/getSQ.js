@@ -23,8 +23,8 @@ router.post(
         const query = 'SELECT `SQ1`, `SQ2`, `SQ3` FROM `db_users` WHERE `email` = ?';
         const value = [user.email];
         const userData = await database(query, value);
-        const accessToken = jwt.sign({email: user.email}, secretKey);
-        res.status(200).cookie("access_token", "Bearer " + accessToken,{httpOnly: true, secure: false, sameSite: "lax"});
+        const accessToken = jwt.sign({email: user.email}, secretKey, {expiresIn: "1h"});
+        res.status(200).cookie("access_token", "Bearer " + accessToken,{expires: new Date(Date.now() + 2 * 3600000), httpOnly: true, secure: false, sameSite: "lax"});
         return(res.status(200).json(userData));
       };
     } catch (error) {
