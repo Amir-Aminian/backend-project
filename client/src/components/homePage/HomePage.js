@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import SetWeek from "../../utilities/SetWeek";
 import WeekTable from "./WeekTable";
 import mainPage from "../../requests/mainPage";
+import clearCookies from "../../requests/clearCookies";
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 const HomePage = () => {
     const [newTask, setNewTask] = useState();
@@ -55,12 +57,21 @@ const HomePage = () => {
         }
     });  
 
+    const logOut = async () => {
+        const result = await clearCookies();
+        alert(result);
+        navigate("/")
+    };
+
     if (signedIn === true) {
         return (
             <Container maxWidth="lg" sx={{mt: 5 , mb: 5, backgroundColor: "white", borderRadius: "0.5%"}}>
                 <Grid container direction="column" alignItems="center" justifyContent="center" spacing={1}>
-                    <Grid container item justifyContent="right">
+                    <Grid container item direction="row" justifyContent="right" spacing={0.34}>
                         <IconButton onClick={() => {localStorage.removeItem("userEmail"); localStorage.removeItem("userName"); navigate("/")}}>
+                            <PersonAddIcon />
+                        </IconButton> 
+                        <IconButton onClick={() => logOut()}>
                             <LogoutOutlined />
                         </IconButton> 
                     </Grid>               
