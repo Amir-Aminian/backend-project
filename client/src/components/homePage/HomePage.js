@@ -8,13 +8,14 @@ import mainPage from "../../requests/mainPage";
 import clearCookies from "../../requests/clearCookies";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AddSharedUser from "./AddSharedUser";
+import getSharedUsers from "../../requests/getSharedUsers";
 
 const HomePage = () => {
     const [newTask, setNewTask] = useState(null);
 
     const [signedIn, setSignedIn] = useState();
 
-    const [tasks, setTasks] = useState([])
+    const [tasks, setTasks] = useState([]);
 
     const [user, setUser] = useState();
 
@@ -43,6 +44,8 @@ const HomePage = () => {
     useEffect(() => {
         const getResult = async () => {
             const result = await mainPage();
+            const sharedUsers = await getSharedUsers();
+            console.log(sharedUsers);
             if (result.error != undefined) {
                 alert("You are not signed in");
                 navigate("/");

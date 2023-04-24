@@ -37,7 +37,6 @@ router.post(
             'SELECT `status` FROM `db_shared_users` WHERE `user_id` = ? AND `shared_user_id` = ?',
             [userId[0].user_id, sharedUserId[0].user_id ]
           ) || [];
-          console.log(status)
           if (status.length != 0) {
             if (status[0].status == true) {
               return(res.status(400).json({error: "You have already added this email address to your account."}));
