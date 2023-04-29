@@ -7,12 +7,17 @@ import ViewTask from "../homePage/ViewTask";
 import { useState } from "react";
 import GetTask from "../../utilities/GetTask";
 
-const DayBarChart = ({date, tasks, user, setNewTask}) => {
+const DayBarChart = ({date, tasks, user, setNewTask, sharedUsers}) => {
     const [open, setOpen] = useState(false);
 
     const [task, setTask] = useState({});
 
-    const dayTasks = GetTask(date, tasks);
+    let dayTasks = GetTask(date, tasks);
+
+    if (Array.isArray(sharedUsers)) {
+        let sharedTasks = GetTask(date, sharedUsers);
+        dayTasks = dayTasks.concat(sharedTasks);
+    };
 
     const clickHandler = (e, element) => {
         if (element.length>0) {
@@ -28,7 +33,7 @@ const DayBarChart = ({date, tasks, user, setNewTask}) => {
                     data={{
                         datasets:
                             dayTasks.map((data) =>( 
-                                {data:[{x:[data.task_start_time, data.task_end_time],y:user}], backgroundColor:data.task_color}
+                                {data:[{x:[data.task_start_time, data.task_end_time],y:data.user}], backgroundColor:data.task_color}
                             ))
                     }} 
                     options={{

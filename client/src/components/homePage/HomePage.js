@@ -11,6 +11,8 @@ import AddSharedUser from "./AddSharedUser";
 import getSharedUsers from "../../requests/getSharedUsers";
 
 const HomePage = () => {
+    const [sharedUsers, setSharedUsers] = useState(null);
+
     const [newTask, setNewTask] = useState(null);
 
     const [signedIn, setSignedIn] = useState();
@@ -45,7 +47,7 @@ const HomePage = () => {
         const getResult = async () => {
             const result = await mainPage();
             const sharedUsers = await getSharedUsers();
-            console.log(sharedUsers);
+            setSharedUsers(sharedUsers);
             if (result.error != undefined) {
                 alert("You are not signed in");
                 navigate("/");
@@ -95,7 +97,7 @@ const HomePage = () => {
                             <Button onClick={nextWeek} variant="contained" size="small">Next Week</Button>
                         </Grid>
                     </Grid>
-                    <WeekTable year={SetWeek(date).year} month={SetWeek(date).month} weekDays={SetWeek(date).weekDays} scrollToDate={scrollToDate} tasks={tasks} user={user} setNewTask={setNewTask} />
+                    <WeekTable year={SetWeek(date).year} month={SetWeek(date).month} weekDays={SetWeek(date).weekDays} scrollToDate={scrollToDate} tasks={tasks} user={user} setNewTask={setNewTask} sharedUsers={sharedUsers} />
                 </Grid>
                 <AddSharedUser open={open} setOpen={setOpen} user={user} setSharedUser={setSharedUser} />
             </Container>
