@@ -2,23 +2,26 @@ import { Avatar, Button, Chip, Container, Grid, Modal, Typography } from "@mui/m
 import { useForm } from "react-hook-form";
 import InputForm from "../../forms/InputForm";
 import { Stack } from "@mui/system";
-import { useState } from "react";
-import shareUser from "../../requests/shareUser";
+import { useEffect, useState } from "react";
+import ConfirmPassword from "./ConfirmPassword";
 
-const AddSharedUser = ({open, setOpen, user, setSharedUser}) => {
+const AddSharedUser = ({open, setOpen, user, sharedUser, setSharedUser}) => {
     const {control, reset, handleSubmit} = useForm();
 
-    const submit = async (data) => {
-        const result = await shareUser(data);
-        if (result.error) {
-            alert(result.error);
-        } else {
+    const [passWindow, setPassWindow] = useState(false);
+
+    const [email, setEmail] = useState();
+
+    const submit = (data) => {
+        setEmail(data);
+        setPassWindow(true);
+    };    
+
+    useEffect(() => {
+        if (sharedUser == "added") {
             reset();
-            setOpen(false);
-            setSharedUser("added");
-            alert(result);
         };
-    };     
+    }, [sharedUser]);
       
     return (
         <Modal open={open} onClose={() => setOpen(false)} sx={{overflow:"scroll"}}>            
@@ -29,8 +32,6 @@ const AddSharedUser = ({open, setOpen, user, setSharedUser}) => {
                         <Chip label={user} variant="outlined" sx={{width:"30%"}} />
                         <Typography>Type in the user's email address you want to add:</Typography>
                         <InputForm type="email" id="email" label="Email Address" control={control} rules={{required: "This field is required"}} defaultValue={""} />
-                        <Typography>Type in your password:</Typography>
-                        <InputForm type="password" id="password" label="Password" control={control} rules={{required: "This field is required", minLength: {value: 8, message: "Password must have at least 8 characters"}}} defaultValue={""} />
                         <Grid container direction="row" justifyContent="center">
                             <Grid item>
                                 <Button type="button" onClick={() => setOpen(false)} variant="contained" size="large" sx={{mb:2, mr:4}}>Close</Button>
@@ -41,6 +42,7 @@ const AddSharedUser = ({open, setOpen, user, setSharedUser}) => {
                         </Grid>
                     </Stack>
                 </form>
+                <ConfirmPassword passWindow={passWindow} setPassWindow={setPassWindow} setSharedUser={setSharedUser} email={email} setOpen={setOpen} />
             </Container>
         </Modal>
     );

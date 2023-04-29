@@ -99,7 +99,7 @@ const HomePage = () => {
                     </Grid>
                     <WeekTable year={SetWeek(date).year} month={SetWeek(date).month} weekDays={SetWeek(date).weekDays} scrollToDate={scrollToDate} tasks={tasks} user={user} setNewTask={setNewTask} sharedUsers={sharedUsers} />
                 </Grid>
-                <AddSharedUser open={open} setOpen={setOpen} user={user} setSharedUser={setSharedUser} />
+                <AddSharedUser open={open} setOpen={setOpen} user={user} sharedUser={sharedUser} setSharedUser={setSharedUser} />
             </Container>
         );
     };   
