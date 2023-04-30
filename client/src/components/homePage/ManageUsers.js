@@ -1,10 +1,8 @@
 import { Avatar, Button, Chip, Divider, Grid, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 
-const ManageUsers = ({setOpen}) => {   
-  let users = [{user: "amir", status: 0}, {user: "ali", status: 1}];
-
-  const content = () => { 
+const ManageUsers = ({setOpen, users}) => {   
+  const content = (users) => { 
     if (users.length == 0) {
       return (<Typography>You do not have any shared users.</Typography>);
     } else if (users.length > 0) {
@@ -17,7 +15,7 @@ const ManageUsers = ({setOpen}) => {
             <Grid container justifyContent="right">
               {
                 user.status == 0 ? 
-                <Button type="button" variant="contained" size="small">Add</Button> : 
+                <Typography variant="subtitle2">Waiting for the user to accept your request...</Typography> : 
                 user.status == 1 && <Button type="button" variant="contained" size="small">Delete</Button>
               }
             </Grid>
@@ -32,7 +30,7 @@ const ManageUsers = ({setOpen}) => {
   return (
     <Stack direction="column" spacing={2}>
       <Typography>You can manage your shared users here:</Typography>
-      {content()}
+      {content(users)}
       <Grid container justifyContent="left">
           <Grid item>
               <Button type="button" onClick={() => setOpen(false)} variant="contained" size="large" sx={{mb:2, mr:4}}>Close</Button>

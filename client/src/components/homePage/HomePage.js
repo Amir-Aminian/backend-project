@@ -9,6 +9,7 @@ import clearCookies from "../../requests/clearCookies";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AddSharedUser from "./AddSharedUser";
 import getSharedUsers from "../../requests/getSharedUsers";
+import manageSharedUsers from "../../requests/manageSharedUsers";
 
 const HomePage = () => {
     const [sharedUsers, setSharedUsers] = useState(null);
@@ -24,6 +25,8 @@ const HomePage = () => {
     const [open, setOpen] = useState(false)
 
     const [sharedUser, setSharedUser] = useState(null);
+
+    const [users, setUsers] = useState();
 
     const scrollToDate = useRef();
 
@@ -46,15 +49,17 @@ const HomePage = () => {
     useEffect(() => {
         const getResult = async () => {
             const result = await mainPage();
-            const sharedUsers = await getSharedUsers();
-            setSharedUsers(sharedUsers);
             if (result.error != undefined) {
                 alert("You are not signed in");
                 navigate("/");
             } else if (result.signedIn === true) {
+                const sharedUsers = await getSharedUsers();
+                const users = await manageSharedUsers();
                 setSignedIn(true);
                 setTasks(result.tasks);
                 setUser(result.user);
+                setSharedUsers(sharedUsers);
+                setUsers(users);
                 setNewTask(null);
                 setSharedUser(null);
             };
@@ -99,7 +104,7 @@ const HomePage = () => {
                     </Grid>
                     <WeekTable year={SetWeek(date).year} month={SetWeek(date).month} weekDays={SetWeek(date).weekDays} scrollToDate={scrollToDate} tasks={tasks} user={user} setNewTask={setNewTask} sharedUsers={sharedUsers} />
                 </Grid>
-                <AddSharedUser open={open} setOpen={setOpen} user={user} sharedUser={sharedUser} setSharedUser={setSharedUser} />
+                <AddSharedUser open={open} setOpen={setOpen} user={user} sharedUser={sharedUser} setSharedUser={setSharedUser} users={users} />
             </Container>
         );
     };   
