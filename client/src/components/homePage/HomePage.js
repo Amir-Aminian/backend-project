@@ -1,5 +1,5 @@
 import { LogoutOutlined } from "@mui/icons-material";
-import { Container, Button, Grid, IconButton } from "@mui/material";
+import { Container, Button, Grid, IconButton, Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SetWeek from "../../utilities/SetWeek";
@@ -88,13 +88,18 @@ const HomePage = () => {
         return (
             <Container maxWidth="lg" sx={{mt: 5 , mb: 5, backgroundColor: "white", borderRadius: "0.5%"}}>
                 <Grid container direction="column" alignItems="center" justifyContent="center" spacing={1}>
-                    <Grid container item direction="row" justifyContent="right" spacing={0.34}>
-                        <IconButton onClick={() => setOpen(true)}>
-                            <PersonAddIcon />
-                        </IconButton> 
-                        <IconButton onClick={() => logOut()}>
-                            <LogoutOutlined />
-                        </IconButton> 
+                    <Grid container item direction="row" alignItems="center" spacing={0.34}>
+                        <Grid container item xs={6} justifyContent="left">
+                            <Typography>Welcom, {user}</Typography>
+                        </Grid>
+                        <Grid container item direction="row" xs={6} justifyContent="right">
+                            <IconButton onClick={() => setOpen(true)}>
+                                <PersonAddIcon />
+                            </IconButton> 
+                            <IconButton onClick={() => logOut()}>
+                                <LogoutOutlined />
+                            </IconButton> 
+                        </Grid>
                     </Grid>               
                     <Grid container item direction="row" alignItems="center" justifyContent="center" spacing={0.34}>
                         <Grid item>
