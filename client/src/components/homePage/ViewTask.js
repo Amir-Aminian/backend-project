@@ -8,7 +8,7 @@ import SetTask from "../../utilities/SetTask";
 import removeTask from "../../requests/removeTask";
 import updateTask from "../../requests/updateTask";
 
-const ViewTask = ({open, setOpen, date, task, user, setNewTask}) => {   
+const ViewTask = ({open, setOpen, date, task, setNewTask}) => {   
     const {control, reset, handleSubmit} = useForm();
 
     const[newColor, setNewColor] = useState(task.task_color);
@@ -40,14 +40,14 @@ const ViewTask = ({open, setOpen, date, task, user, setNewTask}) => {
         setNewTask("deleted");
         alert(result);
     };
-    
+ 
     return (
         <Modal open={open} onClose={() => {setOpen(false); reset(); setNewColor(task.task_color); setNewColorLabel(task.task_color_label);}} sx={{overflow:"scroll"}}>            
             <Container maxWidth="xs" sx={{mt: 2, mb: 2, backgroundColor: "white", borderRadius: "1%"}}>            
                 <form onSubmit={handleSubmit(submit)}>
                     <Stack direction="column" spacing={2}>
                         <Avatar sx={{backgroundColor:"rgb(0, 114, 181)", mt: 2}}></Avatar>
-                        <Chip label={user} variant="outlined" sx={{width:"30%"}} />
+                        <Chip label={task.user} variant="outlined" sx={{width:"30%"}} />
                         <Stack direction="row" spacing={1}>
                             <DateRange />
                             <Typography>{date[0]}, {date[1]} {date[2]} {date[3]}</Typography>
