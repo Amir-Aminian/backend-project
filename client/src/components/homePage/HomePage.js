@@ -10,6 +10,7 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AddSharedUser from "./AddSharedUser";
 import getSharedUsers from "../../requests/getSharedUsers";
 import manageSharedUsers from "../../requests/manageSharedUsers";
+import shareRequests from "../../requests/shareRequests";
 
 const HomePage = () => {
     const [sharedUsers, setSharedUsers] = useState(null);
@@ -27,6 +28,8 @@ const HomePage = () => {
     const [sharedUser, setSharedUser] = useState(null);
 
     const [users, setUsers] = useState();
+
+    const [requests, setRequests] = useState();
 
     const scrollToDate = useRef();
 
@@ -55,11 +58,13 @@ const HomePage = () => {
             } else if (result.signedIn === true) {
                 const sharedUsers = await getSharedUsers();
                 const users = await manageSharedUsers();
+                const requests = await shareRequests();
                 setSignedIn(true);
                 setTasks(result.tasks);
                 setUser(result.user);
                 setSharedUsers(sharedUsers);
                 setUsers(users);
+                setRequests(requests);
                 setNewTask(null);
                 setSharedUser(null);
             };
@@ -104,7 +109,7 @@ const HomePage = () => {
                     </Grid>
                     <WeekTable year={SetWeek(date).year} month={SetWeek(date).month} weekDays={SetWeek(date).weekDays} scrollToDate={scrollToDate} tasks={tasks} user={user} setNewTask={setNewTask} sharedUsers={sharedUsers} />
                 </Grid>
-                <AddSharedUser open={open} setOpen={setOpen} user={user} sharedUser={sharedUser} setSharedUser={setSharedUser} users={users} />
+                <AddSharedUser open={open} setOpen={setOpen} user={user} sharedUser={sharedUser} setSharedUser={setSharedUser} users={users} requests={requests} />
             </Container>
         );
     };   
