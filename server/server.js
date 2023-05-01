@@ -21,6 +21,7 @@ app.use("/api/getSharedUsers", require("./routes/getSharedUsers"));
 app.use("/api/manageSharedUsers", require("./routes/manageSharedUsers"));
 app.use("/api/shareRequests", require("./routes/shareRequests"));
 app.use("/api/deleteUser", require("./routes/deleteUser"));
+app.use("/api/acceptUser", require("./routes/acceptUser"));
 app.use("/api/addTask", require("./routes/addTask"));
 app.use("/api/deleteTask", require("./routes/deleteTask"));
 app.use("/api/updateTask", require("./routes/updateTask"));

@@ -1,14 +1,20 @@
 import { Avatar, Button, Chip, Divider, Grid, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import deleteUser from "../../requests/deleteUser";
+import acceptUser from "../../requests/acceptUser";
 
-const ManageUsers = ({setOpen, users, setSharedUser, requests}) => { 
-  console.log(requests);    
-  const clickHandler = async (data) => {
+const ManageUsers = ({setOpen, users, setSharedUser, requests}) => {   
+  const deleteHandler = async (data) => {
     const result = await deleteUser(data);
     setSharedUser("deleted");
     alert(result);
   };
+
+  const acceptHandler = async (data) => {
+    const result = await acceptUser(data);
+    setSharedUser("accepted");
+    alert(result);
+  };  
 
   const shareContent = (users) => { 
     if (users.error != undefined) {
@@ -30,7 +36,7 @@ const ManageUsers = ({setOpen, users, setSharedUser, requests}) => {
                     <Typography variant="subtitle2">Added shared user</Typography>
                   </Grid>
                   <Grid item>
-                    <Button type="button" onClick={() => clickHandler({sharedId: user.sharedId})} variant="contained" size="small">Delete</Button>
+                    <Button type="button" onClick={() => deleteHandler({sharedId: user.sharedId})} variant="contained" size="small">Delete</Button>
                   </Grid>
                 </>
               }
@@ -59,17 +65,17 @@ const ManageUsers = ({setOpen, users, setSharedUser, requests}) => {
                 <Typography variant="subtitle2">User is waiting for you to accept the request...</Typography> 
                 <Grid container item direction={"row"} justifyContent={"right"} alignItems={"center"} spacing={1}>
                   <Grid item>
-                    <Button type="button" onClick={() => clickHandler({sharedId: request.sharedId})} variant="contained" size="small">Accept</Button> 
+                    <Button type="button" onClick={() => acceptHandler({sharedId: request.sharedId})} variant="contained" size="small">Accept</Button> 
                   </Grid>
                   <Grid item>
-                    <Button type="button" onClick={() => clickHandler({sharedId: request.sharedId})} variant="contained" size="small">Delete</Button>
+                    <Button type="button" onClick={() => deleteHandler({sharedId: request.sharedId})} variant="contained" size="small">Delete</Button>
                   </Grid>
                 </Grid>
               </Grid> : 
               request.status == 1 && 
               <Grid container justifyContent="right">
                 <Typography variant="subtitle2">You have shared your events with this user.</Typography> 
-                <Button type="button" onClick={() => clickHandler({sharedId: request.sharedId})} variant="contained" size="small">Delete</Button>
+                <Button type="button" onClick={() => deleteHandler({sharedId: request.sharedId})} variant="contained" size="small">Delete</Button>
               </Grid>                
             }            
           </Stack>
