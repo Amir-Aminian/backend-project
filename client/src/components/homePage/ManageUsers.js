@@ -1,7 +1,14 @@
 import { Avatar, Button, Chip, Divider, Grid, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
+import deleteUser from "../../requests/deleteUser";
 
-const ManageUsers = ({setOpen, users}) => {   
+const ManageUsers = ({setOpen, users, setSharedUser}) => {     
+  const clickHandler = async (data) => {
+    const result = await deleteUser(data);
+    setSharedUser("deleted");
+    alert(result);
+  };
+
   const content = (users) => { 
     if (users.length == 0) {
       return (<Typography>You do not have any shared users.</Typography>);
@@ -16,7 +23,7 @@ const ManageUsers = ({setOpen, users}) => {
               {
                 user.status == 0 ? 
                 <Typography variant="subtitle2">Waiting for the user to accept your request...</Typography> : 
-                user.status == 1 && <Button type="button" variant="contained" size="small">Delete</Button>
+                user.status == 1 && <Button type="button" onClick={() => clickHandler({sharedId: user.sharedId})} variant="contained" size="small">Delete</Button>
               }
             </Grid>
           </Stack>
@@ -26,7 +33,7 @@ const ManageUsers = ({setOpen, users}) => {
       );
     };
   };
-  
+
   return (
     <Stack direction="column" spacing={2}>
       <Typography>You can manage your shared users here:</Typography>

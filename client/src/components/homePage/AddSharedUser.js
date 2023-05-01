@@ -40,7 +40,7 @@ const AddSharedUser = ({open, setOpen, user, sharedUser, setSharedUser, users}) 
                         </Grid>
                     </Stack>
                 </form>
-                <ManageUsers setOpen={setOpen} users={users} />
+                <ManageUsers setOpen={setOpen} users={users} setSharedUser={setSharedUser} />
                 <ConfirmPassword passWindow={passWindow} setPassWindow={setPassWindow} setSharedUser={setSharedUser} email={email} setOpen={setOpen} />
             </Container>
         </Modal>
