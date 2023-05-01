@@ -4,7 +4,7 @@ import InputForm from "../../forms/InputForm";
 import { Stack } from "@mui/system";
 import shareUser from "../../requests/shareUser";
 
-const ConfirmPassword = ({passWindow, setPassWindow, email, setSharedUser, setOpen}) => {
+const ConfirmPassword = ({passWindow, setPassWindow, email, setSharedUser}) => {
     const {control, reset, handleSubmit} = useForm();
 
     const submit = async (data) => {
@@ -15,7 +15,6 @@ const ConfirmPassword = ({passWindow, setPassWindow, email, setSharedUser, setOp
             alert(result.error);
         } else {
             setPassWindow(false);
-            setOpen(false);
             reset();
             setSharedUser("added");
             alert(result);

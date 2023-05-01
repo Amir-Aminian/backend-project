@@ -10,9 +10,9 @@ const ManageUsers = ({setOpen, users, setSharedUser}) => {
   };
 
   const content = (users) => { 
-    if (users.length == 0) {
+    if (users.error != undefined) {
       return (<Typography>You do not have any shared users.</Typography>);
-    } else if (users.length > 0) {
+    } else if (users.error == undefined && users.length > 0) {
       return (
         users.map((user) => 
         <>
