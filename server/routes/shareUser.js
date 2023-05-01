@@ -44,6 +44,13 @@ router.post(
               return(res.status(400).json({error: "We have already sent your request to the user.\nYou should wait for the confirmation."}));
             };            
           };
+          let shareCount = await database(
+            'SELECT `status` FROM `db_shared_users` WHERE `user_id` = ?',
+            [userId[0].user_id]
+          ) || [];
+          if (shareCount.length >= 2) {
+            return(res.status(400).json({error: "You can only add 2 users to your account."}));
+          };
           const query = 'SELECT `password` FROM `db_users` WHERE `email` = ?';
           const value = [req.body.userData.email];
           let user = await database(query, value);
