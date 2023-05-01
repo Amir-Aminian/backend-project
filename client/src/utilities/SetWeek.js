@@ -17,7 +17,7 @@ const SetWeek = (d) => {
 
   let endIndex = startIndex+6;
 
-  let startDate = new Date(new Date(d).setDate(startIndex));
+  let startDate = new Date(d.setDate(startIndex));
 
   let endDate = new Date(new Date(d).setDate(endIndex));
 
