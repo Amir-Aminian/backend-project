@@ -8,7 +8,7 @@ const timeLimit = require("../middlewares/timeLimit");
 
 router.post(
   "/", 
-  body(["date", "taskId", "taskTitle", "startTime", "endTime", "taskDescription", "color", "colorLabel"],"This field is required.").exists({checkFalsy: true}),
+  body(["date", "taskTitle", "startTime", "endTime", "taskDescription", "color", "colorLabel"],"This field is required.").exists({checkFalsy: true}),
   authenticateToken,
   async (req, res) => {
     try {
@@ -16,7 +16,10 @@ router.post(
       if (!errors.isEmpty()) {
         return(res.status(400).json({errors: errors.array()}));
       };
-      if (req.body.userData.signedIn === true) {        
+      if (req.body.userData.signedIn === true) { 
+        if (req.body.taskId == undefined) {
+          return(res.status(400).json({error: "You cannot update or change another user's task."}));
+        };       
         const userQuery = 'SELECT `user_id`, `username` FROM `db_users` WHERE `email` = ?';
         const userValue = [req.body.userData.email];
         let user = await database(userQuery, userValue);
