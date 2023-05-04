@@ -14,7 +14,7 @@ const DayBarChart = ({date, tasks, setNewTask, sharedUsers}) => {
 
     let dayTasks = GetTask(date, tasks);
 
-    if (Array.isArray(sharedUsers)) {
+    if (sharedUsers.error == undefined) {
         let sharedTasks = GetTask(date, sharedUsers);
         dayTasks = dayTasks.concat(sharedTasks);
     };
