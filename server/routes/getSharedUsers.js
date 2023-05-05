@@ -20,17 +20,21 @@ router.get("/", authenticateToken, async (req, res) => {
         const sharedData = await Promise.all(sharingData.map(async (data) => 
           await Promise.all([
             data.shared_id,
+            // database(
+            //   'SELECT `username` FROM `db_users` WHERE `user_id` = ?',
+            //   [data.shared_user_id]
+            // ),
+            // database(
+            //   'SELECT `task_date`, `task_color`, `task_color_label`, `task_title`, `task_start_time`, `task_end_time`, `task_description` FROM `db_tasks` WHERE `user_id` = ?',
+            //   [data.shared_user_id]
+            // )
             database(
-              'SELECT `username` FROM `db_users` WHERE `user_id` = ?',
-              [data.shared_user_id]
-            ),
-            database(
-              'SELECT `task_date`, `task_color`, `task_color_label`, `task_title`, `task_start_time`, `task_end_time`, `task_description` FROM `db_tasks` WHERE `user_id` = ?',
+              'SELECT db_users.username, db_tasks.task_date, db_tasks.task_color, db_tasks.task_color_label, db_tasks.task_title, db_tasks.task_start_time, db_tasks.task_end_time, db_tasks.task_description FROM db_users INNER JOIN db_tasks ON db_users.user_id = db_tasks.user_id WHERE db_users.user_id = ?',
               [data.shared_user_id]
             )
           ])
         ));
-        const result = sharedData.map((data)=>({sharedId: data[0], user: data[1][0].username, ...data[2][0]}));
+        const result = sharedData.map((data)=>({sharedId: data[0], ...data[1][0]}));
         return(res.status(200).json(result));
       };      
     } else {

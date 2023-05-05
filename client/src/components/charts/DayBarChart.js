@@ -33,7 +33,7 @@ const DayBarChart = ({date, tasks, setNewTask, sharedUsers}) => {
                     data={{
                         datasets:
                             dayTasks.map((data) =>( 
-                                {data:[{x:[data.task_start_time, data.task_end_time],y:data.user}], backgroundColor:data.task_color}
+                                {data:[{x:[data.task_start_time, data.task_end_time],y:data.username}], backgroundColor:data.task_color}
                             ))
                     }} 
                     options={{
