@@ -17,11 +17,11 @@ router.post(
       if (!errors.isEmpty()) {
         return(res.status(400).json({errors: errors.array()}));
       };
-      let user = await database('SELECT `email`, `password` FROM `db_users` WHERE `email` = ? AND `verified` = ?', [req.body.email, true]) || [];
-      if (user == null) {
+      const user = await database('SELECT `email`, `password` FROM `db_users` WHERE `email` = ? AND `verified` = ?', [req.body.email, true]) || [];
+      if (user.length == 0) {
         return(res.status(400).json({error: "Invalid Email Address or Password."}));
-      } else if (await bcrypt.compare(req.body.password, user.password)) {
-        const accessToken = jwt.sign({email: user.email, signedIn: true}, secretKey, {expiresIn: "1h"});
+      } else if (await bcrypt.compare(req.body.password, user[0].password)) {
+        const accessToken = jwt.sign({email: user[0].email, signedIn: true}, secretKey, {expiresIn: "1h"});
         res.status(200).cookie("access_token", "Bearer " + accessToken,{expires: new Date(Date.now() + 2 * 3600000), httpOnly: true, secure: false, sameSite: "lax"});
         return(res.status(200).json("Successfully created jwt TOKEN."));
       } else {
