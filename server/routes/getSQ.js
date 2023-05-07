@@ -3,7 +3,7 @@ const database = require("../database");
 const router = express.Router();
 const {body, validationResult} = require("express-validator");
 const jwt = require("jsonwebtoken");
-const secretKey = process.env.SECRETKEYE;
+const secretKey = process.env.VSECRETKEYE;
 
 router.post(
   "/", 
@@ -15,8 +15,7 @@ router.post(
       if (!errors.isEmpty()) {
         return(res.status(400).json({errors: errors.array()}));
       };
-      let users = await database('SELECT `email` FROM `db_users`') || [];
-      let user = users.find((user) => user.email === req.body.email);
+      let user = await database('SELECT `email` FROM `db_users` WHERE `email` = ? AND `verified` = ?', [req.body.email, true]) || [];
       if (user == null) {
         return(res.status(400).json({error: "Invalid Email Address."}));
       } else {
