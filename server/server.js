@@ -12,6 +12,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.static(static__dir));
 app.use(cookieParser());
 app.use("/api/signUp", require("./routes/signUp"));
+app.use("/api/verifyEmail", require("./routes/verifyEmail"));
 app.use("/api/signIn", require("./routes/signIn"));
 app.use("/api/forgotPassword/SQ", require("./routes/getSQ"));
 app.use("/api/forgotPassword/SA", require("./routes/checkSA"));

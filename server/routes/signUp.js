@@ -4,6 +4,12 @@ const router = express.Router();
 const {body, validationResult} = require("express-validator");
 const uuid = require("uuid");
 const bcrypt = require('bcrypt');
+const sendMail = require("../middlewares/sendMail");
+const signUpEmail = require("../middlewares/signupEmail");
+const jwt = require("jsonwebtoken");
+const secretKey = process.env.VSECRETKEYE;
+const website = process.env.WEBSITE;
+const port = process.env.PORT
 
 router.post(
   "/", 
@@ -28,10 +34,17 @@ router.post(
           delete user.confirmPassword;
           const saltRounds = await bcrypt.genSalt();
           user.password = await bcrypt.hash(user.password, saltRounds);
-          const query = 'INSERT INTO `db_users` VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-          const values = [user.id, user.username, user.email, user.password, user.SQ1, user.SA1, user.SQ2, user.SA2, user.SQ3, user.SA3];
+          const query = 'INSERT INTO `db_users` VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+          const values = [user.id, user.username, user.email, user.password, user.SQ1, user.SA1, user.SQ2, user.SA2, user.SQ3, user.SA3, false];
           await database(query, values);
-          return(res.status(200).json("Successfully created new user."));
+          const accessToken = jwt.sign({email: user.email}, secretKey, {expiresIn: "5m"});
+          const vLink = `${website}${port}/emailVerification/${accessToken}`;
+          const sent = await sendMail(user.email, signUpEmail(user.username, vLink), "Do not reply - Complete your Sign up");
+          if (sent.err) {
+            return(res.status(400).json("Something went wrong please try again later."));
+          } else if (sent == true) {
+            return(res.status(200).json("Verification email sent!\nPlease check your email inbox. You need to verify your email address to activate your account."));
+          };
         };
       };
     } catch (error) {
