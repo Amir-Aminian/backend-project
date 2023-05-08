@@ -16,13 +16,13 @@ router.post(
         return(res.status(400).json({errors: errors.array()}));
       };
       let user = await database('SELECT `email` FROM `db_users` WHERE `email` = ? AND `verified` = ?', [req.body.email, true]) || [];
-      if (user == null) {
+      if (user.length == 0) {
         return(res.status(400).json({error: "Invalid Email Address."}));
       } else {
         const query = 'SELECT `SQ1`, `SQ2`, `SQ3` FROM `db_users` WHERE `email` = ?';
-        const value = [user.email];
+        const value = [user[0].email];
         const userData = await database(query, value);
-        const accessToken = jwt.sign({email: user.email}, secretKey, {expiresIn: "1h"});
+        const accessToken = jwt.sign({email: user[0].email}, secretKey, {expiresIn: "1h"});
         res.status(200).cookie("access_token", "Bearer " + accessToken,{expires: new Date(Date.now() + 2 * 3600000), httpOnly: true, secure: false, sameSite: "lax"});
         return(res.status(200).json(userData));
       };
