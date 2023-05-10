@@ -3,7 +3,7 @@ const database = require("../database");
 const router = express.Router();
 const {body, validationResult} = require("express-validator");
 const jwt = require("jsonwebtoken");
-const secretKey = process.env.VSECRETKEYE;
+const secretKey = process.env.SECRETKEYE;
 
 router.post(
   "/", 
@@ -23,7 +23,7 @@ router.post(
         const value = [user[0].email];
         const userData = await database(query, value);
         const accessToken = jwt.sign({email: user[0].email}, secretKey, {expiresIn: "1h"});
-        res.status(200).cookie("access_token", "Bearer " + accessToken,{expires: new Date(Date.now() + 2 * 3600000), httpOnly: true, secure: false, sameSite: "lax"});
+        res.status(200).cookie("access_token", "Bearer " + accessToken,{expires: new Date(Date.now() + 2 * 3600000), httpOnly: true, secure: true, sameSite: "lax"});
         return(res.status(200).json(userData));
       };
     } catch (error) {

@@ -1,7 +1,7 @@
 import InputForm from "../../forms/InputForm";
 import DropDownForm from "../../forms/DropDownForm";
 import { Link, useNavigate } from "react-router-dom";
-import { Container, Button, Grid } from "@mui/material";
+import { Container, Button, Grid, Typography } from "@mui/material";
 import NavigationBar from "./NavigationBar";
 import { useForm } from "react-hook-form";
 import addUser from "../../requests/addUser";
@@ -34,7 +34,7 @@ const SignUp = () => {
             <NavigationBar tabIndex={1} />
             <Grid container direction="column" alignItems="center" justifyContent="center" spacing={2}>  
                 <Grid item>
-                    <h2>Sign Up</h2>
+                    <Typography variant="h5" sx={{mt: 2}}>Sign Up</Typography>
                 </Grid>
                 <Grid item>
                     <form onSubmit={handleSubmit(submit)}>
@@ -46,10 +46,10 @@ const SignUp = () => {
                                 <InputForm type="password" id="confirmPassword" label="Confirm Password" control={control} rules={{required: "This field is required", minLength: {value: 8, message: "Password must have at least 8 characters"}, validate: (value) => (value===watch("password") || "Password does not match")}} defaultValue={""} />
                             </Grid>
                             <Grid item>
-                                <h3>Security Questions</h3>
+                                <Typography variant="h5">Security Questions</Typography>
                             </Grid>
                             <Grid item>
-                                <p>Select and answer three security questions. These questions will help us verify your identity should you forget your password.</p>
+                                <Typography variant="subtitle1">Select and answer three security questions. These questions will help us verify your identity should you forget your password.</Typography>
                             </Grid>
                             <Grid container item direction="column" alignItems="center" justifyContent="center" spacing={2}>
                                 <DropDownForm id="SQ1" label={"Select first security question"} options={handleOptions(watch("SQ2"),watch("SQ3"))} control={control} rules={{required: "This field is required"}} defaultValue={""} />

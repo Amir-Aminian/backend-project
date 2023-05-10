@@ -1,4 +1,4 @@
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import InputForm from "../../../forms/InputForm";
 import { useForm } from "react-hook-form";
@@ -24,10 +24,10 @@ const UserEmail = () => {
         <Box>
             <Grid container direction="column" alignItems="center" justifyContent="center" spacing={2}>
                 <Grid item>
-                    <h2>Forgot Your Password?</h2>
+                    <Typography variant="h5">Forgot Your Password?</Typography>
                 </Grid>
                 <Grid item>
-                    <p>Please enter your email address down below to receive your password reset instructions.</p>
+                    <Typography variant="subtitle1" textAlign={"justify"} sx={{mb: 2}}>Please enter your email address down below to receive your password reset instructions.</Typography>
                 </Grid>
                 <Grid item>
                     <form onSubmit={handleSubmit(submit)}>

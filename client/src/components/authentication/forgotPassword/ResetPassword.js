@@ -1,4 +1,4 @@
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import InputForm from "../../../forms/InputForm";
 import { useForm } from "react-hook-form";
@@ -24,10 +24,10 @@ const ResetPassword = () => {
         <Box>
             <Grid container direction="column" alignItems="center" justifyContent="center" spacing={2}>
                 <Grid item>
-                    <h2>Forgot Your Password?</h2>
+                    <Typography variant="h5">Forgot Your Password?</Typography>
                 </Grid>
                 <Grid item>
-                    <p>Please enter your new password below.</p>
+                    <Typography variant="subtitle1"  sx={{mb: 2}}>Please enter your new password below.</Typography>
                 </Grid>
                 <Grid item>
                     <form onSubmit={handleSubmit(submit)}>

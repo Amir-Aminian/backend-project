@@ -1,6 +1,6 @@
 import InputForm from "../../forms/InputForm";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Grid, Container } from "@mui/material";
+import { Button, Grid, Container, Typography } from "@mui/material";
 import NavigationBar from "./NavigationBar";
 import { useForm } from "react-hook-form";
 import logIn from "../../requests/logIn";
@@ -24,7 +24,7 @@ const SignIn = () => {
                 <NavigationBar tabIndex={0} />
                 <Grid container direction="column" alignItems="center" justifyContent="center" spacing={2}>
                     <Grid item>
-                        <h2>Sign In</h2>
+                        <Typography variant="h5" sx={{mt: 2}}>Sign In</Typography>
                     </Grid>
                     <Grid item>
                         <form onSubmit={handleSubmit(submit)}>

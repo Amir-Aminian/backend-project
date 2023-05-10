@@ -10,7 +10,7 @@ const InputForm = ({ type, id, label, control, rules, defaultValue }) => {
                 rules={rules}
                 defaultValue={defaultValue}
                 render={({field:{onChange, value}, fieldState:{error}}) => (
-                    <TextField type={type} id={id} label={label} onChange={onChange} value={value} error={!!error} helperText={error ? error.message : null} variant="filled" size="small" fullWidth />
+                    <TextField type={type} id={id} label={label} onChange={onChange} value={value} error={!!error} helperText={error ? error.message : null} variant="outlined" size="small" fullWidth />
                 )}
             />
         </Grid>

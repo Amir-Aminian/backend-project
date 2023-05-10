@@ -25,10 +25,10 @@ const UserSQ = ({SQ1, SQ2, SQ3}) => {
         <Box>
             <Grid container direction="column" alignItems="center" justifyContent="center" spacing={2}>
                 <Grid item>
-                    <h2>Forgot Your Password?</h2>
+                    <Typography variant="h5">Forgot Your Password?</Typography>
                 </Grid>
                 <Grid item>
-                    <p>Please answer these three security questions to reset your password.</p>
+                    <Typography variant="subtitle1"  sx={{mb: 2}}>Please answer these three security questions to reset your password.</Typography>
                 </Grid>
                 <Grid item>
                     <form onSubmit={handleSubmit(submit)}>
