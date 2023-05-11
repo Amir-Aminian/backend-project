@@ -6,7 +6,7 @@ import { useContext } from "react";
 import UserContext from "../../../contexts/UserContext";
 import forgotPassReset from "../../../requests/forgotPassReset";
 
-const ResetPassword = () => {
+const ResetPassword = ({setErr, setStep}) => {
     const { control, handleSubmit, watch } = useForm();
 
     const {setSA} = useContext(UserContext);
@@ -16,6 +16,8 @@ const ResetPassword = () => {
     const submit = async (data) => {
         const result = await forgotPassReset(data);
         setSA(false);
+        setErr(false);
+        setStep(3);
         alert(result);
         navigate("/");
     };

@@ -6,7 +6,7 @@ import { useContext } from "react";
 import UserContext from "../../../contexts/UserContext";
 import forgotPassSQ from "../../../requests/forgotPassSQ";
 
-const UserEmail = () => {
+const UserEmail = ({setErr, setStep}) => {
     const {setSQ} = useContext(UserContext);
     
     const { control, handleSubmit } = useForm();
@@ -14,8 +14,11 @@ const UserEmail = () => {
     const submit = async (data) => {
         const userData =  await forgotPassSQ(data);
         if (userData != undefined) {
+            setErr(false);
+            setStep(1);
             setSQ([userData.SQ1, userData.SQ2, userData.SQ3]);
         } else {
+            setErr(true);
             alert("Invalid Email Address.");
         };
     };
@@ -23,9 +26,6 @@ const UserEmail = () => {
     return (
         <Box>
             <Grid container direction="column" alignItems="center" justifyContent="center" spacing={2}>
-                <Grid item>
-                    <Typography variant="h5">Forgot Your Password?</Typography>
-                </Grid>
                 <Grid item>
                     <Typography variant="subtitle1" textAlign={"justify"} sx={{mb: 2}}>Please enter your email address down below to receive your password reset instructions.</Typography>
                 </Grid>
