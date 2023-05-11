@@ -48,11 +48,16 @@ const UserSQ = ({SQ1, SQ2, SQ3, setErr, setStep}) => {
                                 <Typography>3. {SQ3}</Typography>
                             </Grid>
                             <InputForm type="text" id="SA3" label="Answer third security question" control={control} rules={{required: "This field is required"}} defaultValue={""} />
-                            <Grid container item justifyContent="center">
-                                <Button type="submit" variant="contained" size="small">Submit</Button>
+                            <Grid container item direction={"row"} justifyContent="center" spacing={24}>
+                                <Grid item sx={{mt:1, mb: 1}}>
+                                    <Button onClick={() => {setSQ(undefined); setStep(0); setErr();}} variant="contained" size="small">Back</Button>
+                                </Grid>
+                                <Grid item sx={{mt:1, mb: 1}}>
+                                    <Button type="submit" variant="contained" size="small">Next</Button>
+                                </Grid>
                             </Grid>
                             <Grid container item justifyContent="flex-end" sx={{mb: 4}}>
-                                <Link to={"/"} onClick={() => setSQ(undefined)}>Back to Sign In page</Link>
+                                <Link to={"/"} onClick={() => {setSQ(undefined); setStep(0); setErr();}}>Back to Sign In page</Link>
                             </Grid>
                         </Grid>
                     </form>

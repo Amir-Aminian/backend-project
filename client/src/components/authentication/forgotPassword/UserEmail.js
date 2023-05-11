@@ -1,5 +1,5 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import InputForm from "../../../forms/InputForm";
 import { useForm } from "react-hook-form";
 import { useContext } from "react";
@@ -10,6 +10,8 @@ const UserEmail = ({setErr, setStep}) => {
     const {setSQ} = useContext(UserContext);
     
     const { control, handleSubmit } = useForm();
+
+    const navigate = useNavigate();
     
     const submit = async (data) => {
         const userData =  await forgotPassSQ(data);
@@ -31,10 +33,15 @@ const UserEmail = ({setErr, setStep}) => {
                 </Grid>
                 <Grid item>
                     <form onSubmit={handleSubmit(submit)}>
-                        <Grid container item direction="column" alignItems="center" justifyContent="center" spacing={2}>
+                        <Grid container item direction="column" alignItems="center" justifyContent="center" spacing={3}>
                             <InputForm type="email" id="email" label="Email Address" control={control} rules={{required: "This field is required"}} defaultValue={""} />
-                            <Grid item>
-                                <Button type="submit" variant="contained" size="small">Submit</Button>
+                            <Grid container item direction={"row"} justifyContent="center" spacing={12}>
+                                <Grid item>
+                                    <Button onClick={() => navigate("/")} variant="contained" size="small">Back</Button>
+                                </Grid>
+                                <Grid item>
+                                    <Button type="submit" variant="contained" size="small">Next</Button>
+                                </Grid>
                             </Grid>
                             <Grid container item justifyContent="flex-end" sx={{mb: 4}}>
                                 <Link to={"/"}>Back to Sign In page</Link>
