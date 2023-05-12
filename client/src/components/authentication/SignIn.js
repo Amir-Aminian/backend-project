@@ -31,7 +31,7 @@ const SignIn = () => {
                             <Grid container item direction="column" alignItems="center" justifyContent="center" spacing={2} width={250}>
                                 <InputForm type="email" id="email" label="Email Address" control={control} rules={{required: "This field is required"}} defaultValue={""} />
                                 <InputForm type="password" id="password" label="Password" control={control} rules={{required: "This field is required", minLength: {value: 8, message: "Password must have at least 8 characters"}}} defaultValue={""} />
-                                <Grid container item justifyContent="flex-end">
+                                <Grid container item justifyContent="flex-start" style={{paddingTop: 0}}>
                                     <Link to={"/forgotPassword"}>Forgot Your Password?</Link>
                                 </Grid>
                                 <Grid item>

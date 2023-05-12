@@ -56,7 +56,7 @@ const UserSQ = ({SQ1, SQ2, SQ3, setErr, setStep}) => {
                                     <Button type="submit" variant="contained" size="small">Next</Button>
                                 </Grid>
                             </Grid>
-                            <Grid container item justifyContent="flex-end" sx={{mb: 4}}>
+                            <Grid container item justifyContent="flex-start" sx={{mb: 4}}>
                                 <Link to={"/"} onClick={() => {setSQ(undefined); setStep(0); setErr();}}>Back to Sign In page</Link>
                             </Grid>
                         </Grid>

@@ -43,7 +43,7 @@ const UserEmail = ({setErr, setStep}) => {
                                     <Button type="submit" variant="contained" size="small">Next</Button>
                                 </Grid>
                             </Grid>
-                            <Grid container item justifyContent="flex-end" sx={{mb: 4}}>
+                            <Grid container item justifyContent="flex-start" sx={{mb: 4}}>
                                 <Link to={"/"}>Back to Sign In page</Link>
                             </Grid>
                         </Grid>

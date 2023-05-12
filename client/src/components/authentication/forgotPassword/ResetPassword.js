@@ -26,9 +26,6 @@ const ResetPassword = ({setErr, setStep}) => {
         <Box>
             <Grid container direction="column" alignItems="center" justifyContent="center" spacing={2}>
                 <Grid item>
-                    <Typography variant="h5">Forgot Your Password?</Typography>
-                </Grid>
-                <Grid item>
                     <Typography variant="subtitle1"  sx={{mb: 2}}>Please enter your new password below.</Typography>
                 </Grid>
                 <Grid item>
@@ -39,7 +36,7 @@ const ResetPassword = ({setErr, setStep}) => {
                             <Grid item sx={{mt:1, mb: 1}}>
                                 <Button type="submit" variant="contained" size="small">Reset Password</Button>
                             </Grid>
-                            <Grid container item justifyContent="flex-end" sx={{mb: 4}}>
+                            <Grid container item justifyContent="flex-start" sx={{mb: 4}}>
                                 <Link to={"/"} onClick={() => setSA(false)}>Back to Sign In page</Link>
                             </Grid>
                         </Grid>

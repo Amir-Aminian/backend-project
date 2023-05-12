@@ -46,7 +46,7 @@ const SignUp = () => {
                                 <InputForm type="password" id="confirmPassword" label="Confirm Password" control={control} rules={{required: "This field is required", minLength: {value: 8, message: "Password must have at least 8 characters"}, validate: (value) => (value===watch("password") || "Password does not match")}} defaultValue={""} />
                             </Grid>
                             <Grid item>
-                                <Typography variant="h5">Security Questions</Typography>
+                                <Typography variant="h5" sx={{mt: 2}}>Security Questions</Typography>
                             </Grid>
                             <Grid item>
                                 <Typography variant="subtitle1">Select and answer three security questions. These questions will help us verify your identity should you forget your password.</Typography>
@@ -58,11 +58,11 @@ const SignUp = () => {
                                 <InputForm type="text" id="SA2" label="Answer second security question" control={control} rules={{required: "This field is required"}} />
                                 <DropDownForm id="SQ3" label={"Select third security question"} options={handleOptions(watch("SQ1"),watch("SQ2"))} control={control} rules={{required: "This field is required"}} defaultValue={""} />
                                 <InputForm type="text" id="SA3" label="Answer third security question" control={control} rules={{required: "This field is required"}} />
-                                <Grid container item justifyContent="flex-end">
-                                    <Link to={"/"}>Already have an account? Sign In</Link>
-                                </Grid>
                                 <Grid item>
-                                    <Button type="submit" variant="contained" size="small" sx={{mb: 4}}>Sign Up</Button>
+                                    <Button type="submit" variant="contained" size="small">Sign Up</Button>
+                                </Grid>
+                                <Grid container item justifyContent="flex-start" sx={{mb: 4}}>
+                                    <Link to={"/"}>Already have an account? Sign In</Link>
                                 </Grid>
                             </Grid>
                         </Grid>
