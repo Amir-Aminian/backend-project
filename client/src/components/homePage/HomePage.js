@@ -1,16 +1,14 @@
-import { LogoutOutlined } from "@mui/icons-material";
 import { Container, Button, Grid, IconButton, Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SetWeek from "../../utilities/SetWeek";
 import WeekTable from "./WeekTable";
 import mainPage from "../../requests/mainPage";
-import clearCookies from "../../requests/clearCookies";
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AddSharedUser from "./AddSharedUser";
 import getSharedUsers from "../../requests/getSharedUsers";
 import manageSharedUsers from "../../requests/manageSharedUsers";
 import shareRequests from "../../requests/shareRequests";
+import Bar from "../appBar/Bar";
 
 const HomePage = () => {
     const [sharedUsers, setSharedUsers] = useState(null);
@@ -78,29 +76,11 @@ const HomePage = () => {
         }
     });  
 
-    const logOut = async () => {
-        const result = await clearCookies();
-        alert(result);
-        navigate("/")
-    };
-
     if (signedIn === true) {
         return (
-            <Container maxWidth="lg" sx={{mt: 5 , mb: 5, backgroundColor: "white", borderRadius: "0.5%"}}>
-                <Grid container direction="column" alignItems="center" justifyContent="center" spacing={1}>
-                    <Grid container item direction="row" alignItems="center" spacing={0.34}>
-                        <Grid container item xs={6} justifyContent="left">
-                            <Typography>Welcom, {user}</Typography>
-                        </Grid>
-                        <Grid container item direction="row" xs={6} justifyContent="right">
-                            <IconButton onClick={() => setOpen(true)}>
-                                <PersonAddIcon />
-                            </IconButton> 
-                            <IconButton onClick={() => logOut()}>
-                                <LogoutOutlined />
-                            </IconButton> 
-                        </Grid>
-                    </Grid>               
+            <Container maxWidth="lg" style={{padding:"0"}} sx={{mt: 5 , mb: 5, backgroundColor: "white", borderRadius: "0.5%"}}>
+                <Bar user={user} setOpen={setOpen} />
+                <Grid container direction="column" alignItems="center" justifyContent="center" spacing={1}>             
                     <Grid container item direction="row" alignItems="center" justifyContent="center" spacing={0.34}>
                         <Grid item>
                             <Button onClick={previousWeek} variant="contained" size="small">Previous Week</Button>
