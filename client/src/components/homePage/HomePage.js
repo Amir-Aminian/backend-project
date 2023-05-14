@@ -1,4 +1,4 @@
-import { Container, Button, Grid, IconButton, Typography } from "@mui/material";
+import { Container, Button, Grid } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SetWeek from "../../utilities/SetWeek";
@@ -35,18 +35,6 @@ const HomePage = () => {
 
     const [date, setDate] = useState(new Date(new Date().setDate(new Date().getDate()-1)));
 
-    const nextWeek = () => {
-        setDate(new Date(date.setDate(date.getDate()+7)));
-    };
-
-    const thisWeek = () => {
-        setDate(new Date(new Date().setDate(new Date().getDate()-1)));
-    };
-
-    const previousWeek = () => {
-        setDate(new Date(date.setDate(date.getDate()-7)));
-    };
-
     useEffect(() => {
         const getResult = async () => {
             const result = await mainPage();
@@ -79,21 +67,8 @@ const HomePage = () => {
     if (signedIn === true) {
         return (
             <Container maxWidth="lg" style={{padding:"0"}} sx={{mt: 5 , mb: 5, backgroundColor: "white", borderRadius: "0.5%"}}>
-                <Bar user={user} setOpen={setOpen} />
-                <Grid container direction="column" alignItems="center" justifyContent="center" spacing={1}>             
-                    <Grid container item direction="row" alignItems="center" justifyContent="center" spacing={0.34}>
-                        <Grid item>
-                            <Button onClick={previousWeek} variant="contained" size="small">Previous Week</Button>
-                        </Grid>
-                            <Grid item>
-                        <Button onClick={thisWeek} variant="contained" size="small">This Week</Button>
-                            </Grid>
-                        <Grid item>
-                            <Button onClick={nextWeek} variant="contained" size="small">Next Week</Button>
-                        </Grid>
-                    </Grid>
-                    <WeekTable year={SetWeek(date).year} month={SetWeek(date).month} weekDays={SetWeek(date).weekDays} scrollToDate={scrollToDate} tasks={tasks} user={user} setNewTask={setNewTask} sharedUsers={sharedUsers} />
-                </Grid>
+                <Bar user={user} setOpen={setOpen} year={SetWeek(date).year} month={SetWeek(date).month} date={date} setDate={setDate} />
+                <WeekTable year={SetWeek(date).year} weekDays={SetWeek(date).weekDays} scrollToDate={scrollToDate} tasks={tasks} user={user} setNewTask={setNewTask} sharedUsers={sharedUsers} />
                 <AddSharedUser open={open} setOpen={setOpen} user={user} sharedUser={sharedUser} setSharedUser={setSharedUser} users={users} requests={requests} />
             </Container>
         );
