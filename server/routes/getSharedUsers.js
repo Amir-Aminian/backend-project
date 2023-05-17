@@ -15,7 +15,7 @@ router.get("/", authenticateToken, async (req, res) => {
         [userId[0].user_id, true]
       );
       if (sharingData.length == 0) {
-        return(res.status(204).json({error: "You do not have any shared users."}));
+        return(res.status(200).json({error: "You do not have any shared users."}));
       } else if (sharingData.length != 0) {
         const sharedData = await Promise.all(sharingData.map(async (data) => 
           await Promise.all([

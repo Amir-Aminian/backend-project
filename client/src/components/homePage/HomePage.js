@@ -62,7 +62,7 @@ const HomePage = () => {
         if (scrollToDate.current!=undefined) {
             scrollToDate.current.scrollIntoView({block:"center", behavior:"smooth"});
         }
-    });  
+    },[date]);  
 
     if (signedIn === true) {
         return (
