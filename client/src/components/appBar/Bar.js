@@ -98,7 +98,7 @@ const Bar = ({user, setOpen, year, month, date, setDate}) => {
       }
     };
     manageNotification();
-  }, [notificationStatus]);
+  }, [notificationStatus, openDialog, Notification.permission]);
 
   return (
     <>

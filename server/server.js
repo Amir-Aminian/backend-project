@@ -19,6 +19,7 @@ app.use("/api/forgotPassword/SA", require("./routes/checkSA"));
 app.use("/api/forgotPassword/reset", require("./routes/resetPassword"));
 app.use("/api/homePage", require("./routes/homePage"));
 app.use("/api/notificationStatus", require("./routes/notificationStatus"));
+app.use("/api/editNotification", require("./routes/editNotification"));
 app.use("/api/getSharedUsers", require("./routes/getSharedUsers"));
 app.use("/api/manageSharedUsers", require("./routes/manageSharedUsers"));
 app.use("/api/shareRequests", require("./routes/shareRequests"));

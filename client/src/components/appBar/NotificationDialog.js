@@ -1,28 +1,32 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+import editNotification from "../../requests/editNotification";
 
 const NotificationDialog = ({open, setOpen, notificationStatus}) => {
-  const notifyMe = () => {
+  const turnOn = async () => {
     if (!("Notification" in window)) {
-      // Check if the browser supports notifications
       alert("This browser does not support desktop notification");
     } else if (Notification.permission === "granted") {
-      // Check whether notification permissions have already been granted;
-      // if so, create a notification
-      const notification = new Notification("Hi there!");
-      // …
-    } else {
-      // We need to ask the user for permission
-      Notification.requestPermission().then((permission) => {
-        // If the user accepts, let's create a notification
-        if (permission === "granted") {
-          const notification = new Notification("Hi there!");
-          // …
-        }
+      const result = await editNotification({status: true});
+      alert(result);
+    } else if (Notification.permission === "default") {
+      Notification.requestPermission().then( async () => {
+        if (Notification.permission === "granted") {
+          const result = await editNotification({status: true});
+          alert(result);
+        };
       });
-    }  
-  }
+    };    
+  };
+
+  const turnOff = async () => {
+    const result = await editNotification({status: false});
+    if (notificationStatus == true) {
+    alert(result);
+    };
+  };
 
   if (notificationStatus === "denied") {
+    turnOff();
     return(
       <Dialog open={open} onClose={() => setOpen(false)}>
         <DialogTitle>Manage your notification setting</DialogTitle>
@@ -48,7 +52,7 @@ const NotificationDialog = ({open, setOpen, notificationStatus}) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => {setOpen(false);}}>Yes</Button>
+          <Button onClick={() => {turnOff(); setOpen(false);}}>Yes</Button>
           <Button onClick={() => setOpen(false)}>No</Button>
         </DialogActions>
       </Dialog>
@@ -65,7 +69,7 @@ const NotificationDialog = ({open, setOpen, notificationStatus}) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => {setOpen(false);}}>Yes</Button>
+          <Button onClick={() => {turnOn(); setOpen(false);}}>Yes</Button>
           <Button onClick={() => setOpen(false)}>No</Button>
         </DialogActions>
       </Dialog>
@@ -82,7 +86,7 @@ const NotificationDialog = ({open, setOpen, notificationStatus}) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => {notifyMe(); setOpen(false);}}>Yes</Button>
+          <Button onClick={() => {turnOn(); setOpen(false);}}>Yes</Button>
           <Button onClick={() => setOpen(false)}>No</Button>
         </DialogActions>
       </Dialog>
