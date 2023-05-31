@@ -13,7 +13,7 @@ import NotificationsOffIcon from '@mui/icons-material/NotificationsOff';
 import NotificationDialog from "./NotificationDialog";
 import getNotificationStatus from "../../requests/getNotificationStatus";
 
-const Bar = ({user, setOpen, year, month, date, setDate}) => {
+const Bar = ({user, setOpen, year, month, date, setDate, tasks}) => {
   let theme = createTheme();
   theme = responsiveFontSizes(theme);
 
@@ -147,7 +147,7 @@ const Bar = ({user, setOpen, year, month, date, setDate}) => {
           <ListItemText primary="Logout" />
         </MenuItem>
       </Menu>
-      <NotificationDialog open={openDialog} setOpen={setOpenDialog} notificationStatus={notificationStatus} />
+      <NotificationDialog open={openDialog} setOpen={setOpenDialog} notificationStatus={notificationStatus} tasks={tasks} />
     </>
   );
 };

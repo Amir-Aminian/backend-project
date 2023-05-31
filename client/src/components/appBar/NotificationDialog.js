@@ -1,7 +1,12 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import editNotification from "../../requests/editNotification";
+import notifyLoop from "../../utilities/notifyLoop";
 
-const NotificationDialog = ({open, setOpen, notificationStatus}) => {
+const NotificationDialog = ({open, setOpen, notificationStatus, tasks}) => {
+  if (Notification.permission === "granted" && notificationStatus === true) {
+    notifyLoop(tasks);
+  };
+
   const turnOn = async () => {
     if (!("Notification" in window)) {
       alert("This browser does not support desktop notification");

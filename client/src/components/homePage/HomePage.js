@@ -45,7 +45,7 @@ const HomePage = () => {
                 const sharedUsers = await getSharedUsers();
                 const users = await manageSharedUsers();
                 const requests = await shareRequests();
-                setSignedIn(true);
+                setSignedIn(result.signedIn);
                 setTasks(result.tasks);
                 setUser(result.user);
                 setSharedUsers(sharedUsers);
@@ -67,7 +67,7 @@ const HomePage = () => {
     if (signedIn === true) {
         return (
             <Container maxWidth="lg" style={{padding:"0"}} sx={{mt: 5 , mb: 5, backgroundColor: "white", borderRadius: "0.5%"}}>
-                <Bar user={user} setOpen={setOpen} year={SetWeek(date).year} month={SetWeek(date).month} date={date} setDate={setDate} />
+                <Bar user={user} setOpen={setOpen} year={SetWeek(date).year} month={SetWeek(date).month} date={date} setDate={setDate} tasks={tasks} />
                 <WeekTable year={SetWeek(date).year} weekDays={SetWeek(date).weekDays} scrollToDate={scrollToDate} tasks={tasks} user={user} setNewTask={setNewTask} sharedUsers={sharedUsers} />
                 <AddSharedUser open={open} setOpen={setOpen} user={user} sharedUser={sharedUser} setSharedUser={setSharedUser} users={users} requests={requests} />
             </Container>
