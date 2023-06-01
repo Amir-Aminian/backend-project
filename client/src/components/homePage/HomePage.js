@@ -33,7 +33,7 @@ const HomePage = () => {
 
     const navigate = useNavigate();
 
-    const [date, setDate] = useState(new Date(new Date().setDate(new Date().getDate()-1)));
+    const [date, setDate] = useState(new Date());
 
     useEffect(() => {
         const getResult = async () => {
