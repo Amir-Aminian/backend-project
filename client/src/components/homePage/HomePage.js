@@ -13,7 +13,7 @@ import Bar from "../appBar/Bar";
 const HomePage = () => {
     const [sharedUsers, setSharedUsers] = useState(null);
 
-    const [newTask, setNewTask] = useState(null);
+    const [newTask, setNewTask] = useState();
 
     const [signedIn, setSignedIn] = useState();
 
@@ -51,7 +51,6 @@ const HomePage = () => {
                 setSharedUsers(sharedUsers);
                 setUsers(users);
                 setRequests(requests);
-                setNewTask(null);
                 setSharedUser(null);
             };
         };

@@ -22,8 +22,8 @@ const AddTask = ({open, setOpen, date, user, setNewTask}) => {
             } else {
                 reset();
                 setOpen(false);
-                setNewTask("added");
-                alert(result);
+                setNewTask(result.task_id);
+                alert(result.message);
             };
         };
     };     

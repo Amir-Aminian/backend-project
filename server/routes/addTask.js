@@ -40,7 +40,7 @@ router.post(
           const query = 'INSERT INTO `db_tasks` VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
           const values = [task.id, task.userId, task.date, task.taskTitle, task.startTime, task.endTime, task.taskDescription, task.color, task.colorLabel];
           await database(query, values);
-          return(res.status(200).json("Successfully added new task."));
+          return(res.status(200).json({message: "Successfully added new task.", task_id: task.id}));
         };
     
         tasks.forEach((data) => {
