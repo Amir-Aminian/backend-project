@@ -22,7 +22,7 @@ const AddTask = ({open, setOpen, date, user, setNewTask}) => {
             } else {
                 reset();
                 setOpen(false);
-                setNewTask(result.task_id);
+                setNewTask(result.task_id+"added");
                 alert(result.message);
             };
         };

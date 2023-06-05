@@ -28,8 +28,8 @@ const ViewTask = ({open, setOpen, date, task, setNewTask}) => {
             } else {
                 reset();
                 setOpen(false);
-                setNewTask(task.task_id);
-                alert(result);
+                setNewTask(task.task_id+"updated");
+                alert(result.message);
             };
         };
     };
@@ -37,7 +37,7 @@ const ViewTask = ({open, setOpen, date, task, setNewTask}) => {
     const deleteTask = async () => {
         const result = await removeTask({taskId: task.task_id});
         setOpen(false);
-        setNewTask(task.task_id);
+        setNewTask(task.task_id+"deleted");
         alert(result);
     };
  

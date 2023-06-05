@@ -1,4 +1,6 @@
 const notifyLoop = (tasks) => {
+  let timeout;
+
   const timeToMiliSec = (date, startTime) => {
     const splitedStartTime = startTime.split(":");
     const startHour = splitedStartTime[0];
@@ -19,11 +21,11 @@ const notifyLoop = (tasks) => {
   const setTimer = (task, now) => {
     const notificationTime = timeToMiliSec(task.task_date, task.task_start_time) - 1800000;
     const diff = notificationTime - now;
-    return new Promise ((resolve) => 
-      setTimeout(() => {
+    return new Promise ((resolve) => {
+      timeout = setTimeout(() => {
         resolve(alert(`task title: ${task.task_title}`));
-      }, diff)
-    );
+      }, diff);
+    });
   };
   
   const notify = async (tasks, now) => {
@@ -41,6 +43,7 @@ const notifyLoop = (tasks) => {
   };
   
   loop(tasks);
+  return(timeout);
 };
 
 export default notifyLoop;

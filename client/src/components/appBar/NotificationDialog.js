@@ -1,11 +1,18 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import editNotification from "../../requests/editNotification";
 import notifyLoop from "../../utilities/notifyLoop";
+import { useEffect, useState } from "react";
 
 const NotificationDialog = ({open, setOpen, notificationStatus, tasks}) => {
-  if (Notification.permission === "granted" && notificationStatus === true) {
-    notifyLoop(tasks);
-  };
+  const [timerId, setTimerId] = useState();
+
+  useEffect(() => {
+    if (Notification.permission === "granted" && notificationStatus === true) {
+      clearTimeout(timerId);
+      const timeout = notifyLoop(tasks);
+      setTimerId(timeout);
+    };
+  }, [tasks]); 
 
   const turnOn = async () => {
     if (!("Notification" in window)) {

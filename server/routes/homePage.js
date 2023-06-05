@@ -9,7 +9,7 @@ router.get("/", authenticateToken, async (req, res) => {
       const userQuery = 'SELECT `user_id`, `username` FROM `db_users` WHERE `email` = ?';
       const userValue = [req.body.userData.email];
       let user = await database(userQuery, userValue);
-      const taskQuery = 'SELECT `task_id`, `task_date`, `task_color`, `task_color_label`, `task_title`, `task_start_time`, `task_end_time`, `task_description` FROM `db_tasks` WHERE `user_id` = ?';
+      const taskQuery = 'SELECT `task_id`, `task_date`, `task_color`, `task_color_label`, `task_title`, `task_start_time`, `task_end_time`, `task_description` FROM `db_tasks` WHERE `user_id` = ? ORDER BY `task_date`, `task_start_time`';
       const taskValue = [user[0].user_id];
       let tasks = await database(taskQuery, taskValue);
       const sharedTasks = tasks.map((data) => ({username: user[0].username, ...data}));
