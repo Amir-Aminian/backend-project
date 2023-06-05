@@ -36,7 +36,7 @@ const Bar = ({user, setOpen, year, month, date, setDate, tasks}) => {
   };
 
   const thisWeek = () => {
-    setDate(new Date(new Date().setDate(new Date().getDate()-1)));
+    setDate(new Date());
 };
 
   const nextWeek = () => {
