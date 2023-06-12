@@ -7,12 +7,12 @@ router.put("/", authenticateToken, async (req, res) => {
   try {
     if (req.body.userData.signedIn === true) {
       if (req.body.taskId == undefined) {
-        return(res.status(400).json("You cannot delete another user's task."));
+        return(res.status(400).json({error: "You cannot delete another user's task."}));
       };
       const query = 'DELETE FROM `db_tasks` WHERE `task_id` = ?';
       const value = [req.body.taskId];
       await database(query, value);
-      return(res.status(200).json("Successfully deleted the task."));
+      return(res.status(200).json({message: "Successfully deleted the task."}));
     } else {
       return(res.status(400).json({error: "Please sign in."}));
     };

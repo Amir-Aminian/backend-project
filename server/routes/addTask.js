@@ -53,7 +53,6 @@ router.post(
         
         if (conflict != 0) {
           return(res.status(400).json({error: "You cannot add this task due to a time conflict with another task."}));
-          conflict = 0;
         } else {
           const task = {id: uuid.v4(), userId: user[0].user_id, ...req.body};
           const query = 'INSERT INTO `db_tasks` VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';

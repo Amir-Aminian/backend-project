@@ -8,7 +8,7 @@ import SetTask from "../../utilities/SetTask";
 import removeTask from "../../requests/removeTask";
 import updateTask from "../../requests/updateTask";
 
-const ViewTask = ({open, setOpen, date, task, setNewTask}) => {   
+const ViewTask = ({open, setOpen, date, task, setNewTask, setUpdate}) => {   
     const {control, reset, handleSubmit} = useForm();
 
     const[newColor, setNewColor] = useState(task.task_color);
@@ -29,6 +29,7 @@ const ViewTask = ({open, setOpen, date, task, setNewTask}) => {
                 reset();
                 setOpen(false);
                 setNewTask(task.task_id+"updated");
+                setUpdate(true);
                 alert(result.message);
             };
         };
@@ -36,9 +37,14 @@ const ViewTask = ({open, setOpen, date, task, setNewTask}) => {
 
     const deleteTask = async () => {
         const result = await removeTask({taskId: task.task_id});
-        setOpen(false);
-        setNewTask(task.task_id+"deleted");
-        alert(result);
+        if (result.error) {
+            alert(result.error);
+        } else {
+            setOpen(false);
+            setNewTask(task.task_id+"deleted");
+            setUpdate(true);
+            alert(result.message);
+        };        
     };
  
     return (

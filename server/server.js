@@ -2,10 +2,17 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 require('dotenv').config();
-
 const app = express();
 const static__dir = path.resolve(path.join(__dirname, "../client/build"));
 const port = process.env.PORT || "8080";
+const server = require("http").createServer(app);
+const WebSocket = require("ws");
+const wss = new WebSocket.Server({server: server});
+const connect = require("./middlewares/connect");
+
+wss.on("connection", function connection(ws) {
+  connect(WebSocket ,wss, ws);
+});
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
@@ -34,6 +41,6 @@ app.get("/*", (req, res) => {
   res.sendFile(path.join(static__dir, 'index.html'));
 });
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`server is runing on port: ${port}`);
 });

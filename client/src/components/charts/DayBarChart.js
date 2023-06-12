@@ -7,7 +7,7 @@ import ViewTask from "../homePage/ViewTask";
 import { useState } from "react";
 import GetTask from "../../utilities/GetTask";
 
-const DayBarChart = ({date, tasks, setNewTask, sharedUsers}) => {
+const DayBarChart = ({date, tasks, setNewTask, sharedUsers, setUpdate}) => {
     const [open, setOpen] = useState(false);
 
     const [task, setTask] = useState({});
@@ -68,7 +68,7 @@ const DayBarChart = ({date, tasks, setNewTask, sharedUsers}) => {
                     }}
                 />
             </Box>
-            <ViewTask open={open} setOpen={setOpen} date={date} task={task} setNewTask={setNewTask} />
+            <ViewTask open={open} setOpen={setOpen} date={date} task={task} setNewTask={setNewTask} setUpdate={setUpdate} />
         </Box>
     );
 }

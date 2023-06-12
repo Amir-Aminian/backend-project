@@ -26,7 +26,7 @@ const notifyLoop = (tasks) => {
     };
     setTimeout(() => {
       alert(`You have an event starting in 30 minutes.\nEvent: ${task.task_title}`);
-    }, 10); 
+    }, 20); 
     };
   
   const setTimer = (task, now) => {

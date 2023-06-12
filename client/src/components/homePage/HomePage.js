@@ -1,4 +1,4 @@
-import { Container, Button, Grid } from "@mui/material";
+import { Container } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SetWeek from "../../utilities/SetWeek";
@@ -11,6 +11,10 @@ import shareRequests from "../../requests/shareRequests";
 import Bar from "../appBar/Bar";
 
 const HomePage = () => {
+    const [update, setUpdate] = useState(false);
+
+    const [change, setChange] = useState(false);
+
     const [sharedUsers, setSharedUsers] = useState(null);
 
     const [newTask, setNewTask] = useState();
@@ -18,6 +22,8 @@ const HomePage = () => {
     const [signedIn, setSignedIn] = useState();
 
     const [tasks, setTasks] = useState([]);
+
+    const [userEmail, setUserEmail] = useState();
 
     const [user, setUser] = useState();
 
@@ -47,15 +53,18 @@ const HomePage = () => {
                 const requests = await shareRequests();
                 setSignedIn(result.signedIn);
                 setTasks(result.tasks);
+                setUserEmail(result.userEmail)
                 setUser(result.user);
                 setSharedUsers(sharedUsers);
                 setUsers(users);
                 setRequests(requests);
                 setSharedUser(null);
+                setChange(false);
+                setUpdate(false);
             };
         };
         getResult();
-    }, [newTask, sharedUser]);
+    }, [newTask, sharedUser, change]);
 
     useEffect(() => {
         if (scrollToDate.current!=undefined) {
@@ -64,10 +73,22 @@ const HomePage = () => {
     },[date]);  
 
     if (signedIn === true) {
+        const socket = new WebSocket("ws://localhost:8080");
+        socket.addEventListener("open", () => {
+            let sharedEmails = [];
+            if (requests.error == undefined) {
+                sharedEmails = requests.map((user) => user.email );
+            };
+            socket.send(JSON.stringify({userEmail, update, sharedEmails}));
+        });
+        socket.addEventListener("message", (event) => {
+            setChange(event.data);
+        });
+
         return (
             <Container maxWidth="lg" style={{padding:"0"}} sx={{mt: 5 , mb: 5, backgroundColor: "white", borderRadius: "0.5%"}}>
                 <Bar user={user} setOpen={setOpen} year={SetWeek(date).year} month={SetWeek(date).month} date={date} setDate={setDate} tasks={tasks} />
-                <WeekTable year={SetWeek(date).year} weekDays={SetWeek(date).weekDays} scrollToDate={scrollToDate} tasks={tasks} user={user} setNewTask={setNewTask} sharedUsers={sharedUsers} />
+                <WeekTable year={SetWeek(date).year} weekDays={SetWeek(date).weekDays} scrollToDate={scrollToDate} tasks={tasks} user={user} setNewTask={setNewTask} sharedUsers={sharedUsers} setUpdate={setUpdate} />
                 <AddSharedUser open={open} setOpen={setOpen} user={user} sharedUser={sharedUser} setSharedUser={setSharedUser} users={users} requests={requests} />
             </Container>
         );

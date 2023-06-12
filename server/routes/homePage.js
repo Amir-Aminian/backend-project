@@ -13,7 +13,7 @@ router.get("/", authenticateToken, async (req, res) => {
       const taskValue = [user[0].user_id];
       let tasks = await database(taskQuery, taskValue);
       const sharedTasks = tasks.map((data) => ({username: user[0].username, ...data}));
-      return(res.status(200).json({user: user[0].username, tasks: sharedTasks, signedIn: true}));
+      return(res.status(200).json({userEmail: req.body.userData.email, user: user[0].username, tasks: sharedTasks, signedIn: true}));
     } else {
       return(res.status(400).json({error: "Please sign in."}));
     };
