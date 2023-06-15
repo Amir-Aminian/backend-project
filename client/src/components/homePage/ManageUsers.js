@@ -3,17 +3,19 @@ import { Stack } from "@mui/system";
 import deleteUser from "../../requests/deleteUser";
 import acceptUser from "../../requests/acceptUser";
 
-const ManageUsers = ({setOpen, users, setSharedUser, requests}) => {   
+const ManageUsers = ({setOpen, users, setSharedUser, requests, setUpdate}) => {   
   const deleteHandler = async (data) => {
     const result = await deleteUser(data);
     setSharedUser("deleted");
-    alert(result);
+    setUpdate({status: true, userEmail: result.email});
+    alert(result.message);
   };
 
   const acceptHandler = async (data) => {
     const result = await acceptUser(data);
     setSharedUser("accepted");
-    alert(result);
+    setUpdate({status: true, userEmail: result.email});
+    alert(result.message);
   };  
 
   const shareContent = (users) => { 

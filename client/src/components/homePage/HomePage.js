@@ -77,7 +77,7 @@ const HomePage = () => {
         socket.addEventListener("open", () => {
             let sharedEmails = [];
             if (requests.error == undefined) {
-                sharedEmails = requests.map((user) => user.email );
+                sharedEmails = requests.map((user) => {if (user.status == 1) {return(user.email)}});
             };
             socket.send(JSON.stringify({userEmail, update, sharedEmails}));
         });
@@ -89,7 +89,7 @@ const HomePage = () => {
             <Container maxWidth="lg" style={{padding:"0"}} sx={{mt: 5 , mb: 5, backgroundColor: "white", borderRadius: "0.5%"}}>
                 <Bar user={user} setOpen={setOpen} year={SetWeek(date).year} month={SetWeek(date).month} date={date} setDate={setDate} tasks={tasks} />
                 <WeekTable year={SetWeek(date).year} weekDays={SetWeek(date).weekDays} scrollToDate={scrollToDate} tasks={tasks} user={user} setNewTask={setNewTask} sharedUsers={sharedUsers} setUpdate={setUpdate} />
-                <AddSharedUser open={open} setOpen={setOpen} user={user} sharedUser={sharedUser} setSharedUser={setSharedUser} users={users} requests={requests} />
+                <AddSharedUser open={open} setOpen={setOpen} user={user} sharedUser={sharedUser} setSharedUser={setSharedUser} users={users} requests={requests} setUpdate={setUpdate} />
             </Container>
         );
     };   

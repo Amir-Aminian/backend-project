@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import ConfirmPassword from "./ConfirmPassword";
 import ManageUsers from "./ManageUsers";
 
-const AddSharedUser = ({open, setOpen, user, sharedUser, setSharedUser, users, requests}) => {
+const AddSharedUser = ({open, setOpen, user, sharedUser, setSharedUser, users, requests, setUpdate}) => {
     const {control, reset, handleSubmit} = useForm();
 
     const [passWindow, setPassWindow] = useState(false);
@@ -40,8 +40,8 @@ const AddSharedUser = ({open, setOpen, user, sharedUser, setSharedUser, users, r
                         </Grid>
                     </Stack>
                 </form>
-                <ManageUsers setOpen={setOpen} users={users} setSharedUser={setSharedUser} requests={requests} />
-                <ConfirmPassword passWindow={passWindow} setPassWindow={setPassWindow} setSharedUser={setSharedUser} email={email} setOpen={setOpen} />
+                <ManageUsers setOpen={setOpen} users={users} setSharedUser={setSharedUser} requests={requests} setUpdate={setUpdate} />
+                <ConfirmPassword passWindow={passWindow} setPassWindow={setPassWindow} setSharedUser={setSharedUser} email={email} setOpen={setOpen} setUpdate={setUpdate} />
             </Container>
         </Modal>
     );

@@ -21,13 +21,13 @@ router.get("/", authenticateToken, async (req, res) => {
           await Promise.all([
             data.shared_id,
             database(
-              'SELECT `username` FROM `db_users` WHERE `user_id` = ?',
+              'SELECT `email`, `username` FROM `db_users` WHERE `user_id` = ?',
               [data.shared_user_id]
             ),
             data.status
           ])
         ));
-        const result = sharedData.map((data)=>({sharedId: data[0], user: data[1][0].username, status: data[2]}));
+        const result = sharedData.map((data)=>({sharedId: data[0], user: data[1][0].username, email: data[1][0].email, status: data[2]}));
         return(res.status(200).json(result));
       };      
     } else {
