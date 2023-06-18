@@ -19,7 +19,9 @@ router.post(
       if (req.body.userData.signedIn === true) { 
         if (req.body.taskId == undefined) {
           return(res.status(400).json({error: "You cannot update or change another user's task."}));
-        };       
+        };  
+        await database('SET autocommit = 0');
+        await database('START TRANSACTION');     
         const userQuery = 'SELECT `user_id`, `username` FROM `db_users` WHERE `email` = ?';
         const userValue = [req.body.userData.email];
         let user = await database(userQuery, userValue);
@@ -46,6 +48,7 @@ router.post(
           const query = 'INSERT INTO `db_tasks` VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
           const values = [task.id, task.userId, task.date, task.taskTitle, task.startTime, task.endTime, task.taskDescription, task.color, task.colorLabel];
           await database(query, values);
+          await database('COMMIT');
           return(res.status(200).json({message: "Successfully updated the task.", task_id: task.id}));
         };
     
@@ -59,7 +62,6 @@ router.post(
         
         if (conflict != 0) {
           return(res.status(400).json({error: "You cannot add this task due to a time conflict with another task."}));
-          conflict = 0;
         } else {
           const deleteQuery = 'DELETE FROM `db_tasks` WHERE `task_id` = ?';
           const deleteValue = [req.body.taskId];
@@ -68,12 +70,14 @@ router.post(
           const query = 'INSERT INTO `db_tasks` VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
           const values = [task.id, task.userId, task.date, task.taskTitle, task.startTime, task.endTime, task.taskDescription, task.color, task.colorLabel];
           await database(query, values);
+          await database('COMMIT');
           return(res.status(200).json({message: "Successfully updated the task.", task_id: task.id}));    
         };
       } else {
         return(res.status(400).json({error: "Please sign in."}));
       };
     } catch (error) {
+      await database('ROLLBACK');
       return(res.status(400).json(error));
     };
   }

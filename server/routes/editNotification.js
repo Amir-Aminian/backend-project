@@ -6,9 +6,12 @@ const authenticateToken = require("../middlewares/authenticateToken");
 router.put("/", authenticateToken, async (req, res) => {
   try {
     if (req.body.userData.signedIn === true) {
+      await database('SET autocommit = 0');
+      await database('START TRANSACTION');
       const query = 'UPDATE `db_users` SET `notification` = ? WHERE `email` = ?';
       const value = [req.body.status ,req.body.userData.email];
       await database(query, value);
+      await database('COMMIT');
       if (req.body.status == true) {
         return(res.status(200).json("Now you will receive notifications 1 hour before your tasks start time."));
       } else if (req.body.status == false) {
@@ -18,6 +21,7 @@ router.put("/", authenticateToken, async (req, res) => {
       return(res.status(400).json({error: "Please sign in."}));
     };
   } catch (error) {
+    await database('ROLLBACK');
     return(res.status(400).json(error));
   };
 });

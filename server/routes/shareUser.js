@@ -22,6 +22,8 @@ router.post(
         if (req.body.userData.email === req.body.email) {
           return(res.status(400).json({error: "You cannot add your own email address as you have used it to create your account."}));
         };
+        await database('SET autocommit = 0');
+        await database('START TRANSACTION');
         let users = await database('SELECT `email` FROM `db_users`') || [];
         let userIndex = users.findIndex((user) => user.email===req.body.email);
         if (userIndex!=-1) {
@@ -58,6 +60,7 @@ router.post(
             const query = 'INSERT INTO `db_shared_users` VALUES (?, ?, ?, ?)';
             const values = [uuid.v4(), userId[0].user_id, sharedUserId[0].user_id, false];
             await database(query, values);
+            await database('COMMIT');
             return(res.status(200).json("Successfully added new user."));
           } else {
             return(res.status(400).json({error: "Invalid Email Address or Password."}));
@@ -69,6 +72,7 @@ router.post(
         return(res.status(400).json({error: "Please sign in."}));
       };
     } catch (error) {
+      await database('ROLLBACK');
       return(res.status(400).json(error));
     };
   }

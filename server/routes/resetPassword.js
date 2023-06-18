@@ -21,14 +21,18 @@ router.put(
       } else if (req.body.userData.validated === true) {
         const saltRounds = await bcrypt.genSalt();
         const newPassword = await bcrypt.hash(req.body.newPassword, saltRounds);
+        await database('SET autocommit = 0');
+        await database('START TRANSACTION');
         const query = 'UPDATE `db_users` SET `password` = ? WHERE `email` = ?';
         const values = [newPassword, req.body.userData.email];
         await database(query, values);
+        await database('COMMIT');
         return(res.status(200).json("Successfully updated your password."));
       } else {
         return(res.status(400).json("Please answer security questions first."));
       };
     } catch (error) {
+      await database('ROLLBACK');
       return(res.status(400).json(error));
     };
   }
