@@ -15,19 +15,15 @@ router.post(
         jwt.verify(token, secretKey, async (err, data) => {
           if (err) {
             return(res.status(400).json({error: "The link is not valid.\nPlease try to sign up again."}));
-          } else {   
-            await database('SET autocommit = 0');
-            await database('START TRANSACTION');
+          } else {    
             const query = 'UPDATE `db_users` SET `verified` = ? WHERE `email` = ?';
             const value = [true, data.email];
             await database(query, value);
-            await database('COMMIT');
             return(res.status(200).json("Your email was successfully verified.\nYou can now sign in to your account."));
           };
         })
       };
     } catch (error) {
-      await database('ROLLBACK');
       return(res.status(400).json(error));
     };
   }

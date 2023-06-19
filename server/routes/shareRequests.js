@@ -6,8 +6,6 @@ const authenticateToken = require("../middlewares/authenticateToken");
 router.get("/", authenticateToken, async (req, res) => {
   try {
     if (req.body.userData.signedIn === true) {
-      await database('SET autocommit = 0');
-      await database('START TRANSACTION');
       userId = await database(
         'SELECT `user_id` FROM `db_users` WHERE `email` = ?',
         [req.body.userData.email]
@@ -29,7 +27,6 @@ router.get("/", authenticateToken, async (req, res) => {
             data.status
           ])
         ));
-        await database('COMMIT');
         const result = sharedData.map((data)=>({sharedId: data[0], user: data[1][0].username, email: data[1][0].email, status: data[2]}));
         return(res.status(200).json(result));
       };      
@@ -37,7 +34,6 @@ router.get("/", authenticateToken, async (req, res) => {
       return(res.status(400).json({error: "Please sign in."}));
     };
   } catch (error) {
-    await database('ROLLBACK');
     return(res.status(400).json(error));
   };
 });

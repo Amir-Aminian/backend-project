@@ -17,14 +17,12 @@ router.post(
         return(res.status(400).json({errors: errors.array()}));
       };
       if (req.body.userData.signedIn === true) {
-        await database('SET autocommit = 0');
-        await database('START TRANSACTION');
         const userQuery = 'SELECT `user_id`, `username` FROM `db_users` WHERE `email` = ?';
         const userValue = [req.body.userData.email];
         let user = await database(userQuery, userValue);
         const tasksQuery = 'SELECT `task_date`, `task_color`, `task_color_label`, `task_title`, `task_start_time`, `task_end_time`, `task_description` FROM `db_tasks` WHERE `user_id` = ? AND `task_date` = ?';
         const tasksValues = [user[0].user_id, req.body.date];
-        let tasks = await database(tasksQuery, tasksValues) || []; 
+        let tasks = await database(tasksQuery, tasksValues) || [];  
         let conflict = 0;
     
         if (req.body.startTime > req.body.endTime) {
@@ -42,7 +40,6 @@ router.post(
           const query = 'INSERT INTO `db_tasks` VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
           const values = [task.id, task.userId, task.date, task.taskTitle, task.startTime, task.endTime, task.taskDescription, task.color, task.colorLabel];
           await database(query, values);
-          await database('COMMIT');
           return(res.status(200).json({message: "Successfully added new task.", task_id: task.id}));
         };
     
@@ -61,14 +58,12 @@ router.post(
           const query = 'INSERT INTO `db_tasks` VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
           const values = [task.id, task.userId, task.date, task.taskTitle, task.startTime, task.endTime, task.taskDescription, task.color, task.colorLabel];
           await database(query, values);
-          await database('COMMIT');
           return(res.status(200).json({message: "Successfully added new task.", task_id: task.id}));    
         };
       } else {
         return(res.status(400).json({error: "Please sign in."}));
       };
     } catch (error) {
-      await database('ROLLBACK');
       return(res.status(400).json(error));
     };
   }

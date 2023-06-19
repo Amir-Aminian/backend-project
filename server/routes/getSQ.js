@@ -15,8 +15,6 @@ router.post(
       if (!errors.isEmpty()) {
         return(res.status(400).json({errors: errors.array()}));
       };
-      await database('SET autocommit = 0');
-      await database('START TRANSACTION');
       let user = await database('SELECT `email` FROM `db_users` WHERE `email` = ? AND `verified` = ?', [req.body.email, true]) || [];
       if (user.length == 0) {
         return(res.status(400).json({error: "Invalid Email Address."}));
@@ -24,13 +22,11 @@ router.post(
         const query = 'SELECT `SQ1`, `SQ2`, `SQ3` FROM `db_users` WHERE `email` = ?';
         const value = [user[0].email];
         const userData = await database(query, value);
-        await database('COMMIT');
         const accessToken = jwt.sign({email: user[0].email}, secretKey, {expiresIn: "1h"});
         res.status(200).cookie("access_token", "Bearer " + accessToken,{expires: new Date(Date.now() + 2 * 3600000), httpOnly: true, secure: true, sameSite: "lax"});
         return(res.status(200).json(userData));
       };
     } catch (error) {
-      await database('ROLLBACK');
       return(res.status(400).json(error));
     };
   }

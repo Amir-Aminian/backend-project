@@ -17,10 +17,7 @@ router.post(
       if (!errors.isEmpty()) {
         return(res.status(400).json({errors: errors.array()}));
       };
-      await database('SET autocommit = 0');
-      await database('START TRANSACTION');
       const user = await database('SELECT `email`, `password` FROM `db_users` WHERE `email` = ? AND `verified` = ?', [req.body.email, true]) || [];
-      await database('COMMIT');
       if (user.length == 0) {
         return(res.status(400).json({error: "Invalid Email Address or Password."}));
       } else if (await bcrypt.compare(req.body.password, user[0].password)) {
@@ -31,7 +28,6 @@ router.post(
         return(res.status(400).json({error: "Invalid Email Address or Password."}));
       };
     } catch (error) {
-      await database('ROLLBACK');
       return(res.status(400).json(error));
     };
   }

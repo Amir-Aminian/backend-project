@@ -22,8 +22,6 @@ router.post(
       if (!errors.isEmpty()) {
         return(res.status(400).json({errors: errors.array()}));
       };
-      await database('SET autocommit = 0');
-      await database('START TRANSACTION');
       let user = await database('SELECT `email` FROM `db_users` WHERE `email` = ?', [req.body.email]) || [];
       if (user.length > 0) {
         return(res.status(400).json({error: "This Email Address has already been used before.\nPlease sign in or try to sign up agian with a new Email Address."}));
@@ -47,13 +45,11 @@ router.post(
             const query = 'DELETE FROM `db_users` WHERE `email` = ? AND `verified` = ?';
             const values = [user.email, false];            
             setTimeout(async () => {await database(query, values)}, 300000);
-            await database('COMMIT');
             return(res.status(200).json("Verification email sent!\nPlease check your email inbox. You need to verify your email address to activate your account."));
           };
         };
       };
     } catch (error) {
-      await database('ROLLBACK');
       return(res.status(400).json(error));
     };
   }
