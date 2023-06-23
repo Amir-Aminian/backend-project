@@ -21,8 +21,8 @@ router.post(
       if (user.length == 0) {
         return(res.status(400).json({error: "Invalid Email Address or Password."}));
       } else if (await bcrypt.compare(req.body.password, user[0].password)) {
-        const accessToken = jwt.sign({email: user[0].email, signedIn: true}, secretKey, {expiresIn: "1h"});
-        res.status(200).cookie("access_token", "Bearer " + accessToken,{expires: new Date(Date.now() + 2 * 3600000), httpOnly: true, secure: true, sameSite: "lax"});
+        const accessToken = jwt.sign({email: user[0].email, signedIn: true}, secretKey, {expiresIn: "8h"});
+        res.status(200).cookie("access_token", "Bearer " + accessToken,{expires: new Date(Date.now() + 8 * 3600000), httpOnly: true, secure: true, sameSite: "lax"});
         return(res.status(200).json("Successfully created jwt TOKEN."));
       } else {
         return(res.status(400).json({error: "Invalid Email Address or Password."}));
