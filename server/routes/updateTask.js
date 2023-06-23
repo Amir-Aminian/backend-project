@@ -59,7 +59,6 @@ router.post(
         
         if (conflict != 0) {
           return(res.status(400).json({error: "You cannot add this task due to a time conflict with another task."}));
-          conflict = 0;
         } else {
           const deleteQuery = 'DELETE FROM `db_tasks` WHERE `task_id` = ?';
           const deleteValue = [req.body.taskId];
