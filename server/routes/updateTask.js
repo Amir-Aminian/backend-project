@@ -5,6 +5,7 @@ const {body, validationResult} = require("express-validator");
 const uuid = require("uuid");
 const authenticateToken = require("../middlewares/authenticateToken");
 const timeLimit = require("../middlewares/timeLimit");
+const sequentialQueries = require("../sequentialQueries");
 
 router.post(
   "/", 
@@ -41,12 +42,21 @@ router.post(
         if (tasks.length === 0) {
           const deleteQuery = 'DELETE FROM `db_tasks` WHERE `task_id` = ?';
           const deleteValue = [req.body.taskId];
-          await database(deleteQuery, deleteValue);
+        
           const task = {id: uuid.v4(), userId: user[0].user_id, ...req.body};
           const query = 'INSERT INTO `db_tasks` VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
           const values = [task.id, task.userId, task.date, task.taskTitle, task.startTime, task.endTime, task.taskDescription, task.color, task.colorLabel];
-          await database(query, values);
-          return(res.status(200).json({message: "Successfully updated the task.", task_id: task.id}));
+
+          const result = await sequentialQueries(async (connection) => {
+            await connection.query(deleteQuery, deleteValue);
+            await connection.query(query, values);
+          });
+
+          if (result == false) {
+            return(res.status(200).json({error: "Something went wrong with the data base. Please try again later."}));
+          } else {
+            return(res.status(200).json({message: "Successfully updated the task.", task_id: task.id}));
+          };          
         };
     
         tasks.forEach((data) => {
@@ -62,12 +72,21 @@ router.post(
         } else {
           const deleteQuery = 'DELETE FROM `db_tasks` WHERE `task_id` = ?';
           const deleteValue = [req.body.taskId];
-          await database(deleteQuery, deleteValue);
+          
           const task = {id: uuid.v4(), userId: user[0].user_id, ...req.body};
           const query = 'INSERT INTO `db_tasks` VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
           const values = [task.id, task.userId, task.date, task.taskTitle, task.startTime, task.endTime, task.taskDescription, task.color, task.colorLabel];
-          await database(query, values);
-          return(res.status(200).json({message: "Successfully updated the task.", task_id: task.id}));    
+
+          const result = await sequentialQueries(async (connection) => {
+            await connection.query(deleteQuery, deleteValue);
+            await connection.query(query, values);
+          });
+          
+          if (result == false) {
+            return(res.status(200).json({error: "Something went wrong with the data base. Please try again later."}));
+          } else {
+            return(res.status(200).json({message: "Successfully updated the task.", task_id: task.id}));
+          };
         };
       } else {
         return(res.status(400).json({error: "Please sign in."}));
