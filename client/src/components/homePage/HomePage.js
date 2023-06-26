@@ -11,6 +11,8 @@ import shareRequests from "../../requests/shareRequests";
 import Bar from "../appBar/Bar";
 
 const HomePage = () => {
+    const [invisible, setInvisible] = useState(true);
+
     const [update, setUpdate] = useState(false);
 
     const [change, setChange] = useState(false);
@@ -83,11 +85,12 @@ const HomePage = () => {
         });
         socket.addEventListener("message", (event) => {
             setChange(event.data);
+            setInvisible(!event.data);
         });
 
         return (
             <Container maxWidth="lg" style={{padding:"0"}} sx={{mt: 5 , mb: 5, backgroundColor: "white", borderRadius: "0.5%"}}>
-                <Bar user={user} setOpen={setOpen} year={SetWeek(date).year} month={SetWeek(date).month} date={date} setDate={setDate} tasks={tasks} />
+                <Bar user={user} setOpen={setOpen} year={SetWeek(date).year} month={SetWeek(date).month} date={date} setDate={setDate} tasks={tasks} invisible={invisible} setInvisible={setInvisible} />
                 <WeekTable year={SetWeek(date).year} weekDays={SetWeek(date).weekDays} scrollToDate={scrollToDate} tasks={tasks} user={user} setNewTask={setNewTask} sharedUsers={sharedUsers} setUpdate={setUpdate} />
                 <AddSharedUser open={open} setOpen={setOpen} user={user} sharedUser={sharedUser} setSharedUser={setSharedUser} users={users} requests={requests} setUpdate={setUpdate} />
             </Container>

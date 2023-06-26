@@ -1,4 +1,4 @@
-import { AppBar, Divider, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Stack, ThemeProvider, Toolbar, Typography, createTheme, responsiveFontSizes } from "@mui/material";
+import { AppBar, Divider, IconButton, Badge, ListItemIcon, ListItemText, Menu, MenuItem, Stack, ThemeProvider, Toolbar, Typography, createTheme, responsiveFontSizes } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import { useEffect, useState } from "react";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -13,7 +13,7 @@ import NotificationsOffIcon from '@mui/icons-material/NotificationsOff';
 import NotificationDialog from "./NotificationDialog";
 import getNotificationStatus from "../../requests/getNotificationStatus";
 
-const Bar = ({user, setOpen, year, month, date, setDate, tasks}) => {
+const Bar = ({user, setOpen, year, month, date, setDate, tasks, invisible, setInvisible}) => {
   let theme = createTheme();
   theme = responsiveFontSizes(theme);
 
@@ -51,6 +51,10 @@ const Bar = ({user, setOpen, year, month, date, setDate, tasks}) => {
     const result = await clearCookies();
     navigate("/");
     alert(result);
+  };
+
+  const handleBadgeVisibility = () => {
+    setInvisible(true);
   };
 
   useEffect(() => {
@@ -111,8 +115,10 @@ const Bar = ({user, setOpen, year, month, date, setDate, tasks}) => {
       <>
         <AppBar position="sticky" color="primary" sx={{borderRadius: 0.5, marginBottom:"10px"}}>
           <Toolbar sx={{paddingRight: "0px"}}>
-            <IconButton onClick={(e) => clickHandler(e)} color="inherit" size="large" aria-label="menu" edge="start" sx={{padding:"4px"}}>
-              <MenuIcon fontSize="large" />
+            <IconButton onClick={(e) => {clickHandler(e); handleBadgeVisibility();}} color="inherit" size="large" aria-label="menu" edge="start" sx={{padding:"4px"}}>
+              <Badge color="error" overlap="circular" variant="dot" invisible={invisible}>
+                <MenuIcon fontSize="large" />
+              </Badge>
             </IconButton>
             <Stack direction={"column"} justifyContent={"center"} display={"flex"} flexGrow={1}>
               <Stack direction={"row"} justifyContent={"center"} display={"flex"} flexGrow={1} paddingTop={"6px"}>
