@@ -6,6 +6,9 @@ import clearCookies from "../../requests/clearCookies";
 import { useNavigate } from "react-router-dom";
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import GroupIcon from '@mui/icons-material/Group';
+import Diversity3Icon from '@mui/icons-material/Diversity3';
+import CampaignIcon from '@mui/icons-material/Campaign';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -13,7 +16,7 @@ import NotificationsOffIcon from '@mui/icons-material/NotificationsOff';
 import NotificationDialog from "./NotificationDialog";
 import getNotificationStatus from "../../requests/getNotificationStatus";
 
-const Bar = ({user, setOpen, year, month, date, setDate, tasks, invisible, setInvisible}) => {
+const Bar = ({user, setOpenAGU, setOpenMGU, setOpenMS, setOpenSM, year, month, date, setDate, tasks, invisible, setInvisible}) => {
   let theme = createTheme();
   theme = responsiveFontSizes(theme);
 
@@ -115,25 +118,25 @@ const Bar = ({user, setOpen, year, month, date, setDate, tasks, invisible, setIn
       <>
         <AppBar position="sticky" color="primary" sx={{borderRadius: 0.5, marginBottom:"10px"}}>
           <Toolbar sx={{paddingRight: "0px"}}>
-            <IconButton onClick={(e) => {clickHandler(e); handleBadgeVisibility();}} color="inherit" size="large" aria-label="menu" edge="start" sx={{padding:"4px"}}>
+            <IconButton onClick={(e) => {clickHandler(e); handleBadgeVisibility();}} color="inherit" size="large" aria-label="menu" edge="start" sx={{padding:"0px", borderRadius:"0", transform:"translateY (2px)", boxShadow:"0 4px 8px rgba(0, 0, 0, 0.6)"}}>
               <Badge color="error" overlap="circular" variant="dot" invisible={invisible}>
                 <MenuIcon fontSize="large" />
               </Badge>
             </IconButton>
             <Stack direction={"column"} justifyContent={"center"} display={"flex"} flexGrow={1}>
               <Stack direction={"row"} justifyContent={"center"} display={"flex"} flexGrow={1} paddingTop={"6px"}>
-                <IconButton onClick={previousWeek} color="inherit" size="large" sx={{padding: 0}}>
+                <IconButton onClick={previousWeek} color="inherit" size="large" sx={{padding: "0px", transform:"translateY (2px)", boxShadow:"0 4px 8px rgba(0, 0, 0, 0.6)"}}>
                   <NavigateBeforeIcon fontSize="large" />
                 </IconButton>
                 <ThemeProvider theme={theme}>
-                  <Typography variant={"h5"} color={"inherit"} display={"flex"} alignItems={"center"} justifyContent={"center"} textAlign={"center"}>{month} {year}</Typography>
+                  <Typography variant={"h6"} color={"inherit"} display={"flex"} alignItems={"center"} justifyContent={"center"} textAlign={"center"}>{month} {year}</Typography>
                 </ThemeProvider>
-                <IconButton onClick={nextWeek} color="inherit" size="large" sx={{padding: 0}}>
+                <IconButton onClick={nextWeek} color="inherit" size="large" sx={{padding: "0px", transform:"translateY (2px)", boxShadow:"0 4px 8px rgba(0, 0, 0, 0.6)"}}>
                   <NavigateNextIcon fontSize="large" />
                 </IconButton>
               </Stack>
-              <Stack direction={"row"} justifyContent={"center"} display={"flex"} flexGrow={1}>
-                <MenuItem onClick={thisWeek} sx={{paddingTop: "0px"}}>Today</MenuItem>
+              <Stack direction={"row"} justifyContent={"center"} display={"flex"} flexGrow={1} paddingBottom={"6px"}>
+                <MenuItem onClick={thisWeek} sx={{minHeight:"2px", paddingTop: "0px", paddingBottom: "0px", transform: "translateY (2px)", boxShadow: "0 4px 8px rgba(0, 0, 0, 0.6)"}}>Today</MenuItem>
               </Stack>
             </Stack>
           </Toolbar>
@@ -146,11 +149,29 @@ const Bar = ({user, setOpen, year, month, date, setDate, tasks, invisible, setIn
             <Typography>{user}</Typography>
           </Stack>
           <Divider />
-          <MenuItem onClick={() => {setOpen(true); setAnchorEl(null);}}>
+          <MenuItem onClick={() => {setOpenAGU(true); setAnchorEl(null);}}>
             <ListItemIcon style={{minWidth: "56px"}}>
               <PersonAddIcon />
             </ListItemIcon>
-            <ListItemText primary="Manage Users" />
+            <ListItemText primary="Add Guest User" />
+          </MenuItem>
+          <MenuItem onClick={() => {setOpenMGU(true); setAnchorEl(null);}}>
+            <ListItemIcon style={{minWidth: "56px"}}>
+              <GroupIcon />
+            </ListItemIcon>
+            <ListItemText primary="Manage Guest Users" />
+          </MenuItem>
+          <MenuItem onClick={() => {setOpenMS(true); setAnchorEl(null);}}>
+            <ListItemIcon style={{minWidth: "56px"}}>
+              <Diversity3Icon />
+            </ListItemIcon>
+            <ListItemText primary="Manage Sharing" />
+          </MenuItem>
+          <MenuItem onClick={() => {setOpenSM(true); setAnchorEl(null);}}>
+            <ListItemIcon style={{minWidth: "56px"}}>
+              <CampaignIcon />
+            </ListItemIcon>
+            <ListItemText primary="System Messages" />
           </MenuItem>
           {options}
           <MenuItem onClick={() => {logOut(); setAnchorEl(null);}}>

@@ -1,12 +1,11 @@
-import { Avatar, Button, Chip, Container, Grid, Modal, Typography } from "@mui/material";
+import { Button, Container, Grid, Modal, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import InputForm from "../../forms/InputForm";
 import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
 import ConfirmPassword from "./ConfirmPassword";
-import ManageUsers from "./ManageUsers";
 
-const AddSharedUser = ({open, setOpen, user, sharedUser, setSharedUser, users, requests, setUpdate}) => {
+const AddSharedUser = ({open, setOpen, sharedUser, setSharedUser, setUpdate}) => {
     const {control, reset, handleSubmit} = useForm();
 
     const [passWindow, setPassWindow] = useState(false);
@@ -26,13 +25,12 @@ const AddSharedUser = ({open, setOpen, user, sharedUser, setSharedUser, users, r
       
     return (
         <Modal open={open} onClose={() => setOpen(false)} sx={{overflow:"scroll"}}>            
-            <Container maxWidth="xs" sx={{mt: 2, mb: 2, backgroundColor: "white", borderRadius: "1%"}}>            
+            <Container maxWidth="xs" sx={{mt: 6, mb: 2, backgroundColor: "white", borderRadius: "1%"}}>            
                 <form onSubmit={handleSubmit(submit)}>
                     <Stack direction="column" spacing={2}>
-                        <Avatar sx={{backgroundColor:"rgb(0, 114, 181)", mt: 2}}></Avatar>
-                        <Chip label={user} variant="outlined" sx={{width:"30%"}} />
-                        <Typography>Type in the user's email address you want to add:</Typography>
-                        <InputForm type="email" id="email" label="Email Address" control={control} rules={{required: "This field is required"}} defaultValue={""} />
+                        <Typography variant="h5" align={"center"} sx={{mt: 2}}>Add a new guest user</Typography>
+                        <Typography align={"justify"}>By adding a Guest user to your account you will be able to see all their task in real time. Please type in the user's email address you want to add:</Typography>
+                        <InputForm type="email" id="email" label="Gust User's Email Address" control={control} rules={{required: "This field is required"}} defaultValue={""} />
                         <Grid container justifyContent="right">
                             <Grid item>
                                 <Button type="submit" variant="contained" size="large" sx={{mb:2, ml:4}}>Add User</Button>
@@ -40,7 +38,6 @@ const AddSharedUser = ({open, setOpen, user, sharedUser, setSharedUser, users, r
                         </Grid>
                     </Stack>
                 </form>
-                <ManageUsers setOpen={setOpen} users={users} setSharedUser={setSharedUser} requests={requests} setUpdate={setUpdate} />
                 <ConfirmPassword passWindow={passWindow} setPassWindow={setPassWindow} setSharedUser={setSharedUser} email={email} setOpen={setOpen} setUpdate={setUpdate} />
             </Container>
         </Modal>

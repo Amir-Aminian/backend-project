@@ -4,7 +4,10 @@ import { useNavigate } from "react-router-dom";
 import SetWeek from "../../utilities/SetWeek";
 import WeekTable from "./WeekTable";
 import mainPage from "../../requests/mainPage";
-import AddSharedUser from "./AddSharedUser";
+import AddGuestUser from "./AddGuestUser";
+import ManageGuestUsers from "./ManageGuestUsers";
+import ManageSharing from "./ManageSharing";
+import SystemMessages from "./SystemMessages";
 import getSharedUsers from "../../requests/getSharedUsers";
 import manageSharedUsers from "../../requests/manageSharedUsers";
 import shareRequests from "../../requests/shareRequests";
@@ -29,7 +32,13 @@ const HomePage = () => {
 
     const [user, setUser] = useState();
 
-    const [open, setOpen] = useState(false)
+    const [openAGU, setOpenAGU] = useState(false);
+
+    const [openMGU, setOpenMGU] = useState(false);
+
+    const [openMS, setOpenMS] = useState(false);
+
+    const [openSM, setOpenSM] = useState(false);
 
     const [sharedUser, setSharedUser] = useState(null);
 
@@ -90,9 +99,12 @@ const HomePage = () => {
 
         return (
             <Container maxWidth="lg" style={{padding:"0"}} sx={{mt: 5 , mb: 5, backgroundColor: "white", borderRadius: "0.5%"}}>
-                <Bar user={user} setOpen={setOpen} year={SetWeek(date).year} month={SetWeek(date).month} date={date} setDate={setDate} tasks={tasks} invisible={invisible} setInvisible={setInvisible} />
+                <Bar user={user} setOpenAGU={setOpenAGU} setOpenMGU={setOpenMGU} setOpenMS={setOpenMS} setOpenSM={setOpenSM} year={SetWeek(date).year} month={SetWeek(date).month} date={date} setDate={setDate} tasks={tasks} invisible={invisible} setInvisible={setInvisible} />
                 <WeekTable year={SetWeek(date).year} weekDays={SetWeek(date).weekDays} scrollToDate={scrollToDate} tasks={tasks} user={user} setNewTask={setNewTask} sharedUsers={sharedUsers} setUpdate={setUpdate} />
-                <AddSharedUser open={open} setOpen={setOpen} user={user} sharedUser={sharedUser} setSharedUser={setSharedUser} users={users} requests={requests} setUpdate={setUpdate} />
+                <AddGuestUser open={openAGU} setOpen={setOpenAGU} user={user} sharedUser={sharedUser} setSharedUser={setSharedUser} users={users} requests={requests} setUpdate={setUpdate} />
+                <ManageGuestUsers open={openMGU} setOpen={setOpenMGU} user={user} sharedUser={sharedUser} setSharedUser={setSharedUser} users={users} requests={requests} setUpdate={setUpdate} />
+                <ManageSharing open={openMS} setOpen={setOpenMS} user={user} sharedUser={sharedUser} setSharedUser={setSharedUser} users={users} requests={requests} setUpdate={setUpdate} />
+                <SystemMessages open={openSM} setOpen={setOpenSM} user={user} sharedUser={sharedUser} setSharedUser={setSharedUser} users={users} requests={requests} setUpdate={setUpdate} />
             </Container>
         );
     };   
