@@ -29,9 +29,12 @@ const AddSharedUser = ({open, setOpen, sharedUser, setSharedUser, setUpdate}) =>
                 <form onSubmit={handleSubmit(submit)}>
                     <Stack direction="column" spacing={2}>
                         <Typography variant="h5" align={"center"} sx={{mt: 2}}>Add a new guest user</Typography>
-                        <Typography align={"justify"}>By adding a Guest user to your account you will be able to see all their task in real time. Please type in the user's email address you want to add:</Typography>
+                        <Typography align={"justify"}>By adding a Guest user to your account you will be able to see all their tasks in real time. Please type in the user's email address you want to add:</Typography>
                         <InputForm type="email" id="email" label="Gust User's Email Address" control={control} rules={{required: "This field is required"}} defaultValue={""} />
-                        <Grid container justifyContent="right">
+                        <Grid container direction={"row"} justifyContent="center">
+                            <Grid item>
+                                <Button type="button" onClick={() => setOpen(false)} variant="contained" size="large" sx={{mb:2, mr:4}}>Close</Button>
+                            </Grid>
                             <Grid item>
                                 <Button type="submit" variant="contained" size="large" sx={{mb:2, ml:4}}>Add User</Button>
                             </Grid>
