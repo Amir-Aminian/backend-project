@@ -20,6 +20,7 @@ const AddSharedUser = ({open, setOpen, sharedUser, setSharedUser, setUpdate}) =>
     useEffect(() => {
         if (sharedUser == "added") {
             reset();
+            setOpen(false);
         };
     }, [sharedUser]);
       
