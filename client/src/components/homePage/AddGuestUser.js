@@ -5,7 +5,7 @@ import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
 import ConfirmPassword from "./ConfirmPassword";
 
-const AddSharedUser = ({open, setOpen, sharedUser, setSharedUser, setUpdate}) => {
+const AddGuestUser = ({open, setOpen, sharedUser, setSharedUser, setUpdate}) => {
     const {control, reset, handleSubmit} = useForm();
 
     const [passWindow, setPassWindow] = useState(false);
@@ -48,4 +48,4 @@ const AddSharedUser = ({open, setOpen, sharedUser, setSharedUser, setUpdate}) =>
     );
 }
 
-export default AddSharedUser;
+export default AddGuestUser;

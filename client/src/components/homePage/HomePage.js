@@ -15,6 +15,10 @@ import Bar from "../appBar/Bar";
 const HomePage = () => {
     const [invisible, setInvisible] = useState(true);
 
+    const [badge1, setBadge1] = useState(true);
+
+    const [badge2, setBadge2] = useState(true);
+
     const [update, setUpdate] = useState(false);
 
     const [change, setChange] = useState(false);
@@ -90,13 +94,20 @@ const HomePage = () => {
             socket.send(JSON.stringify({userEmail, update, sharedEmails}));
         });
         socket.addEventListener("message", (event) => {
-            setChange(event.data);
-            setInvisible(!event.data);
+            const data = JSON.parse(event.data);
+            if (data.from === "receiver") {
+                setInvisible(false);
+                setBadge1(false);
+            } else if (data.from === "sender") {
+                setInvisible(false);
+                setBadge2(false);
+            }
+            setChange(data.status);
         });
 
         return (
             <Container maxWidth="lg" style={{padding:"0"}} sx={{mt: 5 , mb: 5, backgroundColor: "white", borderRadius: "0.5%"}}>
-                <Bar user={user} setOpenAGU={setOpenAGU} setOpenMGU={setOpenMGU} setOpenMS={setOpenMS} year={SetWeek(date).year} month={SetWeek(date).month} date={date} setDate={setDate} tasks={tasks} invisible={invisible} setInvisible={setInvisible} />
+                <Bar user={user} setOpenAGU={setOpenAGU} setOpenMGU={setOpenMGU} setOpenMS={setOpenMS} year={SetWeek(date).year} month={SetWeek(date).month} date={date} setDate={setDate} tasks={tasks} invisible={invisible} setInvisible={setInvisible} badge1={badge1} setBadge1={setBadge1} badge2={badge2} setBadge2={setBadge2} />
                 <WeekTable year={SetWeek(date).year} weekDays={SetWeek(date).weekDays} scrollToDate={scrollToDate} tasks={tasks} user={user} setNewTask={setNewTask} sharedUsers={sharedUsers} setUpdate={setUpdate} />
                 <AddGuestUser open={openAGU} setOpen={setOpenAGU} sharedUser={sharedUser} setSharedUser={setSharedUser} setUpdate={setUpdate} />
                 <ManageGuestUsers open={openMGU} setOpen={setOpenMGU} setSharedUser={setSharedUser} users={users} setUpdate={setUpdate} />

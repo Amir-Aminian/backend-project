@@ -15,7 +15,7 @@ import NotificationsOffIcon from '@mui/icons-material/NotificationsOff';
 import NotificationDialog from "./NotificationDialog";
 import getNotificationStatus from "../../requests/getNotificationStatus";
 
-const Bar = ({user, setOpenAGU, setOpenMGU, setOpenMS, year, month, date, setDate, tasks, invisible, setInvisible}) => {
+const Bar = ({user, setOpenAGU, setOpenMGU, setOpenMS, year, month, date, setDate, tasks, invisible, setInvisible, badge1, setBadge1, badge2, setBadge2}) => {
   let theme = createTheme();
   theme = responsiveFontSizes(theme);
 
@@ -55,8 +55,20 @@ const Bar = ({user, setOpenAGU, setOpenMGU, setOpenMS, year, month, date, setDat
     alert(result);
   };
 
-  const handleBadgeVisibility = () => {
-    setInvisible(true);
+  const handleMenuBadgeVisibility = (badge) => {
+    if (badge === true) {
+      setInvisible(true);
+    }
+  };
+
+  const handleBadgeVisibility = (badge) => {
+    if (badge === "badge1" && badge1 === false) {
+      setBadge1(true);
+      handleMenuBadgeVisibility(badge2);
+    } else if (badge === "badge2" && badge2 === false) {
+      setBadge2(true);
+      handleMenuBadgeVisibility(badge1);
+    }
   };
 
   useEffect(() => {
@@ -117,7 +129,7 @@ const Bar = ({user, setOpenAGU, setOpenMGU, setOpenMS, year, month, date, setDat
       <>
         <AppBar position="sticky" color="primary" sx={{borderRadius: 0.5, marginBottom:"10px"}}>
           <Toolbar sx={{paddingRight: "0px"}}>
-            <IconButton onClick={(e) => {clickHandler(e); handleBadgeVisibility();}} color="inherit" size="large" aria-label="menu" edge="start" sx={{padding:"0px", borderRadius:"0", transform:"translateY (2px)", boxShadow:"0 4px 8px rgba(0, 0, 0, 0.6)"}}>
+            <IconButton onClick={(e) => clickHandler(e)} color="inherit" size="large" aria-label="menu" edge="start" sx={{padding:"0px", borderRadius:"0", transform:"translateY (2px)", boxShadow:"0 4px 8px rgba(0, 0, 0, 0.6)"}}>
               <Badge color="error" overlap="circular" variant="dot" invisible={invisible}>
                 <MenuIcon fontSize="large" />
               </Badge>
@@ -154,17 +166,21 @@ const Bar = ({user, setOpenAGU, setOpenMGU, setOpenMS, year, month, date, setDat
             </ListItemIcon>
             <ListItemText primary="Add Guest User" />
           </MenuItem>
-          <MenuItem onClick={() => {setOpenMGU(true); setAnchorEl(null);}}>
+          <MenuItem onClick={() => {setOpenMGU(true); setAnchorEl(null); handleBadgeVisibility("badge1");}}>
             <ListItemIcon style={{minWidth: "56px"}}>
-              <GroupIcon />
+              <Badge color="error" overlap="circular" variant="dot" invisible={badge1}>
+                <GroupIcon />
+              </Badge>
             </ListItemIcon>
             <ListItemText primary="Manage Guest Users" />
           </MenuItem>
-          <MenuItem onClick={() => {setOpenMS(true); setAnchorEl(null);}}>
+          <MenuItem onClick={() => {setOpenMS(true); setAnchorEl(null); handleBadgeVisibility("badge2");}}>
             <ListItemIcon style={{minWidth: "56px"}}>
-              <Diversity3Icon />
+              <Badge color="error" overlap="circular" variant="dot" invisible={badge2}>
+                <Diversity3Icon />
+              </Badge>
             </ListItemIcon>
-            <ListItemText primary="Manage Sharing" />
+            <ListItemText primary="Manage Task Sharing" />
           </MenuItem>
           {options}
           <MenuItem onClick={() => {logOut(); setAnchorEl(null);}}>

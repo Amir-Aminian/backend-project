@@ -17,7 +17,7 @@ const ConfirmPassword = ({passWindow, setPassWindow, email, setSharedUser, setUp
             setPassWindow(false);
             reset();
             setSharedUser("added");
-            setUpdate({status: true, userEmail: email.email});
+            setUpdate({status: true, userEmail: email.email, from: "sender"});
             alert(result);
         };
     };     

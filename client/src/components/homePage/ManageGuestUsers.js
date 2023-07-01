@@ -2,11 +2,11 @@ import { Avatar, Button, Chip, Container, Divider, Grid, Modal, Paper, Typograph
 import { Stack } from "@mui/system";
 import deleteUser from "../../requests/deleteUser";
 
-const AddSharedUser = ({open, setOpen, users, setSharedUser, setUpdate}) => {   
+const ManageGuestUsers = ({open, setOpen, users, setSharedUser, setUpdate}) => {   
     const deleteHandler = async (data) => {
         const result = await deleteUser(data);
         setSharedUser("deleted");
-        setUpdate({status: true, userEmail: result.email});
+        setUpdate({status: true, userEmail: result.email, from:"sender"});
         alert(result.message);
       };
 
@@ -58,4 +58,4 @@ const AddSharedUser = ({open, setOpen, users, setSharedUser, setUpdate}) => {
     );
 }
 
-export default AddSharedUser;
+export default ManageGuestUsers;

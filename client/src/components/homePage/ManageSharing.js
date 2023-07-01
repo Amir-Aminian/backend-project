@@ -3,24 +3,24 @@ import { Stack } from "@mui/system";
 import deleteUser from "../../requests/deleteUser";
 import acceptUser from "../../requests/acceptUser";
 
-const AddSharedUser = ({open, setOpen, setSharedUser, requests, setUpdate}) => {   
+const ManageSharing = ({open, setOpen, setSharedUser, requests, setUpdate}) => {   
     const deleteHandler = async (data) => {
         const result = await deleteUser(data);
         setSharedUser("deleted");
-        setUpdate({status: true, userEmail: result.email});
+        setUpdate({status: true, userEmail: result.email, from:"receiver"});
         alert(result.message);
       };
     
       const acceptHandler = async (data) => {
         const result = await acceptUser(data);
         setSharedUser("accepted");
-        setUpdate({status: true, userEmail: result.email});
+        setUpdate({status: true, userEmail: result.email, from:"receiver"});
         alert(result.message);
       };  
     
       const requestContent = (requests) => { 
         if (requests.error != undefined) {
-          return (<Typography align={"center"} sx={{mt: 2}}>You do not have any Sharing Data.</Typography>);
+          return (<Typography align={"center"} sx={{mt: 2}}>You are not sharing yor tasks with anyone.</Typography>);
         } else if (requests.error == undefined && requests.length > 0) {
           return (
             requests.map((request) => 
@@ -74,4 +74,4 @@ const AddSharedUser = ({open, setOpen, setSharedUser, requests, setUpdate}) => {
     );
 }
 
-export default AddSharedUser;
+export default ManageSharing;
