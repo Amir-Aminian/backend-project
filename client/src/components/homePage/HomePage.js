@@ -37,8 +37,6 @@ const HomePage = () => {
 
     const [openMS, setOpenMS] = useState(false);
 
-    const [openSM, setOpenSM] = useState(false);
-
     const [sharedUser, setSharedUser] = useState(null);
 
     const [users, setUsers] = useState();
@@ -98,11 +96,11 @@ const HomePage = () => {
 
         return (
             <Container maxWidth="lg" style={{padding:"0"}} sx={{mt: 5 , mb: 5, backgroundColor: "white", borderRadius: "0.5%"}}>
-                <Bar user={user} setOpenAGU={setOpenAGU} setOpenMGU={setOpenMGU} setOpenMS={setOpenMS} setOpenSM={setOpenSM} year={SetWeek(date).year} month={SetWeek(date).month} date={date} setDate={setDate} tasks={tasks} invisible={invisible} setInvisible={setInvisible} />
+                <Bar user={user} setOpenAGU={setOpenAGU} setOpenMGU={setOpenMGU} setOpenMS={setOpenMS} year={SetWeek(date).year} month={SetWeek(date).month} date={date} setDate={setDate} tasks={tasks} invisible={invisible} setInvisible={setInvisible} />
                 <WeekTable year={SetWeek(date).year} weekDays={SetWeek(date).weekDays} scrollToDate={scrollToDate} tasks={tasks} user={user} setNewTask={setNewTask} sharedUsers={sharedUsers} setUpdate={setUpdate} />
-                <AddGuestUser open={openAGU} setOpen={setOpenAGU} user={user} sharedUser={sharedUser} setSharedUser={setSharedUser} users={users} requests={requests} setUpdate={setUpdate} />
-                <ManageGuestUsers open={openMGU} setOpen={setOpenMGU} user={user} sharedUser={sharedUser} setSharedUser={setSharedUser} users={users} requests={requests} setUpdate={setUpdate} />
-                <ManageSharing open={openMS} setOpen={setOpenMS} user={user} sharedUser={sharedUser} setSharedUser={setSharedUser} users={users} requests={requests} setUpdate={setUpdate} />
+                <AddGuestUser open={openAGU} setOpen={setOpenAGU} sharedUser={sharedUser} setSharedUser={setSharedUser} setUpdate={setUpdate} />
+                <ManageGuestUsers open={openMGU} setOpen={setOpenMGU} setSharedUser={setSharedUser} users={users} setUpdate={setUpdate} />
+                <ManageSharing open={openMS} setOpen={setOpenMS} setSharedUser={setSharedUser} requests={requests} setUpdate={setUpdate} />
             </Container>
         );
     };   

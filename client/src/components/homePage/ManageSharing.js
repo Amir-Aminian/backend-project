@@ -43,7 +43,7 @@ const AddSharedUser = ({open, setOpen, setSharedUser, requests, setUpdate}) => {
                         </Grid>: 
                         request.status == 1 && 
                         <Grid container justifyContent="right">
-                            <Button type="button" onClick={() => deleteHandler({sharedId: request.sharedId})} variant="contained" size="small">Delete</Button>
+                            <Button type="button" onClick={() => deleteHandler({sharedId: request.sharedId})} variant="contained" size="small" sx={{mr:1}}>Delete</Button>
                         </Grid>                
                     }            
                 </Stack>
