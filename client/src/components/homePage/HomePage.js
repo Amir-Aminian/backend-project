@@ -7,7 +7,6 @@ import mainPage from "../../requests/mainPage";
 import AddGuestUser from "./AddGuestUser";
 import ManageGuestUsers from "./ManageGuestUsers";
 import ManageSharing from "./ManageSharing";
-import SystemMessages from "./SystemMessages";
 import getSharedUsers from "../../requests/getSharedUsers";
 import manageSharedUsers from "../../requests/manageSharedUsers";
 import shareRequests from "../../requests/shareRequests";
@@ -104,7 +103,6 @@ const HomePage = () => {
                 <AddGuestUser open={openAGU} setOpen={setOpenAGU} user={user} sharedUser={sharedUser} setSharedUser={setSharedUser} users={users} requests={requests} setUpdate={setUpdate} />
                 <ManageGuestUsers open={openMGU} setOpen={setOpenMGU} user={user} sharedUser={sharedUser} setSharedUser={setSharedUser} users={users} requests={requests} setUpdate={setUpdate} />
                 <ManageSharing open={openMS} setOpen={setOpenMS} user={user} sharedUser={sharedUser} setSharedUser={setSharedUser} users={users} requests={requests} setUpdate={setUpdate} />
-                <SystemMessages open={openSM} setOpen={setOpenSM} user={user} sharedUser={sharedUser} setSharedUser={setSharedUser} users={users} requests={requests} setUpdate={setUpdate} />
             </Container>
         );
     };   

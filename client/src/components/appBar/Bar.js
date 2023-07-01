@@ -8,7 +8,6 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import GroupIcon from '@mui/icons-material/Group';
 import Diversity3Icon from '@mui/icons-material/Diversity3';
-import CampaignIcon from '@mui/icons-material/Campaign';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -16,7 +15,7 @@ import NotificationsOffIcon from '@mui/icons-material/NotificationsOff';
 import NotificationDialog from "./NotificationDialog";
 import getNotificationStatus from "../../requests/getNotificationStatus";
 
-const Bar = ({user, setOpenAGU, setOpenMGU, setOpenMS, setOpenSM, year, month, date, setDate, tasks, invisible, setInvisible}) => {
+const Bar = ({user, setOpenAGU, setOpenMGU, setOpenMS, year, month, date, setDate, tasks, invisible, setInvisible}) => {
   let theme = createTheme();
   theme = responsiveFontSizes(theme);
 
@@ -124,7 +123,7 @@ const Bar = ({user, setOpenAGU, setOpenMGU, setOpenMS, setOpenSM, year, month, d
               </Badge>
             </IconButton>
             <Stack direction={"column"} justifyContent={"center"} display={"flex"} flexGrow={1}>
-              <Stack direction={"row"} justifyContent={"center"} display={"flex"} flexGrow={1} paddingTop={"6px"}>
+              <Stack direction={"row"} justifyContent={"center"} display={"flex"} flexGrow={1} paddingTop={"6px"} spacing={0.5}>
                 <IconButton onClick={previousWeek} color="inherit" size="large" sx={{padding: "0px", transform:"translateY (2px)", boxShadow:"0 4px 8px rgba(0, 0, 0, 0.6)"}}>
                   <NavigateBeforeIcon fontSize="large" />
                 </IconButton>
@@ -166,12 +165,6 @@ const Bar = ({user, setOpenAGU, setOpenMGU, setOpenMS, setOpenSM, year, month, d
               <Diversity3Icon />
             </ListItemIcon>
             <ListItemText primary="Manage Sharing" />
-          </MenuItem>
-          <MenuItem onClick={() => {setOpenSM(true); setAnchorEl(null);}}>
-            <ListItemIcon style={{minWidth: "56px"}}>
-              <CampaignIcon />
-            </ListItemIcon>
-            <ListItemText primary="System Messages" />
           </MenuItem>
           {options}
           <MenuItem onClick={() => {logOut(); setAnchorEl(null);}}>
