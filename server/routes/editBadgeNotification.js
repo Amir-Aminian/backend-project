@@ -6,14 +6,10 @@ const authenticateToken = require("../middlewares/authenticateToken");
 router.put("/", authenticateToken, async (req, res) => {
   try {
     if (req.body.userData.signedIn === true) {
-      const query = 'UPDATE `db_users` SET `notification` = ? WHERE `email` = ?';
-      const value = [req.body.status ,req.body.userData.email];
+      const query = 'UPDATE `db_users` SET `badge_notification` = ?, `badge_name` = ? WHERE `email` = ?';
+      const value = [req.body.badgeNotification,  req.body.badgeName, req.body.userData.email];
       await database(query, value);
-      if (req.body.status == true) {
-        return(res.status(200).json("Now you will receive notifications 30 minutes before your tasks start time."));
-      } else if (req.body.status == false) {
-        return(res.status(200).json("Your notification is turned off."));
-      };
+      return(res.status(200).json("Successfully changed the notification badge."))
     } else {
       return(res.status(400).json({error: "Please sign in."}));
     };

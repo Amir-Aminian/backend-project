@@ -10,6 +10,8 @@ import ManageSharing from "./ManageSharing";
 import getSharedUsers from "../../requests/getSharedUsers";
 import manageSharedUsers from "../../requests/manageSharedUsers";
 import shareRequests from "../../requests/shareRequests";
+import getBadgeNotification from "../../requests/getBadgeNotification";
+import editBadgeNotification from "../../requests/editBadgeNotification";
 import Bar from "../appBar/Bar";
 
 const HomePage = () => {
@@ -53,6 +55,16 @@ const HomePage = () => {
 
     const [date, setDate] = useState(new Date());
 
+    const handleBadgeNotification = (badgeNotification) => {
+        if (badgeNotification.badge_notification === 0 && badgeNotification.badge_name === "badge1") {
+            setInvisible(false);
+            setBadge1(false);
+        } else if (badgeNotification.badge_notification === 0 && badgeNotification.badge_name === "badge2") {
+            setInvisible(false);
+            setBadge2(false);
+        }
+    };
+
     useEffect(() => {
         const getResult = async () => {
             const result = await mainPage();
@@ -63,6 +75,8 @@ const HomePage = () => {
                 const sharedUsers = await getSharedUsers();
                 const users = await manageSharedUsers();
                 const requests = await shareRequests();
+                const badgeNotification = await getBadgeNotification();
+                handleBadgeNotification(badgeNotification);
                 setSignedIn(result.signedIn);
                 setTasks(result.tasks);
                 setUserEmail(result.userEmail)
@@ -93,12 +107,14 @@ const HomePage = () => {
             };
             socket.send(JSON.stringify({userEmail, update, sharedEmails}));
         });
-        socket.addEventListener("message", (event) => {
+        socket.addEventListener("message", async (event) => {
             const data = JSON.parse(event.data);
             if (data.from === "receiver") {
+                await editBadgeNotification({badgeNotification: false, badgeName: "badge1"});
                 setInvisible(false);
                 setBadge1(false);
             } else if (data.from === "sender") {
+                await editBadgeNotification({badgeNotification: false, badgeName: "badge2"});
                 setInvisible(false);
                 setBadge2(false);
             }
