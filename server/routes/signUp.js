@@ -34,7 +34,7 @@ router.post(
           const saltRounds = await bcrypt.genSalt();
           user.password = await bcrypt.hash(user.password, saltRounds);
           const query = 'INSERT INTO `db_users` VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-          const values = [user.id, user.username, user.email, user.password, user.SQ1, user.SA1, user.SQ2, user.SA2, user.SQ3, user.SA3, false, true, null];
+          const values = [user.id, user.username, user.email, user.password, user.SQ1, user.SA1, user.SQ2, user.SA2, user.SQ3, user.SA3, false, true, true];
           await database(query, values);
           const accessToken = jwt.sign({email: user.email}, secretKey, {expiresIn: "5m"});
           const vLink = `${website}${port}/emailVerification/${accessToken}`;

@@ -14,6 +14,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import NotificationsOffIcon from '@mui/icons-material/NotificationsOff';
 import NotificationDialog from "./NotificationDialog";
 import getNotificationStatus from "../../requests/getNotificationStatus";
+import editBadgeNotification from "../../requests/editBadgeNotification";
 
 const Bar = ({user, setOpenAGU, setOpenMGU, setOpenMS, year, month, date, setDate, tasks, invisible, setInvisible, badge1, setBadge1, badge2, setBadge2}) => {
   let theme = createTheme();
@@ -61,13 +62,15 @@ const Bar = ({user, setOpenAGU, setOpenMGU, setOpenMS, year, month, date, setDat
     }
   };
 
-  const handleBadgeVisibility = (badge) => {
+  const handleBadgeVisibility = async (badge) => {
     if (badge === "badge1" && badge1 === false) {
       setBadge1(true);
       handleMenuBadgeVisibility(badge2);
+      await editBadgeNotification({badgeName: "badge1", badgeNotification: true});
     } else if (badge === "badge2" && badge2 === false) {
       setBadge2(true);
       handleMenuBadgeVisibility(badge1);
+      await editBadgeNotification({badgeName: "badge2", badgeNotification: true});
     }
   };
 

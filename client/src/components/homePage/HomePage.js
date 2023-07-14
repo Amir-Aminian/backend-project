@@ -56,13 +56,14 @@ const HomePage = () => {
     const [date, setDate] = useState(new Date());
 
     const handleBadgeNotification = (badgeNotification) => {
-        if (badgeNotification.badge_notification === 0 && badgeNotification.badge_name === "badge1") {
+        if (badgeNotification.badge1 === 0) {
             setInvisible(false);
             setBadge1(false);
-        } else if (badgeNotification.badge_notification === 0 && badgeNotification.badge_name === "badge2") {
+        };
+        if (badgeNotification.badge2 === 0) {
             setInvisible(false);
             setBadge2(false);
-        }
+        };
     };
 
     useEffect(() => {
@@ -110,11 +111,11 @@ const HomePage = () => {
         socket.addEventListener("message", async (event) => {
             const data = JSON.parse(event.data);
             if (data.from === "receiver") {
-                await editBadgeNotification({badgeNotification: false, badgeName: "badge1"});
+                await editBadgeNotification({badgeName: "badge1", badgeNotification: false});
                 setInvisible(false);
                 setBadge1(false);
             } else if (data.from === "sender") {
-                await editBadgeNotification({badgeNotification: false, badgeName: "badge2"});
+                await editBadgeNotification({badgeName: "badge2", badgeNotification: false});
                 setInvisible(false);
                 setBadge2(false);
             }
