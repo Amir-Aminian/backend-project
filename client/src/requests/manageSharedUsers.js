@@ -1,7 +1,9 @@
+import { webAddress } from "../config";
+
 const manageSharedUsers = async (data) => {
   const response = await fetch(
     new Request(
-      "http://localhost:8080/api/manageSharedUsers", 
+      `${webAddress}/api/manageSharedUsers`, 
       {
         method: "GET",
         headers: {'Content-Type':'application/json'}

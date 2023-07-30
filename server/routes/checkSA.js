@@ -21,7 +21,7 @@ router.post(
       const userData = await database(query, value);
       if (req.body.SA1===userData[0].SA1 && req.body.SA2===userData[0].SA2 && req.body.SA3===userData[0].SA3) {
         const accessToken = jwt.sign({email: req.body.userData.email, validated: true}, secretKey, {expiresIn: "1h"});
-        res.status(200).cookie("access_token", "Bearer " + accessToken,{expires: new Date(Date.now() + 2 * 3600000), httpOnly: true, secure: true, sameSite: "lax"});
+        res.status(200).cookie("access_token", "Bearer " + accessToken,{expires: new Date(Date.now() + 2 * 3600000), httpOnly: false, secure: true, sameSite: "lax"});
         return(res.status(200).json(true));
       } else {
         return(res.status(400).json("You have entered wrong security question's answer."));

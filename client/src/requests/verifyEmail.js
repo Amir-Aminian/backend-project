@@ -1,7 +1,9 @@
+import { webAddress } from "../config";
+
 const verifyEmail = async (data) => {
   const response = await fetch(
     new Request(
-      "http://localhost:8080/api/verifyEmail", 
+      `${webAddress}/api/verifyEmail`, 
       {
         method: "POST",
         headers: {'Content-Type':'application/json'},

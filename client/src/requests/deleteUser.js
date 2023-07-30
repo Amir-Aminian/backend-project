@@ -1,7 +1,9 @@
+import { webAddress } from "../config";
+
 const deleteUser = async (data) => {
   const response = await fetch(
     new Request(
-      "http://localhost:8080/api/deleteUser", 
+      `${webAddress}/api/deleteUser`, 
       {
         method: "PUT",
         headers: {'Content-Type':'application/json'},

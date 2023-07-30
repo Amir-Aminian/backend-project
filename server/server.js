@@ -3,7 +3,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 require('dotenv').config();
 const app = express();
-const static__dir = path.resolve(path.join(__dirname, "../client/build"));
+const static__dir = path.resolve(path.join(__dirname, "./build"));
 const port = process.env.PORT || "8080";
 const server = require("http").createServer(app);
 const WebSocket = require("ws");

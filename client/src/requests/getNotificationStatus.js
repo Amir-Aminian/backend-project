@@ -1,7 +1,9 @@
+import { webAddress } from "../config";
+
 const getNotificationStatus = async (data) => {
   const response = await fetch(
     new Request(
-      "http://localhost:8080/api/notificationStatus", 
+      `${webAddress}/api/notificationStatus`, 
       {
         method: "GET",
         headers: {'Content-Type':'application/json'}

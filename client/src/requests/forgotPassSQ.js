@@ -1,7 +1,9 @@
+import { webAddress } from "../config";
+
 const forgotPassSQ = async (data) => {
   const response = await fetch(
     new Request(
-      "http://localhost:8080/api/forgotPassword/SQ", 
+      `${webAddress}/api/forgotPassword/SQ`, 
       {
         method: "POST",
         headers: {'Content-Type':'application/json'},

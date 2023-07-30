@@ -1,7 +1,9 @@
+import { webAddress } from "../config";
+
 const removeTask = async (data) => {
   const response = await fetch(
     new Request(
-      "http://localhost:8080/api/deleteTask", 
+      `${webAddress}/api/deleteTask`, 
       {
         method: "PUT",
         headers: {'Content-Type':'application/json'},

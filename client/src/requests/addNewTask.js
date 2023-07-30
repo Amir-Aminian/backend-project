@@ -1,7 +1,9 @@
+import { webAddress } from "../config";
+
 const addNewTask = async (data) => {
   const response = await fetch(
     new Request(
-      "http://localhost:8080/api/addTask", 
+      `${webAddress}/api/addTask`, 
       {
         method: "POST",
         headers: {'Content-Type':'application/json'},

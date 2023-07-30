@@ -1,7 +1,9 @@
+import { webAddress } from "../config";
+
 const clearCookies = async () => {
   const response = await fetch(
     new Request(
-      "http://localhost:8080/api/clearCookies", 
+      `${webAddress}/api/clearCookies`, 
       {
         method: "GET",
         headers: {'Content-Type':'application/json'}

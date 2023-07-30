@@ -1,7 +1,9 @@
+import { webAddress } from "../config";
+
 const shareRequests = async (data) => {
   const response = await fetch(
     new Request(
-      "http://localhost:8080/api/shareRequests", 
+      `${webAddress}/api/shareRequests`, 
       {
         method: "GET",
         headers: {'Content-Type':'application/json'}

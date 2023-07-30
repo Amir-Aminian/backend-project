@@ -1,7 +1,9 @@
+import { webAddress } from "../config";
+
 const editNotification = async (data) => {
   const response = await fetch(
     new Request(
-      "http://localhost:8080/api/editNotification", 
+      `${webAddress}/api/editNotification`, 
       {
         method: "PUT",
         headers: {'Content-Type':'application/json'},

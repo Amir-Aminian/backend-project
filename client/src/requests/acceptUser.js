@@ -1,7 +1,9 @@
+import { webAddress } from "../config";
+
 const acceptUser = async (data) => {
   const response = await fetch(
     new Request(
-      "http://localhost:8080/api/acceptUser", 
+      `${webAddress}/api/acceptUser`, 
       {
         method: "PUT",
         headers: {'Content-Type':'application/json'},

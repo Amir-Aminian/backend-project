@@ -3,7 +3,7 @@ const database = require("../database");
 const router = express.Router();
 const {body, validationResult} = require("express-validator");
 const uuid = require("uuid");
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const authenticateToken = require("../middlewares/authenticateToken");
 
 router.post(

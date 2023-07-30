@@ -1,7 +1,9 @@
+import { webAddress } from "../config";
+
 const forgotPassReset = async (data) => {
   const response = await fetch(
     new Request(
-      "http://localhost:8080/api/forgotPassword/reset", 
+      `${webAddress}/api/forgotPassword/reset`, 
       {
         method: "PUT",
         headers: {'Content-Type':'application/json'},
