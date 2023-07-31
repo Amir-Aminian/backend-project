@@ -9,7 +9,6 @@ const signUpEmail = require("../middlewares/signupEmail");
 const jwt = require("jsonwebtoken");
 const secretKey = process.env.VSECRETKEYE;
 const website = process.env.WEBSITE;
-const port = process.env.PORT
 
 router.post(
   "/", 
