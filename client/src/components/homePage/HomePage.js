@@ -13,7 +13,7 @@ import shareRequests from "../../requests/shareRequests";
 import getBadgeNotification from "../../requests/getBadgeNotification";
 import editBadgeNotification from "../../requests/editBadgeNotification";
 import Bar from "../appBar/Bar";
-import { webAddress } from "../../config";
+import { webSocketUrl } from "../../config";
 
 const HomePage = () => {
     const [invisible, setInvisible] = useState(true);
@@ -101,7 +101,7 @@ const HomePage = () => {
     },[date]);  
 
     if (signedIn === true) {
-        const socket = new WebSocket(`ws://${webAddress}`);
+        const socket = new WebSocket(`ws://${webSocketUrl}`);
         socket.addEventListener("open", () => {
             let sharedEmails = [];
             if (requests.error == undefined) {
