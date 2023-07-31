@@ -33,11 +33,11 @@ router.post(
           delete user.confirmPassword;
           const saltRounds = await bcrypt.genSalt();
           user.password = await bcrypt.hash(user.password, saltRounds);
-          const query = 'INSERT INTO `db_users` VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-          const values = [user.id, user.username, user.email, user.password, user.SQ1, user.SA1, user.SQ2, user.SA2, user.SQ3, user.SA3, false, true, true];
+          const query = 'INSERT INTO `db_users` VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+          const values = [user.id, user.username, user.email, user.password, user.SQ1, user.SA1, user.SQ2, user.SA2, user.SQ3, user.SA3, false, true, true, true];
           await database(query, values);
           const accessToken = jwt.sign({email: user.email}, secretKey, {expiresIn: "5m"});
-          const vLink = `${website}${port}/emailVerification/${accessToken}`;
+          const vLink = `${website}/emailVerification/${accessToken}`;
           const sent = await sendMail(user.email, signUpEmail(user.username, vLink), "Do not reply - Complete your Sign up");
           if (sent.err) {
             return(res.status(400).json("Something went wrong please try again later."));
@@ -45,7 +45,7 @@ router.post(
             const query = 'DELETE FROM `db_users` WHERE `email` = ? AND `verified` = ?';
             const values = [user.email, false];            
             setTimeout(async () => {await database(query, values)}, 300000);
-            return(res.status(200).json("Verification email sent!\nPlease check your email inbox. You need to verify your email address to activate your account."));
+            return(res.status(200).json("Verification email sent!\nPlease check your email inbox, spam or junk mail. You need to verify your email address to activate your account."));
           };
         };
       };
