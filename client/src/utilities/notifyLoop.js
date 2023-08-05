@@ -1,3 +1,5 @@
+import { webAddress } from "../config";
+
 const notifyLoop = (tasks) => {
   let timeout;
 
@@ -22,11 +24,11 @@ const notifyLoop = (tasks) => {
     const notification = new Notification("Schedule Assistant", {body: `Event: ${task.task_title}\n${task.task_start_time} - ${task.task_end_time}` ,icon: "logo.png"});
     notification.onclick = (event) => {
       event.preventDefault();
-      window.open("http://localhost:8080/homePage");
+      window.open(`${webAddress}/homePage`);
     };
     setTimeout(() => {
       alert(`You have an event starting in 30 minutes.\nEvent: ${task.task_title}`);
-    }, 20); 
+    }, 50); 
     };
   
   const setTimer = (task, now) => {
