@@ -101,7 +101,7 @@ const HomePage = () => {
     },[date]);  
 
     if (signedIn === true) {
-        const socket = new WebSocket(`ws://${webSocketUrl}`);
+        const socket = new WebSocket(`wss://${webSocketUrl}`);
         socket.addEventListener("open", () => {
             let sharedEmails = [];
             if (requests.error == undefined) {
