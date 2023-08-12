@@ -14,6 +14,30 @@ wss.on("connection", function connection(ws) {
   connect(WebSocket ,wss, ws);
 });
 
+const winston = require("winston");
+const winstonCloudWatch = require('winston-aws-cloudwatch');
+
+const logger = winston.createLogger({
+  level: "info",
+  transports: [],
+});
+
+logger.add(
+  new winstonCloudWatch({
+    logGroupName: 'App',
+    logStreamName: 'App',
+    createLogGroup: true,
+    createLogStream: true,
+    awsConfig: {
+      accessKeyId: 'AKIARTUKEJIEUJGX5P5V',
+      secretAccessKey: '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',
+      region: 'us-east-1'
+    }
+  })
+);
+
+logger.log('info', 'Successfully setup logger instance');
+
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(express.static(static__dir));
