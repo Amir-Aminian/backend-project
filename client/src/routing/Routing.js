@@ -3,7 +3,7 @@ import SignIn from "../components/authentication/SignIn";
 import SignUp from "../components/authentication/SignUp";
 import ForgotPassword from "../components/authentication/ForgotPassword";
 import HomePage from "../components/homePage/HomePage";
-import EmailVerification from "../components/emailVerification";
+import EmailVerification from "../components/EmailVerification";
 
 const Routing = () => {
   return (
