@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import InputForm from "../../forms/InputForm";
 import { Stack } from "@mui/system";
 import shareUser from "../../requests/shareUser";
+import { toast } from 'react-toastify';
 
 const ConfirmPassword = ({passWindow, setPassWindow, email, setSharedUser, setUpdate}) => {
     const {control, reset, handleSubmit} = useForm();
@@ -12,13 +13,31 @@ const ConfirmPassword = ({passWindow, setPassWindow, email, setSharedUser, setUp
         if (result.error) {
             setPassWindow(false);
             reset();
-            alert(result.error);
+            toast.error(result.error, {
+                position: "top-center",
+                autoClose: 10000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "colored",
+            });
         } else {
             setPassWindow(false);
             reset();
             setSharedUser("added");
             setUpdate({status: true, userEmail: email.email, from: "sender"});
-            alert(result);
+            toast.success(result, {
+                position: "top-center",
+                autoClose: 10000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "colored",
+            });
         };
     };     
       

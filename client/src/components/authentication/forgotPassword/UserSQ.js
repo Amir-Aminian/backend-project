@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import UserContext from "../../../contexts/UserContext";
 import forgotPassSA from "../../../requests/forgotPassSA";
+import { toast } from 'react-toastify';
 
 const UserSQ = ({SQ1, SQ2, SQ3, setErr, setStep}) => {
     const {setSQ, setSA} = useContext(UserContext);
@@ -20,7 +21,16 @@ const UserSQ = ({SQ1, SQ2, SQ3, setErr, setStep}) => {
             setSQ(undefined);
         } else {
             setErr(true);
-            alert("You have entered wrong security question's answer")
+            toast.error("You have entered wrong security question's answer", {
+                position: "top-center",
+                autoClose: 10000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "colored",
+              });
         }
     };
 

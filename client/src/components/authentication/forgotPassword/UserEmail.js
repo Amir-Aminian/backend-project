@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import UserContext from "../../../contexts/UserContext";
 import forgotPassSQ from "../../../requests/forgotPassSQ";
+import { toast } from 'react-toastify';
 
 const UserEmail = ({setErr, setStep}) => {
     const {setSQ} = useContext(UserContext);
@@ -21,7 +22,16 @@ const UserEmail = ({setErr, setStep}) => {
             setSQ([userData.SQ1, userData.SQ2, userData.SQ3]);
         } else {
             setErr(true);
-            alert("Invalid Email Address.");
+            toast.error("Invalid Email Address.", {
+                position: "top-center",
+                autoClose: 10000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "colored",
+              });
         };
     };
 

@@ -1,13 +1,23 @@
 import { Avatar, Button, Chip, Container, Divider, Grid, Modal, Paper, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import deleteUser from "../../requests/deleteUser";
+import { toast } from 'react-toastify';
 
 const ManageGuestUsers = ({open, setOpen, users, setSharedUser, setUpdate}) => {   
     const deleteHandler = async (data) => {
         const result = await deleteUser(data);
         setSharedUser("deleted");
         setUpdate({status: true, userEmail: result.email, from:"sender"});
-        alert(result.message);
+        toast.info(result.message, {
+          position: "top-center",
+          autoClose: 10000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "colored",
+        });
       };
 
     const shareContent = (users) => { 

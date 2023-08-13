@@ -2,20 +2,39 @@ import { Avatar, Button, Chip, Container, Divider, Grid, Modal, Paper, Typograph
 import { Stack } from "@mui/system";
 import deleteUser from "../../requests/deleteUser";
 import acceptUser from "../../requests/acceptUser";
+import { toast } from 'react-toastify';
 
 const ManageSharing = ({open, setOpen, setSharedUser, requests, setUpdate}) => {   
     const deleteHandler = async (data) => {
         const result = await deleteUser(data);
         setSharedUser("deleted");
         setUpdate({status: true, userEmail: result.email, from:"receiver"});
-        alert(result.message);
+        toast.info(result.message, {
+          position: "top-center",
+          autoClose: 10000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "colored",
+        });
       };
     
       const acceptHandler = async (data) => {
         const result = await acceptUser(data);
         setSharedUser("accepted");
         setUpdate({status: true, userEmail: result.email, from:"receiver"});
-        alert(result.message);
+        toast.info(result.message, {
+          position: "top-center",
+          autoClose: 10000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "colored",
+        });
       };  
     
       const requestContent = (requests) => { 

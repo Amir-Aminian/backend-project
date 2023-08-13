@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import SetTask from "../../utilities/SetTask";
 import removeTask from "../../requests/removeTask";
 import updateTask from "../../requests/updateTask";
+import { toast } from 'react-toastify';
 
 const ViewTask = ({open, setOpen, date, task, setNewTask, setUpdate}) => {   
     const {control, reset, handleSubmit} = useForm();
@@ -24,13 +25,31 @@ const ViewTask = ({open, setOpen, date, task, setNewTask, setUpdate}) => {
         if (SetTask(data.startTime, data.endTime) != false) {
             const result = await updateTask({date: new Date(date).getTime(), taskId: task.task_id ,...data , color:newColor, colorLabel:newColorLabel});
             if (result.error) {
-                alert(result.error);
+                toast.warning(result.error, {
+                    position: "top-center",
+                    autoClose: 10000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                    theme: "colored",
+                });
             } else {
                 reset();
                 setOpen(false);
                 setNewTask(task.task_id+"updated");
                 setUpdate(true);
-                alert(result.message);
+                toast.success(result.message, {
+                    position: "top-center",
+                    autoClose: 10000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                    theme: "colored",
+                });
             };
         };
     };
@@ -38,12 +57,30 @@ const ViewTask = ({open, setOpen, date, task, setNewTask, setUpdate}) => {
     const deleteTask = async () => {
         const result = await removeTask({taskId: task.task_id});
         if (result.error) {
-            alert(result.error);
+            toast.warning(result.error, {
+                position: "top-center",
+                autoClose: 10000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "colored",
+            });
         } else {
             setOpen(false);
             setNewTask(task.task_id+"deleted");
             setUpdate(true);
-            alert(result.message);
+            toast.success(result.message, {
+                position: "top-center",
+                autoClose: 10000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "colored",
+            });
         };        
     };
  

@@ -6,6 +6,7 @@ import { DateRange } from "@mui/icons-material";
 import { Stack } from "@mui/system";
 import { useState } from "react";
 import addNewTask from "../../requests/addNewTask";
+import { toast } from 'react-toastify';
 
 const AddTask = ({open, setOpen, date, user, setNewTask, setUpdate}) => {
     const {control, reset, handleSubmit} = useForm();
@@ -18,13 +19,31 @@ const AddTask = ({open, setOpen, date, user, setNewTask, setUpdate}) => {
         if (SetTask(data.startTime, data.endTime) != false) {
             const result = await addNewTask({date: new Date(date).getTime() ,...data , color:color, colorLabel:colorLabel});
             if (result.error) {
-                alert(result.error);
+                toast.warning(result.error, {
+                    position: "top-center",
+                    autoClose: 10000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                    theme: "colored",
+                });
             } else {
                 reset();
                 setOpen(false);
                 setNewTask(result.task_id+"added");
                 setUpdate(true);
-                alert(result.message);
+                toast.success(result.message, {
+                    position: "top-center",
+                    autoClose: 10000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                    theme: "colored",
+                });
             };
         };
     };     

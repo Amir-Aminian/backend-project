@@ -1,4 +1,5 @@
 import { webAddress } from "../config";
+import { toast } from 'react-toastify';
 
 const notifyLoop = (tasks) => {
   let timeout;
@@ -27,8 +28,17 @@ const notifyLoop = (tasks) => {
       window.open(`${webAddress}/homePage`);
     };
     setTimeout(() => {
-      alert(`You have an event starting in 30 minutes.\nEvent: ${task.task_title}`);
-    }, 50); 
+      toast.info(`You have an event starting in 30 minutes.\nEvent: ${task.task_title}`, {
+        position: "top-center",
+        autoClose: 10000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
+    }, 0); 
     };
   
   const setTimer = (task, now) => {

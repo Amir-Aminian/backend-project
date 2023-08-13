@@ -2,6 +2,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 import editNotification from "../../requests/editNotification";
 import notifyLoop from "../../utilities/notifyLoop";
 import { useEffect, useState } from "react";
+import { toast } from 'react-toastify';
 
 const NotificationDialog = ({open, setOpen, notificationStatus, tasks}) => {
   const [timerId, setTimerId] = useState();
@@ -16,15 +17,42 @@ const NotificationDialog = ({open, setOpen, notificationStatus, tasks}) => {
 
   const turnOn = async () => {
     if (!("Notification" in window)) {
-      alert("This browser does not support desktop notification");
+      toast.error("This browser does not support desktop notification", {
+        position: "top-center",
+        autoClose: 10000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
     } else if (Notification.permission === "granted") {
       const result = await editNotification({status: true});
-      alert(result);
+      toast.info(result, {
+        position: "top-center",
+        autoClose: 10000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
     } else if (Notification.permission === "default") {
       Notification.requestPermission().then( async () => {
         if (Notification.permission === "granted") {
           const result = await editNotification({status: true});
-          alert(result);
+          toast.info(result, {
+            position: "top-center",
+            autoClose: 10000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: undefined,
+            theme: "colored",
+          });
         };
       });
     };    
@@ -33,7 +61,16 @@ const NotificationDialog = ({open, setOpen, notificationStatus, tasks}) => {
   const turnOff = async () => {
     const result = await editNotification({status: false});
     if (notificationStatus == true) {
-    alert(result);
+      toast.info(result, {
+        position: "top-center",
+        autoClose: 10000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
     };
   };
 

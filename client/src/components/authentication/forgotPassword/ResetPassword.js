@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import UserContext from "../../../contexts/UserContext";
 import forgotPassReset from "../../../requests/forgotPassReset";
+import { toast } from 'react-toastify';
 
 const ResetPassword = ({setErr, setStep}) => {
     const { control, handleSubmit, watch } = useForm();
@@ -18,7 +19,16 @@ const ResetPassword = ({setErr, setStep}) => {
         setSA(false);
         setErr(false);
         setStep(3);
-        alert(result);
+        toast.success(result, {
+            position: "top-center",
+            autoClose: 10000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: undefined,
+            theme: "colored",
+          });
         navigate("/");
     };
 

@@ -4,6 +4,7 @@ import { Button, Grid, Container, Typography } from "@mui/material";
 import NavigationBar from "./NavigationBar";
 import { useForm } from "react-hook-form";
 import logIn from "../../requests/logIn";
+import { toast } from 'react-toastify';
 
 const SignIn = () => {
     const { control, handleSubmit } = useForm();
@@ -15,7 +16,16 @@ const SignIn = () => {
         if (result.error == undefined ) {
             navigate("/homePage");
         } else {
-            alert(result.error);
+            toast.error(result.error, {
+                position: "top-center",
+                autoClose: 10000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "colored",
+              });
         };
     };
      

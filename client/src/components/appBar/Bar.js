@@ -15,6 +15,7 @@ import NotificationsOffIcon from '@mui/icons-material/NotificationsOff';
 import NotificationDialog from "./NotificationDialog";
 import getNotificationStatus from "../../requests/getNotificationStatus";
 import editBadgeNotification from "../../requests/editBadgeNotification";
+import { toast } from 'react-toastify';
 
 const Bar = ({user, setOpenAGU, setOpenMGU, setOpenMS, year, month, date, setDate, tasks, invisible, setInvisible, badge1, setBadge1, badge2, setBadge2}) => {
   let theme = createTheme();
@@ -53,7 +54,16 @@ const Bar = ({user, setOpenAGU, setOpenMGU, setOpenMS, year, month, date, setDat
   const logOut = async () => {
     const result = await clearCookies();
     navigate("/");
-    alert(result);
+    toast.success(result, {
+      position: "top-center",
+      autoClose: 10000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+      theme: "colored",
+    });
   };
 
   const handleMenuBadgeVisibility = (badge) => {

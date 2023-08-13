@@ -14,6 +14,7 @@ import getBadgeNotification from "../../requests/getBadgeNotification";
 import editBadgeNotification from "../../requests/editBadgeNotification";
 import Bar from "../appBar/Bar";
 import { webSocketUrl } from "../../config";
+import { toast } from 'react-toastify';
 
 const HomePage = () => {
     const [invisible, setInvisible] = useState(true);
@@ -71,7 +72,16 @@ const HomePage = () => {
         const getResult = async () => {
             const result = await mainPage();
             if (result.error != undefined) {
-                alert("You are not signed in");
+                toast.warning("You are not signed in", {
+                    position: "top-center",
+                    autoClose: 10000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                    theme: "colored",
+                });
                 navigate("/");
             } else if (result.signedIn === true) {
                 const sharedUsers = await getSharedUsers();
