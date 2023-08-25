@@ -1,8 +1,9 @@
 import { AddCircleOutline } from "@mui/icons-material";
-import { Card, CardContent, Grid, IconButton, Typography } from "@mui/material";
+import { Card, CardContent, Grid, IconButton, Typography, Table, Box, TableCell, TableContainer, TableHead, TableRow, TableBody, Stack, Avatar, Tooltip } from "@mui/material";
 import React, { useState } from "react";
 import DayBarChart from "../charts/DayBarChart";
 import AddTask from "./AddTask";
+import getUser from "../../utilities/getUser";
 
 const WeekTable = ({year, weekDays, scrollToDate, tasks, user, setNewTask, sharedUsers, setUpdate}) => {
     const [open, setOpen] = useState(false);
@@ -11,10 +12,8 @@ const WeekTable = ({year, weekDays, scrollToDate, tasks, user, setNewTask, share
 
     const style = (weekDay) => {
         if ((new Date().getDate() === weekDay.weekDate) && (new Date().getMonth() === weekDay.monthNumber) && (new Date().getFullYear() === weekDay.yearNumber)) {
-            return({border:5, borderColor:"rgb(46 182 125)"});
-        } else {
-            return({borderBottom:1});
-        };
+            return({borderRadius:"50%", backgroundColor:"rgb(46 182 125)"});
+        }
     };
 
     const today = (weekDay) => {
@@ -22,40 +21,103 @@ const WeekTable = ({year, weekDays, scrollToDate, tasks, user, setNewTask, share
             return(scrollToDate);
         } else {
             return(null);
-        };
+        }
+    };
+
+    const getUserStyle = (weekDay) => {
+        let users = [];
+        weekDays.map((weekDay) =>{ 
+            const allUsers = getUser(weekDay, tasks, sharedUsers);
+            if (allUsers.length > 1) {
+                users.push(1);
+            };
+        });
+        const dayUsers = getUser(weekDay, tasks, sharedUsers);
+        if (users.length > 0 && dayUsers.length > 1) {
+            return("space-between");
+        } else if (users.length > 0 && dayUsers.length === 1) {
+            return("left");
+        } else {
+            return("center");
+        }
+    };
+
+    const getPadding = (weekDay) => {
+        let users = [];
+        weekDays.map((weekDay) =>{ 
+            const allUsers = getUser(weekDay, tasks, sharedUsers);
+            allUsers.forEach((data) => {
+                const index = users.findIndex((user) => user === data);
+                if (index === -1) {
+                users.push(data);
+                };
+            });
+        });
+        const dayUsers = getUser(weekDay, tasks, sharedUsers);
+        if (users.length > 0 && dayUsers.length === 2) {
+            return("10%");
+        } else if (users.length > 0 && dayUsers.length === 3) {
+            return("2.5%");
+        } else if (users.length === 2 && dayUsers.length === 1) {
+            return("10%");
+        } else if (users.length === 3 && dayUsers.length === 1) {
+            return("2.5%");
+        }
     };
 
     return ( 
-        <Grid container item direction="column" alignItems="center" justifyContent="center" spacing={1} sx={{mb: 2}}>                                
+        <Box width={'100%'} align={'center'}> 
+        <Box paddingLeft={'45px'} position="sticky" top={"70px"} sx={{backdropFilter:"blur(3px)"}}>
+        <TableContainer>       
+        <Table>
+        <TableHead>
+        <TableRow>                       
             {weekDays.map((weekDay) => (
-                <Grid container item key={weekDay.weekDate} direction="row" alignItems="center" sx={style(weekDay)} ref={today(weekDay)}> 
-                    <Grid item xs={4.5} sm={2.2} md={1.5} lg={1.3}>                           
-                        <Card align="center">
-                            <CardContent>
-                                <Typography variant="body1" borderBottom={1}>
-                                    {weekDay.weekDay}
-                                </Typography>
-                                <Typography variant="h5" border={1} borderRadius={"10%"} color={"white"} sx={{backgroundColor:"rgb(25, 118, 210)", maxWidth:40}}>
-                                    {weekDay.weekDate}
-                                </Typography>
-                                <Typography variant="body2">
-                                    {weekDay.weekMonth}
-                                </Typography>                                        
-                            </CardContent>
-                        </Card>
+                <TableCell key={weekDay.weekDate} sx={{borderBottom: 0, borderRight: 1, borderColor: "RGB(222, 225, 230)", width: '11.25%', padding: '0px', fontSize: '20px'}}>
+                    <Grid container item direction="column" alignItems="center" ref={today(weekDay)}> 
+                        <Grid item sx={{width: "35px"}}>      
+                            <Typography variant="body2" justifyContent={"center"} alignItems={"center"} display={"flex"} borderBottom={1}>
+                                {weekDay.weekDay}
+                            </Typography>
+                            <Typography variant="body1" justifyContent={"center"} alignItems={"center"} display={"flex"} border={1} borderRadius={"10%"} color={"white"} sx={{backgroundColor:"rgb(25, 118, 210)", Width:'30px', height:'30px', ...style(weekDay)}}>
+                                {weekDay.weekDate}
+                            </Typography>
+                        </Grid>
+                        <Grid item>                                
+                            <IconButton onClick={() => {setDate([weekDay.weekDay, weekDay.weekDate, weekDay.weekMonth, year]);setOpen(true);}}>
+                                <AddCircleOutline />
+                            </IconButton>
+                        </Grid>       
                     </Grid>
-                    <Grid item xs={0.5} sm={0.5} md={0.5} lg={0.7}>                                
-                        <IconButton onClick={() => {setDate([weekDay.weekDay, weekDay.weekDate, weekDay.weekMonth, year]);setOpen(true);}}>
-                            <AddCircleOutline />
-                        </IconButton>
-                    </Grid>  
-                    <Grid item xs={12} sm={12} md={10} lg={10}>
-                        <DayBarChart date={[weekDay.weekDay, weekDay.weekDate, weekDay.weekMonth, year]} tasks={tasks} setNewTask={setNewTask} sharedUsers={sharedUsers} setUpdate={setUpdate} />
-                    </Grid>                      
-                </Grid>
+                </TableCell>
             ))}
+        </TableRow>
+        </TableHead>
+        <TableBody>
+            <TableRow>
+                {weekDays.map((weekDay) => 
+                    <TableCell key={weekDay.weekDate} sx={{borderBottom: 0, borderRight: 1, borderColor: "RGB(222, 225, 230)", width: '11.25%', padding: '0px', fontSize: '20px'}}>
+                        <Grid container direction={"row"} justifyContent={getUserStyle(weekDay)} paddingRight={getPadding(weekDay)} paddingLeft={getPadding(weekDay)}>
+                            {getUser(weekDay, tasks, sharedUsers).map((user) => 
+                            <Grid item>
+                                <Tooltip title={<Typography variant="subtitle2">{user}</Typography>}>
+                                    <Avatar sx={{bgcolor: "RGB(85 85 85)", width:" 3vw", height: "3vw", fontSize:"3vw"}}>
+                                        {user[0].toUpperCase()}
+                                    </Avatar>
+                                </Tooltip>
+                            </Grid>
+                            )}
+                        </Grid>
+                    </TableCell>
+                )}
+            </TableRow>
+        </TableBody>
+        </Table>
+        </TableContainer>
+        </Box> 
+            <DayBarChart weekDays={weekDays} tasks={tasks} setNewTask={setNewTask} sharedUsers={sharedUsers} setUpdate={setUpdate} />
             <AddTask open={open} setOpen={setOpen} date={date} user={user} setNewTask={setNewTask} setUpdate={setUpdate} />
-        </Grid> 
+        </Box> 
     );
 }
 

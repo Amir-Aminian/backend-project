@@ -90,7 +90,7 @@ const ViewTask = ({open, setOpen, date, task, setNewTask, setUpdate}) => {
                 <form onSubmit={handleSubmit(submit)}>
                     <Stack direction="column" spacing={2}>
                         <Avatar sx={{backgroundColor:"rgb(0, 114, 181)", mt: 2}}></Avatar>
-                        <Chip label={task.user} variant="outlined" sx={{width:"30%"}} />
+                        <Chip label={task.username} variant="outlined" sx={{width:"30%"}} />
                         <Stack direction="row" spacing={1}>
                             <DateRange />
                             <Typography>{date[0]}, {date[1]} {date[2]} {date[3]}</Typography>

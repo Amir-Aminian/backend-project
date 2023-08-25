@@ -7,67 +7,92 @@ import ViewTask from "../homePage/ViewTask";
 import { useState } from "react";
 import GetTask from "../../utilities/GetTask";
 
-const DayBarChart = ({date, tasks, setNewTask, sharedUsers, setUpdate}) => {
+const DayBarChart = ({weekDays, tasks, setNewTask, sharedUsers, setUpdate}) => {
     const [open, setOpen] = useState(false);
 
     const [task, setTask] = useState({});
 
-    let dayTasks = GetTask(date, tasks);
+    const [date, setDate] = useState([]);
 
-    if (sharedUsers.error == undefined) {
-        let sharedTasks = GetTask(date, sharedUsers);
-        dayTasks = dayTasks.concat(sharedTasks);
+    const months = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "Jun.", "Jul.", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."];
+
+    const dayTasks = weekDays.map((weekDay) => GetTask(weekDay, tasks, sharedUsers));
+
+    const getDay = (date) => {
+        const d = new Date(date);
+        const index = d.getDay();
+        return(labels[index-1]);
     };
 
     const clickHandler = (e, element) => {
         if (element.length>0) {
+            let date = [];
+            const dateNumber = dayTasks[element[0].element.$context.parsed.x][element[0].datasetIndex].task_date;
+            const d = new Date(dateNumber);
+            const day = labels[d.getDay()-1];
+            const dayDate = d.getDate();
+            const month = months[d.getMonth()];
+            const year = d.getFullYear();
+            date.push(day, dayDate, month, year);
+            setDate(date)
+            setTask(dayTasks[element[0].element.$context.parsed.x][element[0].datasetIndex]);
             setOpen(true);
-            setTask(dayTasks[element[0].datasetIndex]);
         };
     };
 
+    const labels = ["Mon", "Tue", "wed", "Thu", "Fri", "Sat", "Sun"];
+
+    let datasets = [];
+
+    dayTasks.forEach((task) =>( 
+      task.forEach((data) =>( 
+        datasets.push({data:[{x:getDay(data.task_date), y:[data.task_start_time, data.task_end_time]}], backgroundColor:data.task_color, stack:data.username})
+      ))
+    ));
+
+    const data = {
+        labels: labels,
+        datasets: datasets
+    };
+    
+    const options= {
+        onClick:(e, element) => clickHandler(e, element),
+        maintainAspectRatio:false,
+        indexAxis:"x",
+        borderSkipped:false,
+        borderRadius:"5", 
+        barPercentage:"0.3", 
+        categoryPercentage: "1.1",
+        plugins: {
+            legend:{display:false},
+            tooltip:{enabled:false}
+        },
+        responsive: true,
+        scales: {
+          x: {
+            position: "top",
+            stacked: true, 
+            ticks:{
+              color: "white"
+            }
+          },
+          y: {
+            reverse: true,
+            stacked: false,
+            type:"time",
+            min:"00:00",
+            max:"24:00",
+            time:{
+                unit:"hour",
+                displayFormats:{hour:"ha"}
+            }
+          }
+        }
+      };
+
     return (
-        <Box sx={{overflowX:"scroll", overflowY:"hidden"}}>
-            <Box width={2300}>
-                <Bar
-                    data={{
-                        datasets:
-                            dayTasks.map((data) =>( 
-                                {data:[{x:[data.task_start_time, data.task_end_time],y:data.username}], backgroundColor:data.task_color}
-                            ))
-                    }} 
-                    options={{
-                        onClick:(e, element) => clickHandler(e, element),
-                        maintainAspectRatio:false,
-                        indexAxis:"y",
-                        borderSkipped:false,
-                        borderRadius:"5", 
-                        barPercentage:"0.2", 
-                        plugins:{
-                            legend:{display:false},
-                            tooltip:{enabled:false}                    
-                        }, 
-                        scales:{
-                            x:{
-                                type:"time",
-                                min:"00:00",
-                                max:"24:00",
-                                time:{
-                                    unit:"minute",
-                                    displayFormats:{hour:"ha"}
-                            }
-                            }, 
-                            y:{
-                                stacked:true,
-                                grid:{display:false},
-                                ticks:{
-                                    font:{size:"15%"}
-                                }
-                            }
-                        }
-                    }}
-                />
-            </Box>
+        <Box height={2300}>
+            <Bar data={data} options={options}/>
             <ViewTask open={open} setOpen={setOpen} date={date} task={task} setNewTask={setNewTask} setUpdate={setUpdate} />
         </Box>
     );
