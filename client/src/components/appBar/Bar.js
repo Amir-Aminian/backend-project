@@ -140,7 +140,7 @@ const Bar = ({user, setOpenAGU, setOpenMGU, setOpenMS, year, month, date, setDat
   if (ready === true) {
     return (
       <>
-        <AppBar position="sticky" color="primary" sx={{borderRadius: 0.5, marginBottom:"10px"}}>
+        <AppBar position="sticky" color="primary" sx={{borderRadius: 0.5, marginBottom:"10px", marginTop:"10px"}}>
           <Toolbar sx={{paddingRight: "0px"}}>
             <IconButton onClick={(e) => clickHandler(e)} color="inherit" size="large" aria-label="menu" edge="start" sx={{padding:"0px", borderRadius:"0", transform:"translateY (2px)", boxShadow:"0 4px 8px rgba(0, 0, 0, 0.6)"}}>
               <Badge color="error" overlap="circular" variant="dot" invisible={invisible}>

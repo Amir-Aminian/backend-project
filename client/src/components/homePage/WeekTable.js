@@ -73,7 +73,7 @@ const WeekTable = ({year, weekDays, scrollToDate, tasks, user, setNewTask, share
         <TableHead>
         <TableRow>                       
             {weekDays.map((weekDay) => (
-                <TableCell key={weekDay.weekDate} sx={{borderBottom: 0, borderRight: 1, borderColor: "RGB(222, 225, 230)", width: '11.25%', padding: '0px', fontSize: '20px'}}>
+                <TableCell key={weekDay.weekDate} sx={{borderBottom: 0, borderRight: 1, borderLeft: 1, borderColor: "RGB(222, 225, 230)", width: '11.25%', padding: '0px', fontSize: '20px'}}>
                     <Grid container item direction="column" alignItems="center" ref={today(weekDay)}> 
                         <Grid item sx={{width: "35px"}}>      
                             <Typography variant="body2" justifyContent={"center"} alignItems={"center"} display={"flex"} borderBottom={1}>
@@ -96,7 +96,7 @@ const WeekTable = ({year, weekDays, scrollToDate, tasks, user, setNewTask, share
         <TableBody>
             <TableRow>
                 {weekDays.map((weekDay) => 
-                    <TableCell key={weekDay.weekDate} sx={{borderBottom: 0, borderRight: 1, borderColor: "RGB(222, 225, 230)", width: '11.25%', padding: '0px', fontSize: '20px'}}>
+                    <TableCell key={weekDay.weekDate} sx={{borderBottom: 0, borderRight: 1, borderLeft: 1, borderColor: "RGB(222, 225, 230)", width: '11.25%', padding: '0px', fontSize: '20px'}}>
                         <Grid container direction={"row"} justifyContent={getUserStyle(weekDay)} paddingRight={getPadding(weekDay)} paddingLeft={getPadding(weekDay)}>
                             {getUser(weekDay, tasks, sharedUsers).map((user) => 
                             <Grid item>

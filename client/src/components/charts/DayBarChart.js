@@ -91,7 +91,7 @@ const DayBarChart = ({weekDays, tasks, setNewTask, sharedUsers, setUpdate}) => {
       };
 
     return (
-        <Box height={2300}>
+        <Box height={2300} marginTop={"-21px"}>
             <Bar data={data} options={options}/>
             <ViewTask open={open} setOpen={setOpen} date={date} task={task} setNewTask={setNewTask} setUpdate={setUpdate} />
         </Box>
