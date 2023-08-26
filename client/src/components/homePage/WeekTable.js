@@ -67,7 +67,7 @@ const WeekTable = ({year, weekDays, scrollToDate, tasks, user, setNewTask, share
 
     return ( 
         <Box width={'100%'} align={'center'}> 
-        <Box paddingLeft={'45px'} position="sticky" top={"70px"} sx={{backdropFilter:"blur(3px)"}}>
+        <Box paddingLeft={'45px'} position="sticky" top={"80px"} sx={{backdropFilter:"blur(3px)"}}>
         <TableContainer>       
         <Table>
         <TableHead>
