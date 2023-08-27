@@ -63,6 +63,10 @@ app.use("/api/deleteTask", require("./routes/deleteTask"));
 app.use("/api/updateTask", require("./routes/updateTask"));
 app.use("/api/clearCookies", require("./routes/clearCookies"));
 app.use("/api/shareUser", require("./routes/shareUser"));
+app.get('/service-worker.js', (req, res) => {
+  res.setHeader('Content-Type', 'application/javascript');
+  res.sendFile(path.join(__dirname, "./middlewares", 'service-worker.js'));
+});
 app.get("/*", (req, res) => {
   res.sendFile(path.join(static__dir, 'index.html'));
 });

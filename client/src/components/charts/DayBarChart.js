@@ -15,27 +15,31 @@ const DayBarChart = ({weekDays, tasks, setNewTask, sharedUsers, setUpdate}) => {
     const [date, setDate] = useState([]);
 
     const months = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "Jun.", "Jul.", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."];
+    
+    const days = ["Sun", "Mon", "Tue", "wed", "Thu", "Fri", "Sat"];
 
     const dayTasks = weekDays.map((weekDay) => GetTask(weekDay, tasks, sharedUsers));
 
     const getDay = (date) => {
         const d = new Date(date);
         const index = d.getDay();
-        return(labels[index-1]);
+        return(labels[index]);
     };
+
+    let finalTasks = [];
 
     const clickHandler = (e, element) => {
         if (element.length>0) {
             let date = [];
-            const dateNumber = dayTasks[element[0].element.$context.parsed.x][element[0].datasetIndex].task_date;
+            const dateNumber = finalTasks[element[0].datasetIndex].task_date;
             const d = new Date(dateNumber);
-            const day = labels[d.getDay()-1];
+            const day = days[d.getDay()];
             const dayDate = d.getDate();
             const month = months[d.getMonth()];
             const year = d.getFullYear();
             date.push(day, dayDate, month, year);
             setDate(date)
-            setTask(dayTasks[element[0].element.$context.parsed.x][element[0].datasetIndex]);
+            setTask(finalTasks[element[0].datasetIndex]);
             setOpen(true);
         };
     };
@@ -45,9 +49,10 @@ const DayBarChart = ({weekDays, tasks, setNewTask, sharedUsers, setUpdate}) => {
     let datasets = [];
 
     dayTasks.forEach((task) =>( 
-      task.forEach((data) =>( 
+      task.forEach((data) =>{ 
+        finalTasks.push(data);
         datasets.push({data:[{x:getDay(data.task_date), y:[data.task_start_time, data.task_end_time]}], backgroundColor:data.task_color, stack:data.username})
-      ))
+      })
     ));
 
     const data = {

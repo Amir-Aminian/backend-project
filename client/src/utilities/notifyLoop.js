@@ -3,6 +3,20 @@ import { toast } from 'react-toastify';
 
 const notifyLoop = (tasks) => {
   let timeout;
+  
+  let registration = null; 
+  
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+      .register('/service-worker.js')
+      .then((reg) => {
+        console.log('Service Worker registered with scope:', reg.scope);
+        registration = reg;
+      })
+      .catch((error) => {
+        console.error(`Registration failed with ${error}`);
+      });
+  }; 
 
   const timeToMiliSec = (date, startTime) => {
     const splitedStartTime = startTime.split(":");
@@ -22,24 +36,25 @@ const notifyLoop = (tasks) => {
   };
 
   const notifyMe = (task) =>{
-    const notification = new Notification("Schedule Assistant", {body: `Event: ${task.task_title}\n${task.task_start_time} - ${task.task_end_time}` ,icon: "logo.png"});
-    notification.onclick = (event) => {
-      event.preventDefault();
-      window.open(`${webAddress}/homePage`);
-    };
-    setTimeout(() => {
-      toast.info(`You have an event starting in 30 minutes.\nEvent: ${task.task_title}`, {
-        position: "top-center",
-        autoClose: 10000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: false,
-        progress: undefined,
-        theme: "colored",
+    if (registration) {
+      registration.active.postMessage({
+        title: "Schedule Assistant",
+        body: `Event: ${task.task_title}\n${task.task_start_time} - ${task.task_end_time}`,
+        icon: "logo.png",
+        webAddress: webAddress
       });
-    }, 0); 
     };
+    toast.info(`You have an event starting in 30 minutes.\nEvent: ${task.task_title}`, {
+      position: "top-center",
+      autoClose: 10000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+      theme: "colored",
+    });
+  };
   
   const setTimer = (task, now) => {
     const notificationTime = timeToMiliSec(task.task_date, task.task_start_time) - 1800000;
