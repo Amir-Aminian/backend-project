@@ -50,10 +50,10 @@ const ConfirmPassword = ({passWindow, setPassWindow, email, setSharedUser, setUp
                         <InputForm type="password" id="password" label="Password" control={control} rules={{required: "This field is required", minLength: {value: 8, message: "Password must have at least 8 characters"}}} defaultValue={""} />
                         <Grid container direction="row" justifyContent="center">
                             <Grid item>
-                                <Button type="button" onClick={() => setPassWindow(false)} variant="contained" size="large" sx={{mb:2, mr:4}}>Close</Button>
+                                <Button type="button" onClick={() => setPassWindow(false)} variant="contained" size="large" sx={{mb:2, mr:3}}>Close</Button>
                             </Grid>
                             <Grid item>
-                                <Button type="submit" variant="contained" size="large" sx={{mb:2, ml:4}}>Confirm</Button>
+                                <Button type="submit" variant="contained" size="large" sx={{mb:2, ml:3}}>Confirm</Button>
                             </Grid>
                         </Grid>
                     </Stack>
