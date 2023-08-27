@@ -23,7 +23,7 @@ const DayBarChart = ({weekDays, tasks, setNewTask, sharedUsers, setUpdate}) => {
     const getDay = (date) => {
         const d = new Date(date);
         const index = d.getDay();
-        return(labels[index]);
+        return(days[index]);
     };
 
     let finalTasks = [];
