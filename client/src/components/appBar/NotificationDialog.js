@@ -12,8 +12,10 @@ const NotificationDialog = ({open, setOpen, notificationStatus, tasks}) => {
       clearTimeout(timerId);
       const timeout = notifyLoop(tasks);
       setTimerId(timeout);
-    };
-  }, [tasks]); 
+    } else {
+      clearTimeout(timerId);
+    }
+  }, [tasks, notificationStatus]); 
 
   const turnOn = async () => {
     if (!("Notification" in window)) {
