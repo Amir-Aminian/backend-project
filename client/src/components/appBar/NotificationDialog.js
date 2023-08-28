@@ -103,7 +103,7 @@ const NotificationDialog = ({open, setOpen, notificationStatus, tasks}) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => {turnOff(); setOpen(false);}}>Yes</Button>
+          <Button onClick={async () => {await turnOff(); setOpen(false);}}>Yes</Button>
           <Button onClick={() => setOpen(false)}>No</Button>
         </DialogActions>
       </Dialog>
@@ -120,7 +120,7 @@ const NotificationDialog = ({open, setOpen, notificationStatus, tasks}) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => {turnOn(); setOpen(false);}}>Yes</Button>
+          <Button onClick={async () => {await turnOn(); setOpen(false);}}>Yes</Button>
           <Button onClick={() => setOpen(false)}>No</Button>
         </DialogActions>
       </Dialog>
@@ -137,7 +137,7 @@ const NotificationDialog = ({open, setOpen, notificationStatus, tasks}) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => {turnOn(); setOpen(false);}}>Yes</Button>
+          <Button onClick={async () => {await turnOn(); setOpen(false);}}>Yes</Button>
           <Button onClick={() => setOpen(false)}>No</Button>
         </DialogActions>
       </Dialog>
