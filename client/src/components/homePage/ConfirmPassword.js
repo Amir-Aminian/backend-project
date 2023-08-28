@@ -4,6 +4,7 @@ import InputForm from "../../forms/InputForm";
 import { Stack } from "@mui/system";
 import shareUser from "../../requests/shareUser";
 import { toast } from 'react-toastify';
+import editBadgeNotification from "../../requests/editBadgeNotification";
 
 const ConfirmPassword = ({passWindow, setPassWindow, email, setSharedUser, setUpdate}) => {
     const {control, reset, handleSubmit} = useForm();
@@ -24,6 +25,7 @@ const ConfirmPassword = ({passWindow, setPassWindow, email, setSharedUser, setUp
                 theme: "colored",
             });
         } else {
+            await editBadgeNotification({badgeName: "badge2", badgeNotification: false, ...email});
             setPassWindow(false);
             reset();
             setSharedUser("added");

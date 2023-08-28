@@ -2,10 +2,12 @@ import { Avatar, Button, Chip, Container, Divider, Grid, Modal, Paper, Typograph
 import { Stack } from "@mui/system";
 import deleteUser from "../../requests/deleteUser";
 import { toast } from 'react-toastify';
+import editBadgeNotification from "../../requests/editBadgeNotification";
 
 const ManageGuestUsers = ({open, setOpen, users, setSharedUser, setUpdate}) => {   
     const deleteHandler = async (data) => {
         const result = await deleteUser(data);
+        await editBadgeNotification({badgeName: "badge2", badgeNotification: false, email: result.email});
         setSharedUser("deleted");
         setUpdate({status: true, userEmail: result.email, from:"sender"});
         toast.info(result.message, {

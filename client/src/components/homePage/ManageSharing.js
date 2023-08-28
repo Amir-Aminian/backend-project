@@ -3,10 +3,12 @@ import { Stack } from "@mui/system";
 import deleteUser from "../../requests/deleteUser";
 import acceptUser from "../../requests/acceptUser";
 import { toast } from 'react-toastify';
+import editBadgeNotification from "../../requests/editBadgeNotification";
 
 const ManageSharing = ({open, setOpen, setSharedUser, requests, setUpdate}) => {   
     const deleteHandler = async (data) => {
         const result = await deleteUser(data);
+        await editBadgeNotification({badgeName: "badge1", badgeNotification: false, email: result.email});
         setSharedUser("deleted");
         setUpdate({status: true, userEmail: result.email, from:"receiver"});
         toast.info(result.message, {
@@ -23,6 +25,7 @@ const ManageSharing = ({open, setOpen, setSharedUser, requests, setUpdate}) => {
     
       const acceptHandler = async (data) => {
         const result = await acceptUser(data);
+        await editBadgeNotification({badgeName: "badge1", badgeNotification: false, email: result.email});
         setSharedUser("accepted");
         setUpdate({status: true, userEmail: result.email, from:"receiver"});
         toast.info(result.message, {
