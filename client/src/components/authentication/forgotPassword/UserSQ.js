@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 const UserSQ = ({SQ1, SQ2, SQ3, setErr, setStep}) => {
     const {setSQ, setSA} = useContext(UserContext);
 
-    const { control, handleSubmit } = useForm();
+    const { control, handleSubmit } = useForm({mode:"all"});
     
     const submit = async (data) => {
         const userData =  await forgotPassSA(data); 

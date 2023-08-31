@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 const SignUp = () => {
     const securityQuestions = ["In what city were you born?", "What is the name of your favorite pet?", "What is your mother's maiden name?", "What high school did you attend?", "What was the name of your elementary school?", "What was the make of your first car?", "What was your favorite food as a child?", "Where did you meet your spouse?", "What year was your father (or mother) born?"];
 
-    const { control, handleSubmit, watch } = useForm();
+    const { control, handleSubmit, watch } = useForm({mode: "all"});
 
     const navigate = useNavigate();
 
@@ -29,17 +29,7 @@ const SignUp = () => {
                 theme: "colored",
               });
         } else {
-            toast.success(result, {
-                position: "top-center",
-                autoClose: 10000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: false,
-                progress: undefined,
-                theme: "colored",
-              });
-            navigate("/");
+            navigate("/emailNotice");
         };
     };
 

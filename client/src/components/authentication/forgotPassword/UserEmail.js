@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 const UserEmail = ({setErr, setStep}) => {
     const {setSQ} = useContext(UserContext);
     
-    const { control, handleSubmit } = useForm();
+    const { control, handleSubmit } = useForm({mode:"all"});
 
     const navigate = useNavigate();
     

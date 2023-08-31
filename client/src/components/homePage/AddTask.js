@@ -9,7 +9,7 @@ import addNewTask from "../../requests/addNewTask";
 import { toast } from 'react-toastify';
 
 const AddTask = ({open, setOpen, date, user, setNewTask, setUpdate}) => {
-    const {control, reset, handleSubmit} = useForm();
+    const {control, reset, handleSubmit} = useForm({mode:"all"});
 
     const[color, setColor] = useState("rgb(66, 133, 244)");
 

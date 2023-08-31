@@ -10,7 +10,7 @@ import updateTask from "../../requests/updateTask";
 import { toast } from 'react-toastify';
 
 const ViewTask = ({open, setOpen, date, task, setNewTask, setUpdate}) => {   
-    const {control, reset, handleSubmit} = useForm();
+    const {control, reset, handleSubmit} = useForm({mode:"all"});
 
     const[newColor, setNewColor] = useState(task.task_color);
 

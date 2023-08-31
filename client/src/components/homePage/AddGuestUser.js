@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import ConfirmPassword from "./ConfirmPassword";
 
 const AddGuestUser = ({open, setOpen, sharedUser, setSharedUser, setUpdate}) => {
-    const {control, reset, handleSubmit} = useForm();
+    const {control, reset, handleSubmit} = useForm({mode:"all"});
 
     const [passWindow, setPassWindow] = useState(false);
 

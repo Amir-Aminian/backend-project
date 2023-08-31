@@ -8,7 +8,7 @@ import forgotPassReset from "../../../requests/forgotPassReset";
 import { toast } from 'react-toastify';
 
 const ResetPassword = ({setErr, setStep}) => {
-    const { control, handleSubmit, watch } = useForm();
+    const { control, handleSubmit, watch } = useForm({mode:"all"});
 
     const {setSA} = useContext(UserContext);
 

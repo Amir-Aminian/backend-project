@@ -7,7 +7,7 @@ import logIn from "../../requests/logIn";
 import { toast } from 'react-toastify';
 
 const SignIn = () => {
-    const { control, handleSubmit } = useForm();
+    const { control, handleSubmit } = useForm({mode:"all"});
 
     const navigate = useNavigate();
     

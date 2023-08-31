@@ -17,11 +17,15 @@ router.post(
       if (!errors.isEmpty()) {
         return(res.status(400).json({errors: errors.array()}));
       };
-      const user = await database('SELECT `email`, `password` FROM `db_users` WHERE `email` = ? AND `verified` = ?', [req.body.email, true]) || [];
+      const user = await database('SELECT `email`, `password` FROM `db_users` WHERE `email` = ?', [req.body.email]) || [];
       if (user.length == 0) {
         return(res.status(400).json({error: "Invalid Email Address or Password."}));
-      } else if (await bcrypt.compare(req.body.password, user[0].password)) {
-        const accessToken = jwt.sign({email: user[0].email, signedIn: true}, secretKey, {expiresIn: "8h"});
+      };
+      const verifiedUser = await database('SELECT `email`, `password` FROM `db_users` WHERE `email` = ? AND `verified` = ?', [req.body.email, true]) || [];
+      if (verifiedUser.length == 0) {
+        return(res.status(400).json({error: "Please verify your email address first."}));
+      } else if (await bcrypt.compare(req.body.password, verifiedUser[0].password)) {
+        const accessToken = jwt.sign({email: verifiedUser[0].email, signedIn: true}, secretKey, {expiresIn: "8h"});
         res.status(200).cookie("access_token", "Bearer " + accessToken,{expires: new Date(Date.now() + 8 * 3600000), httpOnly: true, secure: false, sameSite: "strict"});
         return(res.status(200).json("Successfully created jwt TOKEN."));
       } else {

@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import editBadgeNotification from "../../requests/editBadgeNotification";
 
 const ConfirmPassword = ({passWindow, setPassWindow, email, setSharedUser, setUpdate}) => {
-    const {control, reset, handleSubmit} = useForm();
+    const {control, reset, handleSubmit} = useForm({mode:"all"});
 
     const submit = async (data) => {
         const result = await shareUser({...email, ...data});
