@@ -4,7 +4,6 @@ import SignUp from "../components/authentication/SignUp";
 import ForgotPassword from "../components/authentication/ForgotPassword";
 import HomePage from "../components/homePage/HomePage";
 import EmailVerification from "../components/EmailVerification";
-import EmailNotice from "../components/authentication/EmailNotice";
 
 const Routing = () => {
   return (
@@ -12,7 +11,6 @@ const Routing = () => {
         <Routes>        
           <Route path="/" element={<SignIn />} />
           <Route path="/signUp" element={<SignUp />} />
-          <Route path="/emailNotice" element={<EmailNotice />} />
           <Route path="/emailVerification/:accessToken" element={<EmailVerification />} />
           <Route path="/forgotPassword" element={<ForgotPassword />} />
           <Route path="/homePage" element={<HomePage />} />

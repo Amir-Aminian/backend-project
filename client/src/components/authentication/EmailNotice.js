@@ -1,9 +1,9 @@
 import { Box, Typography, Container } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
-const EmailNotice= () => {
+const EmailNotice= ({display}) => {
   return (
-    <Container maxWidth="sm" sx={{ mt: 5, mb: 5 }}>
+    <Container maxWidth="sm" sx={{ mt: 5, mb: 5, display: {display} }}>
       <Box
         p={3}
         textAlign="center"

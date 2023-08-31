@@ -1,19 +1,22 @@
 import InputForm from "../../forms/InputForm";
 import DropDownForm from "../../forms/DropDownForm";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Container, Button, Grid, Typography } from "@mui/material";
 import NavigationBar from "./NavigationBar";
 import { useForm } from "react-hook-form";
 import addUser from "../../requests/addUser";
 import { toast } from 'react-toastify';
+import { useState } from "react";
+import EmailNotice from "./EmailNotice";
 
 const SignUp = () => {
     const securityQuestions = ["In what city were you born?", "What is the name of your favorite pet?", "What is your mother's maiden name?", "What high school did you attend?", "What was the name of your elementary school?", "What was the make of your first car?", "What was your favorite food as a child?", "Where did you meet your spouse?", "What year was your father (or mother) born?"];
 
     const { control, handleSubmit, watch } = useForm({mode: "all"});
 
-    const navigate = useNavigate();
+    const [display1, setDisplay1] = useState("block");
 
+    const [display2, setDisplay2] = useState("none");
 
     const submit = async (data) => {
         const result = await addUser(data);
@@ -29,7 +32,8 @@ const SignUp = () => {
                 theme: "colored",
               });
         } else {
-            navigate("/emailNotice");
+            setDisplay1("none");
+            setDisplay2("block");
         };
     };
 
@@ -39,7 +43,8 @@ const SignUp = () => {
     };
 
     return (
-        <Container maxWidth="xs" sx={{mt: 5 , mb: 5, backgroundColor: "white", borderRadius: "1%"}}>
+        <>
+        <Container maxWidth="xs" sx={{mt: 5 , mb: 5, backgroundColor: "white", borderRadius: "1%", display: display1}}>
             <NavigationBar tabIndex={1} />
             <Grid container direction="column" alignItems="center" justifyContent="center" spacing={2}>  
                 <Grid item>
@@ -79,6 +84,8 @@ const SignUp = () => {
                 </Grid>  
             </Grid>
         </Container>
+        <EmailNotice display={display2} />
+        </>
     );
 }
 
