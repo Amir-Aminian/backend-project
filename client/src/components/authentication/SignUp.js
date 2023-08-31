@@ -54,8 +54,8 @@ const SignUp = () => {
                     <form onSubmit={handleSubmit(submit)}>
                         <Grid container item direction="column" alignItems="center" justifyContent="center" spacing={2}>
                             <Grid container item direction="column" alignItems="center" justifyContent="center" spacing={2} width={250}>
-                                <InputForm type="text" id="username" label="Username" control={control} rules={{required: "This field is required"}} defaultValue={""} />
-                                <InputForm type="email" id="email" label="Email Address" control={control} rules={{required: "This field is required"}} defaultValue={""} />
+                                <InputForm type="text" id="username" label="Username" control={control} rules={{required: "This field is required", maxLength: {value: 20, message: "Username must not exceed 20 characters"}}} defaultValue={""} />
+                                <InputForm type="email" id="email" label="Email Address" control={control} rules={{required: "This field is required", pattern: {value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/, message: "Please enter a valid email"}}} defaultValue={""} />
                                 <InputForm type="password" id="password" label="Password" control={control} rules={{required: "This field is required", minLength: {value: 8, message: "Password must have at least 8 characters"}}} defaultValue={""} />
                                 <InputForm type="password" id="confirmPassword" label="Confirm Password" control={control} rules={{required: "This field is required", minLength: {value: 8, message: "Password must have at least 8 characters"}, validate: (value) => (value===watch("password") || "Password does not match")}} defaultValue={""} />
                             </Grid>
