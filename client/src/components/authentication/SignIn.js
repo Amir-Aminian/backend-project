@@ -82,7 +82,7 @@ const SignIn = () => {
                     <Grid item>
                         <form onSubmit={handleSubmit(submit)}>
                             <Grid container item direction="column" alignItems="center" justifyContent="center" spacing={2} width={250}>
-                                <InputForm type="email" id="email" label="Email Address" control={control} rules={{required: "This field is required"}} defaultValue={""} />
+                                <InputForm type="email" id="email" label="Email Address" control={control} rules={{required: "This field is required", pattern: {value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/, message: "Please enter a valid email"}}} defaultValue={""} />
                                 <InputForm type="password" id="password" label="Password" control={control} rules={{required: "This field is required", minLength: {value: 8, message: "Password must have at least 8 characters"}}} defaultValue={""} />
                                 <Grid container item justifyContent="flex-start" style={{paddingTop: 0}}>
                                     <Link to={"/forgotPassword"}>Forgot Your Password?</Link>

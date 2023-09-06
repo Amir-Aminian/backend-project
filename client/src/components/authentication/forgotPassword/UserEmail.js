@@ -44,7 +44,7 @@ const UserEmail = ({setErr, setStep}) => {
                 <Grid item>
                     <form onSubmit={handleSubmit(submit)}>
                         <Grid container item direction="column" alignItems="center" justifyContent="center" spacing={3}>
-                            <InputForm type="email" id="email" label="Email Address" control={control} rules={{required: "This field is required"}} defaultValue={""} />
+                            <InputForm type="email" id="email" label="Email Address" control={control} rules={{required: "This field is required", pattern: {value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/, message: "Please enter a valid email"}}} defaultValue={""} />
                             <Grid container item direction={"row"} justifyContent="center" spacing={12}>
                                 <Grid item>
                                     <Button onClick={() => navigate("/")} variant="contained" size="small">Back</Button>

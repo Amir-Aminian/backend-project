@@ -1,5 +1,5 @@
 import { AddCircleOutline } from "@mui/icons-material";
-import { Card, CardContent, Grid, IconButton, Typography, Table, Box, TableCell, TableContainer, TableHead, TableRow, TableBody, Stack, Avatar, Tooltip } from "@mui/material";
+import { Grid, IconButton, Typography, Table, Box, TableCell, TableContainer, TableHead, TableRow, TableBody, Avatar, Tooltip } from "@mui/material";
 import React, { useState } from "react";
 import DayBarChart from "../charts/DayBarChart";
 import AddTask from "./AddTask";
