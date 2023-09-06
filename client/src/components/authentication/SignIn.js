@@ -1,6 +1,6 @@
 import InputForm from "../../forms/InputForm";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Grid, Container, Typography } from "@mui/material";
+import { Button, Grid, Container, Typography, Box } from "@mui/material";
 import NavigationBar from "./NavigationBar";
 import { useForm } from "react-hook-form";
 import logIn from "../../requests/logIn";
@@ -28,7 +28,50 @@ const SignIn = () => {
               });
         };
     };
-     
+
+    const getOS = () => {
+        const userAgent = navigator.userAgent;
+        if (/iPhone OS/.test(userAgent)) {
+            return(true)
+        }
+    };    
+
+    const getVersion = () => {
+        const userAgent = navigator.userAgent;
+        const match = userAgent.match(new RegExp("Version/" + '([^;]+)'));
+        const result = match ? match[1].trim().split(' ')[0] : null;
+        if (parseFloat(result) < 16.4) {
+            return(true)
+        };        
+    };
+
+    if (getOS() && getVersion()) {
+        return(
+            <Container maxWidth="sm" sx={{ mt: 5, mb: 5 }}>
+                <Box
+                    p={3}
+                    textAlign="center"
+                    borderRadius="10px"
+                    backgroundColor="rgba(255, 255, 255, 0.95)" 
+                    boxShadow="0 0 20px rgba(0, 0, 0, 0.1)"
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                >
+                    <div style={{ fontSize: '48px' }}>🙁</div>
+                    <Typography variant="h5" color="primary" gutterBottom>
+                        Aw, Snap!
+                    </Typography>
+                    <Typography sx={{ color: "#555", fontSize: "1.1rem", marginBottom: 2 }}>
+                        We're sorry, but your browser does not support this web app.
+                    </Typography>
+                    <Typography sx={{ color: "#555", fontSize: "1.1rem", marginBottom: 2 }}>
+                        Please consider using a newer version of your browser for the best experience.
+                    </Typography>
+                </Box>
+            </Container>
+        )
+    } else {
         return (
             <Container maxWidth="xs" sx={{mt: 5 , mb: 5, backgroundColor: "white", borderRadius: "2%"}}>
                 <NavigationBar tabIndex={0} />
@@ -52,8 +95,8 @@ const SignIn = () => {
                     </Grid>
                 </Grid>
             </Container>
-        );
-    
+        )
+    }
 }
 
 export default SignIn;
