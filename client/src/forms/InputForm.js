@@ -4,7 +4,7 @@ import { Controller } from 'react-hook-form';
 const InputForm = ({ type, id, label, control, rules, defaultValue }) => {
 
     const getShrink = (type) => {
-        if (type === "time") {
+        if (type === "time" || type === "datetime") {
             return({shrink: true});
         }
     };
