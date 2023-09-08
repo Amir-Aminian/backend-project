@@ -83,8 +83,8 @@ const AddTask = ({open, setOpen, date, user, setNewTask, setUpdate}) => {
                                 <Typography>{date[0]}, {date[1]} {date[2]} {date[3]}</Typography>
                             </Stack>                    
                             <InputForm type="text" id="taskTitle" label="Task Title" control={control} rules={{required: "This field is required"}} defaultValue={""} />
-                            <InputForm type="datetime" id="startTime" label="Task Start Time" control={control} rules={{required: "This field is required", validate: validateTimeFormat}} defaultValue={""} />
-                            <InputForm type="datetime" id="endTime" label="Task End Time" control={control} rules={{required: "This field is required", validate: validateTimeFormat}} defaultValue={""} />
+                            <InputForm type="datetime" id="startTime" label="Task Start Time" control={control} rules={{required: "This field is required", validate: validateTimeFormat}} defaultValue={"--:--"} />
+                            <InputForm type="datetime" id="endTime" label="Task End Time" control={control} rules={{required: "This field is required", validate: validateTimeFormat}} defaultValue={"--:--"} />
                             <InputForm type="text" id="taskDescription" label="Task Description" control={control} rules={{required: "This field is required"}} defaultValue={""} />
                             <Stack direction="row" spacing={2}>
                                 <Typography>Pick a color for this task:</Typography>
