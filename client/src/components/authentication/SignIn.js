@@ -5,6 +5,7 @@ import NavigationBar from "./NavigationBar";
 import { useForm } from "react-hook-form";
 import logIn from "../../requests/logIn";
 import { toast } from 'react-toastify';
+import "./style1.css";
 
 const SignIn = () => {
     const { control, handleSubmit } = useForm({mode:"all"});
@@ -93,6 +94,7 @@ const SignIn = () => {
                             </Grid>
                         </form>
                     </Grid>
+                    <Button id="demoButton" onClick={() => navigate("/demoHomePage")} variant="text" size="small" sx={{mb: 4, ml: "80%"}}>Try Demo</Button>                                     
                 </Grid>
             </Container>
         )
