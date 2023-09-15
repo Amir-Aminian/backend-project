@@ -34,7 +34,13 @@ router.get("/", authenticateToken, async (req, res) => {
             )
           ])
         ));
-        const result = sharedData[0][1].map((data)=>({sharedId: sharedData[0][0], ...data}));
+        let result = [];
+        sharedData.map((data) => {
+          for (let i = 0; i < data[1].length; i++) {
+            data[1][i]["sharedId"] = data[0];
+            result.push(data[1][i]);
+          }
+        });
         return(res.status(200).json(result));
       };      
     } else {

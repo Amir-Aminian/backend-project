@@ -24,45 +24,40 @@ const WeekTable = ({year, weekDays, scrollToDate, tasks, user, setNewTask, share
         }
     };
 
-    const getUserStyle = (weekDay) => {
-        let users = [];
-        weekDays.map((weekDay) =>{ 
-            const allUsers = getUser(weekDay, tasks, sharedUsers);
-            if (allUsers.length > 1) {
-                users.push(1);
+    let users = [];
+    weekDays.map((weekDay) =>{ 
+        const allUsers = getUser(weekDay, tasks, sharedUsers);
+        allUsers.forEach((data) => {
+            const index = users.findIndex((user) => user === data);
+            if (index === -1) {
+            users.push(data);
             };
         });
-        const dayUsers = getUser(weekDay, tasks, sharedUsers);
-        if (users.length > 0 && dayUsers.length > 1) {
+    });
+
+    const getUserStyle = () => {
+        if (users.length > 1) {
             return("space-between");
-        } else if (users.length > 0 && dayUsers.length === 1) {
-            return("left");
-        } else {
+        } else if (users.length === 1) {
             return("center");
         }
     };
 
-    const getPadding = (weekDay) => {
-        let users = [];
-        weekDays.map((weekDay) =>{ 
-            const allUsers = getUser(weekDay, tasks, sharedUsers);
-            allUsers.forEach((data) => {
-                const index = users.findIndex((user) => user === data);
-                if (index === -1) {
-                users.push(data);
-                };
-            });
-        });
-        const dayUsers = getUser(weekDay, tasks, sharedUsers);
-        if (users.length > 0 && dayUsers.length === 2) {
+    const getPadding = () => {
+        if (users.length === 3) {
+            return("1%");
+        } else if (users.length === 2) {
             return("10%");
-        } else if (users.length > 0 && dayUsers.length === 3) {
-            return("2.5%");
-        } else if (users.length === 2 && dayUsers.length === 1) {
-            return("10%");
-        } else if (users.length === 3 && dayUsers.length === 1) {
-            return("2.5%");
         }
+    };
+
+    const sortArrayByOther = (array1) => {
+        const indexMap = new Map();
+        users.forEach((element, index) => {
+            indexMap.set(element, index);
+        });
+        array1.sort((a, b) => indexMap.get(a) - indexMap.get(b));
+        return array1;
     };
 
     return ( 
@@ -97,16 +92,26 @@ const WeekTable = ({year, weekDays, scrollToDate, tasks, user, setNewTask, share
             <TableRow>
                 {weekDays.map((weekDay) => 
                     <TableCell key={weekDay.weekDate} sx={{borderBottom: 0, borderRight: 1, borderLeft: 1, borderColor: "RGB(222, 225, 230)", width: '11.25%', padding: '0px', fontSize: '20px'}}>
-                        <Grid container direction={"row"} justifyContent={getUserStyle(weekDay)} paddingRight={getPadding(weekDay)} paddingLeft={getPadding(weekDay)}>
-                            {getUser(weekDay, tasks, sharedUsers).map((user) => 
-                            <Grid item>
-                                <Tooltip title={<Typography variant="subtitle2">{user}</Typography>}>
-                                    <Avatar sx={{bgcolor: "RGB(85 85 85)", width:" 3vw", height: "3vw", fontSize:"3vw"}}>
-                                        {user[0].toUpperCase()}
-                                    </Avatar>
-                                </Tooltip>
-                            </Grid>
-                            )}
+                        <Grid container direction={"row"} justifyContent={getUserStyle()} paddingRight={getPadding()} paddingLeft={getPadding()}>
+                            {users.map((user) => {
+                                if (sortArrayByOther(getUser(weekDay, tasks, sharedUsers)).includes(user)) {
+                                    return(
+                                        <Grid item key={weekDay+user}>
+                                            <Tooltip title={<Typography variant="subtitle2">{user}</Typography>}>
+                                                <Avatar sx={{bgcolor: "RGB(85 85 85)", width:" 3vw", height: "3vw", fontSize:"3vw"}}>
+                                                    {user[0].toUpperCase()}
+                                                </Avatar>
+                                            </Tooltip>
+                                        </Grid>
+                                    )
+                                } else {
+                                    return(
+                                        <Grid item key={weekDay+user}>
+                                            <Avatar sx={{bgcolor: "white", width:" 3vw", height: "3vw", fontSize:"3vw"}} />
+                                        </Grid>
+                                    )
+                                }
+                            })}
                         </Grid>
                     </TableCell>
                 )}

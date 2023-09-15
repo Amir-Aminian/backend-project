@@ -3,6 +3,7 @@ import { Stack } from "@mui/system";
 import deleteUser from "../../requests/deleteUser";
 import { toast } from 'react-toastify';
 import editBadgeNotification from "../../requests/editBadgeNotification";
+import { Fragment } from "react";
 
 const ManageGuestUsers = ({open, setOpen, users, setSharedUser, setUpdate}) => {   
     const deleteHandler = async (data) => {
@@ -28,7 +29,7 @@ const ManageGuestUsers = ({open, setOpen, users, setSharedUser, setUpdate}) => {
         } else if (users.error == undefined && users.length > 0) {
           return (
             users.map((user) => 
-            <>
+            <Fragment key={user}>
               <Stack direction="row" justifyContent="left" alignItems={"center"} spacing={1} sx={{mt:1}}>
                 <Avatar sx={{backgroundColor:"rgb(0, 114, 181)", ml:1}}></Avatar>
                 <Chip label={user.user} variant="outlined" />
@@ -44,7 +45,7 @@ const ManageGuestUsers = ({open, setOpen, users, setSharedUser, setUpdate}) => {
                 </Grid>
               </Stack>
               <Divider sx={{mt:1}} />
-            </>
+            </Fragment>
             )
           );
         };
