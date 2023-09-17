@@ -38,7 +38,7 @@ const DemoAddTask = ({open, setOpen, date, user, tasks, setTasks}) => {
     };
 
     const submit = (data) => {
-        if (demoSetTask({ id:uuidv4(), user: user, date: new Date(date).getTime(), ...data, color:color, colorLabel:colorLabel}, tasks, setTasks)) {
+        if (demoSetTask({ id:uuidv4(), user: user, date: new Date(date).getTime(), ...data, color:color, colorLabel:colorLabel, task_date:new Date(date).getTime() , task_title:data.taskTitle , task_start_time:data.startTime , task_end_time:data.endTime}, tasks, setTasks)) {
             setOpen(false);
             reset();            
             toast.success("Successfully added new task.", {
