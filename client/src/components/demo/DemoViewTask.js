@@ -43,7 +43,7 @@ const ViewTask = ({open, setOpen, date, task, tasks, setTasks}) => {
     };
 
     const submit = (data) => {
-        if (demoUpdateTask(task.id, {user: task.user, date: new Date(date).getTime(), ...data, color:newColor, colorLabel:newColorLabel, id:task.id}, tasks, setTasks)) {
+        if (demoUpdateTask(task.id, {id: task.id, user: task.user, date: new Date(date).getTime(), ...data, color:newColor, colorLabel:newColorLabel, task_date:new Date(date).getTime() , task_title:data.taskTitle , task_start_time:data.startTime , task_end_time:data.endTime}, tasks, setTasks)) {
             setOpen(false);
             reset();            
             toast.success("Successfully updated the task.", {
